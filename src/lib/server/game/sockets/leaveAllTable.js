@@ -1,0 +1,22 @@
+import { ObjectId } from 'mongodb';
+import { usersCollection, tarotCollection } from '../../db/db.js';
+
+export default async function leaveAllTable(io, socket, tableId) {
+    console.log("leave all table")
+    const table = await tarotCollection.findOne({ _id: new ObjectId(tableId) });
+    const playersId = table?.playersId
+
+    const ids = playersId.map(id => new ObjectId(id));
+    
+    await usersCollection.updateMany(
+        {_id: { $in: ids }}, 
+        {$set : {inGame: false, tarot : {}, score : 0}
+    })
+
+	await tarotCollection.deleteOne({ _id: new ObjectId(tableId) });
+		
+	console.log(`table ${tableId} deleted and players ${playersId} left`);
+	
+    io.to(tableId).emit("leaveAllTable")
+
+}

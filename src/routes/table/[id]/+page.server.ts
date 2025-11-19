@@ -1,0 +1,50 @@
+import { tarotCollection, usersCollection } from '$lib/server/db/db.js'
+import { redirect } from '@sveltejs/kit';
+import {ObjectId} from 'mongodb'
+
+
+export async function load({params, locals}){
+    // console.log("params id", params.id)
+    const table = await tarotCollection.findOne({_id : new ObjectId(params.id)})
+    const user = await usersCollection.findOne({_id : new ObjectId(locals.user.id)})
+    
+    if (!table) {
+      throw redirect(302, '/table'); 
+    }
+    return {
+        table : {...table, _id : table._id.toString()},
+        user :  {...user, _id : user._id.toString()},
+    }
+}
+
+export const actions = {
+  bet : async({params, locals, request}) => {
+      const formData = await request.formData();
+      const bet = Number(formData.get('bet'))
+      // const user = locals.user
+      // const table = await tarotCollection.findOne({_id : new ObjectId(params.id)})
+
+      // // console.log(user, bet, table)
+
+      // await tarotCollection.updateOne(
+      //   {_id : new ObjectId(params.id)},
+      //   {$set : {"gameState.bet" : bet}}
+      // )
+
+      // await usersCollection.updateOne(
+      //   {_id : new ObjectId(user.id)},
+      //   {$set : {"tarot.bet" : bet, "tarot.hasbet" : true, "tarot.isSpeaker" : false}}
+      // )
+  
+      try {
+        return {
+            success: true,
+            bet : bet,
+          };
+
+      } catch (err) {
+        console.log(err)
+          return fail(400, { error : err.message });
+      }
+  }
+}

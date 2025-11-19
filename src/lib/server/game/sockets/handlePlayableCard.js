@@ -1,0 +1,127 @@
+import { ObjectId } from 'mongodb';
+import { usersCollection, tarotCollection } from '../../db/db.js';
+import { RoundManager } from '../core/round.js';
+import { ScoreManager } from '../core/score.js';
+import gameOver from './gameOver.js';
+import checkStartBet from './startBet.js';
+
+export default async function handlePlayableCard(io, tableId, userId, card) {
+	console.log("handle card : ", card)
+    
+    const table = await tarotCollection.findOne({_id : new ObjectId(tableId)})
+    const user = await usersCollection.findOne({ _id: new ObjectId(userId) });
+    
+    const playersId = table?.playersId
+    let pli = new Map(Object.entries(table?.gameState.pli)) 
+    let colorPli = table?.gameState.colorPli
+    let playedAtouts = table?.gameState.playedAtouts
+    const roundMax = table?.roundMax
+    let round = table?.gameState.round
+
+    // console.log("pli, colorPli :", pli, "\n",colorPli)
+
+    const roundManager = new RoundManager(pli, colorPli, playedAtouts )
+  
+    if (pli.size === table?.size){
+        console.log("end round")
+        const winnerId = roundManager.getRoundWinner()
+        const winner = await usersCollection.findOne({ _id: new ObjectId(winnerId)})
+        let cardsWon = roundManager.updateCardsWon(winner?.tarot.cardsWon)
+        console.log("winner pli : ", winner?.username)
+        await usersCollection.updateOne(
+            {_id : new ObjectId(winnerId)},
+            {$set : {"tarot.cardsWon" : cardsWon, "tarot.isPlayer" : true}}
+        )
+        roundManager.restartRound()
+        for (const playerId of playersId) {
+            await usersCollection.updateOne(
+                {_id : new ObjectId(playerId)},
+                {$set : {"tarot.hasPlayed" : false, "tarot.playedCard" : undefined}}
+            )
+        }; 
+
+    } else {
+        console.log("next player to play")
+        const ind = playersId.indexOf(userId)
+        const newPlayerId = playersId[((ind+1) % playersId.length)]
+        await usersCollection.updateOne(
+            {_id : new ObjectId(newPlayerId)},
+            {$set : {"tarot.isPlayer" : true}}
+        ) 
+    }
+
+    await tarotCollection.updateOne(
+        {_id : new ObjectId(tableId)},
+        {$set : {"gameState.pli" : roundManager.pli,
+                "gameState.colorPli" : roundManager.colorPli,
+                "gameState.playedAtouts" : roundManager.playedAtouts
+        }}
+    )
+    
+    const handsEmpties = await areHandsEmpties(playersId)
+
+    if (handsEmpties){
+        console.log("end manche")
+        const objectIds = playersId.map(id => new ObjectId(id));
+        const preneur = await usersCollection.findOne({ _id: { $in: objectIds }, "tarot.hasTaken" : true })
+        const scoreManager = new ScoreManager(preneur)
+        scoreManager.compute()
+        const {contrat, hasWin, preneurScore, defScore} = scoreManager.getMarque()
+        for (const playerId of playersId) {
+            const player = await usersCollection.findOne({ _id: new ObjectId(playerId)});
+            if (player?.tarot.hasTaken){
+                await usersCollection.updateOne(
+                    {_id : new ObjectId(playerId)},
+                    {$set : {score : preneurScore, "tarot.cardsWon" : new Array(), "tarot.hasWin" : hasWin, "tarot.contrat" : contrat}}
+                )
+            } else {
+                await usersCollection.updateOne(
+                    {_id : new ObjectId(playerId)},
+                    {$set : {score : defScore, "tarot.cardsWon" : new Array()}}
+                )
+            }
+        
+        };
+
+        round++
+        await tarotCollection.updateOne(
+            {_id : new ObjectId(tableId)},
+            {$set : {"gameState.round" : round}}
+        )
+        // faire un nouvel état de la table (scoreRound), la mettre a jour avec updtateContext, et après 10s renvoie event pour checkstartbet
+        // montrer classement, nbBout, contrat..
+        
+        if (round >= roundMax){
+           await gameOver(io, tableId)
+        } else {
+            await checkStartBet(io, tableId)
+        }
+        }
+        
+
+    const updatedTable = await tarotCollection.findOne({ _id: new ObjectId(tableId) });
+    // console.log("updated gameState :", updatedTable?.gameState)
+
+    for (const playerId of playersId){
+        const updatedUser = await usersCollection.findOne({ _id: new ObjectId(playerId)});
+        io.to(playerId).emit("updateTarotContext", updatedUser, updatedTable)
+    }; 
+
+    io.to(userId).emit("endCheckPlayableCard")
+
+
+
+}
+
+async function areHandsEmpties(playersId){
+    let handEmpty = true 
+    for (const playerId of playersId){
+        const player = await usersCollection.findOne({ _id: new ObjectId(playerId)});
+        if (player?.hand.length !== 0) {
+            handEmpty = false 
+        }
+    }
+    return handEmpty
+}
+
+  
