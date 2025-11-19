@@ -7,6 +7,7 @@ let socket: Socket | null = null;
 
 if (browser) {
     console.log("🔌 Tentative de connexion Socket.io...");
+    console.log("socket url : ", process.env.PUBLIC_SOCKET_URL)
     socket = io(process.env.PUBLIC_SOCKET_URL, {
     path: '/socket.io',
     withCredentials: true,
