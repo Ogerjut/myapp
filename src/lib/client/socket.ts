@@ -1,14 +1,14 @@
 import { browser } from "$app/environment";
 import { io, Socket } from "socket.io-client";
-import dotenv from "dotenv"
-dotenv.config()
+import { PUBLIC_SOCKET_URL } from "$env/static/public";
+
 
 let socket: Socket | null = null;
 
 if (browser) {
     console.log("🔌 Tentative de connexion Socket.io...");
-    console.log("socket url : ", process.env.PUBLIC_SOCKET_URL)
-    socket = io(process.env.PUBLIC_SOCKET_URL, {
+    console.log("socket url : ", PUBLIC_SOCKET_URL)
+    socket = io(PUBLIC_SOCKET_URL, {
     path: '/socket.io',
     withCredentials: true,
     transports: ['websocket', 'polling'], 
