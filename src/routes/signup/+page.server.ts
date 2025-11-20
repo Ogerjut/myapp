@@ -4,11 +4,22 @@ import { fail } from '@sveltejs/kit';
 export const actions = {
     signup : async({request}) => {
         const formData = await request.formData();
-        const name = formData.get('name')
         const email = formData.get('email')
         const username = formData.get('username');
         const password = formData.get('password');
-   
+        const password2 = formData.get('password2');
+        const name = username
+
+        try {
+            if(password !== password2){
+                throw new Error('Les mots de passe doivent être identiques !')
+            }
+        
+        } catch (err) {
+            return fail(400, { error : err.message });
+        }
+
+
         try {
             const data = await auth.api.signUpEmail({
                 body: {

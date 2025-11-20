@@ -18,17 +18,17 @@
 </script>
 
 <div id="user-card">
-	<p class="username">{user?.username ?? "empty seat"}</p>
+	<p class="username">{user?.username ?? "siège vide"}</p>
 	<hr />
 	{#if user}
 	<div class="user-bottom">
 		<div class="user-info">
 			{#if tarotContext.table.state === "bet" && user.tarot.isSpeaker}
-				<i>Betting...</i> 
+				<i>Parie...</i> 
 			{:else if tarotContext.table.state === "bet" && user.tarot.hasBet}
-				<p>Bet : {user.tarot.bet}</p> 
+				<p>Annonce : {user.tarot.bet}</p> 
 			{:else if tarotContext.table.state === "game" && user.tarot.isPlayer}
-				<i>Playing...</i>
+				<i>Joue...</i>
 			{:else if tarotContext.table.state === "game" && user.tarot.hasPlayed && user.tarot.playedCard}
 				<MiniCard value={user.tarot.playedCard.value} suit={user.tarot.playedCard.suit} />
 			{/if}

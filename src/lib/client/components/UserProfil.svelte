@@ -10,8 +10,8 @@
 
     
         <b><p>{user.name}</p></b>
-        <p>Games : {user.games}</p>
-        <p>Victories : {user.victories}</p>
+        <p>Parties : {user.games}</p>
+        <p>Victoires : {user.victories}</p>
         <!-- <p>En jeu : {user.inGame} </p> -->
         <button type="button"  onclick={() => onclick()}> Fermer </button>
 

@@ -26,20 +26,20 @@
         }}>
 
         <fieldset>
-          <legend>Select a number of players</legend>
+          <legend>Sélectionnes un nombre de joueurs :</legend>
           
           <div class="dr">
-            <input type="radio" name="nbPlayers" id="r1" value="2" checked>
-            <label for="r1">2</label>
+            <input type="radio" name="nbPlayers" id="r1" value="4" checked>
+            <label for="r1">4</label>
           </div>
       
-          <div class="dr">
-            <input type="radio" name="nbPlayers" id="r2" value="5">
+          <!-- <div class="dr">
+            <input type="radio" name="nbPlayers" id="r2" value="5" >
             <label for="r2">5</label>
-          </div>
+          </div> -->
       
           </fieldset>
-        <button type="submit"> Create a table </button>
+        <button type="submit"> Créer la table </button>
         </form>
         
 

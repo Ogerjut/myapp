@@ -27,32 +27,32 @@
       }
     })}>
 
-    <h1><u>Registration</u></h1>
+    <h1><u>Inscription</u></h1>
 
     <div id="field">
       <label>
-        Username :
+        Pseudo :
         <input type="text" name="username" required />
       </label>
   
-      <label>
-        Name :
-        <input type="text" name="name" required />
-      </label>
-      
       <label>
         Email :
         <input type="email" name="email" required />
       </label>
       
       <label>
-       Password :
+       Mot de passe :
         <input type="password" name="password" required />
       </label>
 
+      <label>
+        Répéter mot de passe :
+         <input type="password" name="password2" required />
+       </label>
+
     </div>
     
-    <button disabled={registering}> Sign up ! </button>
+    <button disabled={registering}> S'inscrire ! </button>
 
     {#if form?.error}
       <p style="color:red;">{form.error}</p>

@@ -26,22 +26,24 @@
     class="overflow-hidden shadow rounded-xl"
     >
 
-    <h1><u>Connexion</u></h1>
+    <h1><u>Connection</u></h1>
 
     <div id="field">
       <label>
-        Username :
+        Pseudo :
         <input type="text" name="username" required />
       </label>
       
       <label>
-       Password :
+       Mot de passe :
         <input type="password" name="password" required />
       </label>
 
     </div>
     
-    <button disabled={logingin}> Sign in ! </button>
+    <button disabled={logingin}> Se connecter </button>
+
+    <a href="/login/forgotten-password">mot de passe oublié</a>
 
     {#if form?.error}
       <p style="color:red;">{form.error}</p>

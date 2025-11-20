@@ -24,18 +24,18 @@
 
     async function backToMenu(){
         socket.emit("endGame", table._id, user._id)
-        await goto('/')
+        await goto('/table')
     }
 </script>
 
 
 
 <div>
-    End Game
+    Fin de la partie 
     <ScoreBoard/>
     
 </div>
 
 <button onclick={() => backToMenu()}>
-    Back to menu
+    Retour au menu
 </button>

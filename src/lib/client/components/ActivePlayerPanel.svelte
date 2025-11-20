@@ -9,8 +9,6 @@
     let selectedUser = $state()
     const socket = $derived(tarotContext.socket)
     const tableId = $derived(tarotContext.table._id)
-    
-    $inspect("activeUsers : ", activeUsers)
 
     async function fetchActiveUsers() {
         const res = await fetch("/");
@@ -35,7 +33,7 @@
 
 
 <div id="listplayers">
-    <h1> Active Players : </h1>
+    <h1> Joueurs actifs : </h1>
     <ul>
         {#each activeUsers as activeUser }
             <li> 

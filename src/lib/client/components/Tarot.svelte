@@ -65,12 +65,11 @@
 </script>
 
 <!-- faire un composant pour 4joueurs et 5joueurs (plus tard) -->
-<!-- utiliser context au lieu prop drilling dans composants enfants -->
+
 <div id="game-area">
-    <i>{tarotContext.table.state} mode</i>
+    <!-- <i>{tarotContext.table.state} mode</i> -->
     <Table/>
     <PlayerSeat {opponents} />
-    <ScoreBoard/>
 
     <div style="grid-area: 2 / 2;">
         {#if !tarotContext.table.ready }

@@ -40,7 +40,7 @@
             <Card value={card.value} suit={card.suit}/> 
         {/each}
     </div>
-    <button disabled={disabledButton} onclick={()=>validateChien()}> Validate </button>
+    <button disabled={disabledButton} onclick={()=>validateChien()}> Valider </button>
 {/if}
 
 

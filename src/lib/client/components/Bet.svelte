@@ -38,7 +38,7 @@
         }}>
         
         <fieldset disabled = {!tarot.isSpeaker}>
-          <legend> <u>Select a bet</u> </legend>
+          <legend> <u>SChoisis ton annonce :</u> </legend>
 
           <div class="dr">
             <input type="radio" name="bet" id="r0" value="0" checked >
@@ -47,7 +47,7 @@
           
           <div class="dr">
             <input type="radio" name="bet" id="r1" value="1" disabled = {actualBet >= 1}>
-            <label for="r1"> Petite </label>
+            <label for="r1"> Prise </label>
           </div>
       
           <div class="dr">
@@ -67,7 +67,7 @@
 
            
           </fieldset>
-        <button disabled = {!tarot.isSpeaker} type="submit"> Bet </button>
+        <button disabled = {!tarot.isSpeaker} type="submit"> Annoncer </button>
         
         </form>
 

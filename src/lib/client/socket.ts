@@ -2,12 +2,10 @@ import { browser } from "$app/environment";
 import { io, Socket } from "socket.io-client";
 import { PUBLIC_SOCKET_URL } from "$env/static/public";
 
-
 let socket: Socket | null = null;
 
 if (browser) {
-    console.log("🔌 Tentative de connexion Socket.io...");
-    console.log("socket url : ", PUBLIC_SOCKET_URL)
+    console.log("🔌 Tentative de connexion Socket.io...", PUBLIC_SOCKET_URL)
     socket = io(PUBLIC_SOCKET_URL, {
     path: '/socket.io',
     withCredentials: true,

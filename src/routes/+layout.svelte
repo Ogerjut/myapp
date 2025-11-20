@@ -57,17 +57,17 @@
 			signout = false	
 			};
 		}}>
-		<button type="submit" disabled={signout}> {signout ? "Loging out..." : "Log out"} </button>
+		<button type="submit" disabled={signout}> {signout ? "Déconnection..." : "Se déconnecter"} </button>
   	</form>
-	<a href="/">Home</a>
+	<a href="/">Menu</a>
 	<a href="/dashboard">Account</a>
 	<a href="/table">Tarot</a>
-	<a href="/yams">Yams</a>
+	<!-- <a href="/yams">Yams</a> -->
 	
 	
 	{:else}
-	<a href="/login">Log in</a>
-	<a href="/signup">Sign up</a>
+	<a href="/login">Se connecter</a>
+	<a href="/signup">S'inscrire</a>
 	{/if}
 
 	
