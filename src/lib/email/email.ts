@@ -1,6 +1,8 @@
 // src/lib/email.ts
 import { Resend } from "resend";
-const resend = new Resend(process.env.RESEND_API_KEY);
+import {RESEND_API_KEY} from '$env/static/private'
+
+const resend = new Resend(RESEND_API_KEY);
 
 export async function sendEmail({
   to,
@@ -15,7 +17,7 @@ export async function sendEmail({
   
 }) {
   const response = await resend.emails.send({
-    from: "no-reply@jouonsentrepotes.com", // Doit être un domaine validé sur Resend
+    from: "no-reply@jouonsentrepotes.fr", // Doit être un domaine validé sur Resend
     to,
     subject,
     text,

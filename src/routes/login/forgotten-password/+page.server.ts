@@ -13,6 +13,8 @@ export const actions: Actions = {
                 redirectTo: "/reset-password",
             },
         });
+
+        console.log("data / forgotten pw", data)
         return {success : true, message : 'Lien envoyé par e-mail'}
         
       } catch (err) {

@@ -6,7 +6,7 @@ import { getRequestEvent } from "$app/server";
 import { BETTER_AUTH_SECRET, BETTER_AUTH_URL } from "$env/static/private";
 import { db, usersCollection } from "./server/db/db.js";
 import { ObjectId } from "mongodb";
-import { sendEmail } from "./server/email/email.js";
+import { sendEmail } from "./email/email.js";
 
 export const auth = betterAuth({
   secret: BETTER_AUTH_SECRET,
