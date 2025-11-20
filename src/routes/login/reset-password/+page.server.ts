@@ -32,8 +32,11 @@ export const load: PageServerLoad = async ({ locals }) => {
                 token, // required
             },
         });
-    
-        return {success : true, message : 'Ton mot de passe a été changé'}
+        if (data.status){
+            return {success : true, message : 'Ton mot de passe a été changé'}
+          } else {
+            throw new Error(`Erreur( ${data.status}) lors de la réinitialisation du mot de passe`)
+          }
       
     } catch (err) {
         return fail(400, { error : err.message });

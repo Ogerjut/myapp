@@ -10,13 +10,15 @@ export const actions: Actions = {
         const data = await auth.api.requestPasswordReset({
             body: {
                 email: email, // required
-                redirectTo: "/reset-password",
+                redirectTo: "/login/reset-password",
             },
         });
 
-        console.log("data / forgotten pw", data)
-        return {success : true, message : 'Lien envoyé par e-mail'}
-        
+        if (data.status){
+          return {success : true, message : 'Lien envoyé par e-mail'}
+        } else {
+          throw new Error(`Erreur( ${data.status}) lors de l'envoie du mail`)
+        }
       } catch (err) {
           return fail(400, { error : err.message });
       }

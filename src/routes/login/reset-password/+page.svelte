@@ -1,3 +1,10 @@
+<script>
+    let {data, form} = $props()
+    import { enhance } from "$app/forms";
+
+    let changePassword = $state(false)
+</script>
+
 <form method="post" action="?/changePassword" 
     use:enhance ={(({formElement})=>{
       changingPassword = true
