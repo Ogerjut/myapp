@@ -57,7 +57,6 @@
         height: 100px;
         border: 2px solid var(--color);
         padding: 2px;
-        gap: 20px;
         border-radius: 5px;
         font-size: large;
         cursor: grab;

@@ -38,7 +38,7 @@
         }}>
         
         <fieldset disabled = {!tarot.isSpeaker}>
-          <legend> <u>SChoisis ton annonce :</u> </legend>
+          <legend> <u>Choisis ton annonce :</u> </legend>
 
           <div class="dr">
             <input type="radio" name="bet" id="r0" value="0" checked >
@@ -75,12 +75,13 @@
 
 <style>
     #bet {
+        display : flex; 
         background: white;
         padding: 10px;
         border: 1px solid black;
         border-radius: 15px;
-        justify-items: center;
-        justify-content: center;
+        align-items: center;
+        flex-direction: column;
 
     }
     
@@ -91,6 +92,12 @@
 
     button:disabled{
       cursor:not-allowed;
+    }
+
+    form{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
   

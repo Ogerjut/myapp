@@ -49,12 +49,12 @@
 
 <style>
 	#user-card {
-		border: 2px solid black;
-		border-radius: 12px;
+		border: var(--border-3);
+		border-radius: 10px;
 		width: 160px;
 		padding: 6px;
 		margin: 5px;
-		background: white;
+		background: var(--color-bg-box);
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
@@ -63,12 +63,12 @@
 	.username {
 		text-align: center;
 		font-weight: bold;
-		margin: 0;
+		color : black
 	}
 
 	hr {
 		border: none;
-		border-top: 1px solid black;
+		border-top: var(--border-1);
 		margin: 4px 0;
 	}
 
@@ -83,12 +83,12 @@
 		flex: 1;
 		text-align: left;
 		font-size: 0.9rem;
-		color: #333;
 	}
 
 	.score {
 		text-align: right;
-		color: black;
+		font-style: italic;
+		color : var(--color-text-2)
 	}
 
 	#badge-preneur {

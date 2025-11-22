@@ -2,7 +2,49 @@
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
 
-button {
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/fonts/Montserrat-Regular.ttf');
+}
+
+:root{
+    --color-bg : rgb(176, 250, 176) ;
+    --color-bg-button : rgb(250, 221, 183);
+    --color-bg-box : azure ;
+    --color-text : saddlebrown; 
+    --color-text-2 : maroon;
+  
+    --border-1 : 1px var(--color-text) solid;
+    --border-2 : 4px var(--color-text) solid;
+    --border-3 : 2px var(--color-text-2) solid;
+
+
+    --box-shadow-1 : 6px 6px 12px var(--color-text) ;
+}
+
+
+html, body {
+    font-family: "Montserrat" ;
+    font-size:large;
+    color:var(--color-text);
+    background-color: var(--color-bg-box);
+    
+
+}
+
+button{
+    border-radius: 15px;
+    box-shadow: 1px 1px 2px;
+    background: var(--color-bg-button);
+    padding: 10px;
+    text-align: center;
+}
+
+
+button:hover {
     cursor: pointer;
-    opacity: 80%;
+    opacity: 90%;
+    color:var(--color-text-2);
+    box-shadow: 1px 1px 4px;
 }

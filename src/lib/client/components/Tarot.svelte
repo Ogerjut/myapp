@@ -65,53 +65,54 @@
 </script>
 
 <!-- faire un composant pour 4joueurs et 5joueurs (plus tard) -->
-
-<div id="game-area">
-    <!-- <i>{tarotContext.table.state} mode</i> -->
-    <Table/>
-    <PlayerSeat {opponents} />
-
-    <div style="grid-area: 2 / 2;">
-        {#if !tarotContext.table.ready }
-            <ActivePlayerPanel/>
-        {/if}
-        {#if tarotContext.table.ready && tarotContext.table.state === 'bet'}
-            <div id='bet-container'>
-                <Bet />
-            </div>
-           
-        {/if}
-        {#if tarotContext.table.ready && tarotContext.table.state === 'setupChien' && tarotContext.table.gameState.actualBet < 3}
-            <div id='chien-container'>
-                <SetupChien/>
-            </div>
-           
-        {/if}
-        {#if tarotContext.table.ready && tarotContext.table.state === 'game'}
-                <Round />
-        {/if}
-        {#if tarotContext.table.completed && tarotContext.table.state === 'endGame'}
-                <EndGame />
-        {/if}
+<div id="game-container">
+    <div id="table-area">
+        <!-- <i>{tarotContext.table.state} mode</i> -->
+        <Table/>
+        <PlayerSeat {opponents} />
+    
+        <div style="grid-area: 2 / 2;">
+            {#if !tarotContext.table.ready }
+                <ActivePlayerPanel/>
+            {/if}
+            {#if tarotContext.table.ready && tarotContext.table.state === 'bet'}
+                <div id='bet-container'>
+                    <Bet />
+                </div>
+               
+            {/if}
+            {#if tarotContext.table.ready && tarotContext.table.state === 'setupChien' && tarotContext.table.gameState.actualBet < 3}
+                <div id='chien-container'>
+                    <SetupChien/>
+                </div>
+               
+            {/if}
+            {#if tarotContext.table.ready && tarotContext.table.state === 'game'}
+                    <Round />
+            {/if}
+            {#if tarotContext.table.completed && tarotContext.table.state === 'endGame'}
+                    <EndGame />
+            {/if}
+        
+        </div>
+        
     
     </div>
     
+    <div id="hand-area">
+        {#each tarotContext.user.tarot?.hand as card}
+            <Card value={card.value} suit={card.suit}/> 
+        {/each}
+    </div>
 
 </div>
 
-<div id="hand-area">
-    {#each tarotContext.user.tarot?.hand as card}
-        <Card value={card.value} suit={card.suit}/> 
-    {/each}
-</div>
 
 <style>
-    #game-area{
+    #table-area{
             display: grid;
-            border: 2px solid black;
             grid-template-columns: 0.1fr 0.1fr 0.1fr;
             grid-template-rows: 0.1fr 1fr 0.1fr 0.1fr;
-            /* justify-items: stretch; */
             align-items: center;
             justify-items: center;
             
@@ -121,10 +122,11 @@
         display : flex;
         flex-direction:row;
         flex-wrap: wrap;
-        border: 1px solid black;
-        background: rgb(188, 206, 216);
-        margin-top: -30px;
+        background: var(--color-bg-box);
+        margin-top: -22px;
         height: 126px;
+        border-radius: 15px;
+        border : var(--border-1)
         
         
     }
@@ -136,9 +138,9 @@
     }
 
     #chien-container{
-        background: white;
+        background: var(--color-bg-box);
         padding: 10px;
-        border: 1px solid black;
+        border:var(--border-1);
         border-radius: 15px;
         justify-items: center;
         justify-content: center;

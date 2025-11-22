@@ -8,8 +8,7 @@
   
 
 
-<div >
-
+<div id="sign-up-container">
   
   <form method="post" action="?/signup" 
     use:enhance={(({formElement})=>{
@@ -27,7 +26,7 @@
       }
     })}>
 
-    <h1><u>Inscription</u></h1>
+    <h1><u>Inscription </u></h1>
 
     <div id="field">
       <label>
@@ -54,19 +53,21 @@
     
     <button disabled={registering}> S'inscrire ! </button>
 
-    {#if form?.error}
+    {#if form?.error && !registering}
       <p style="color:red;">{form.error}</p>
+    {/if}
+
+    {#if registering }
+    <span class="saving"> saving your datas...</span>        
+    {/if}
+
+    {#if form?.success}
+      <span> Registered, you can now log in  </span>
     {/if}
 
   </form>
 
-  {#if registering }
-    <span class="saving"> saving your datas...</span>        
-  {/if}
 
-  {#if form?.success}
-    <span> Registered, you can now log in  </span>
-  {/if}
 
 </div>
 
@@ -74,48 +75,43 @@
 
 
 
-  <style>
-    div {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      
-    }
+<style>
 
-    input {
-      margin: 2px;
-      border-radius: 5px;
-    }
-    
-    form {
-      display: flex;
-      flex-direction: column;
-      padding: 15px;
-      background-color: beige;
-      justify-content: center;
-      align-items: center;
-      border-radius: 15px;
-      
-    }
-  button {
-    background-color: burlywood ;
+#sign-up-container {
+    box-shadow: var(--box-shadow-1);
     border-radius: 15px;
-    margin: 2px;
-    padding: 8px;
+    margin-top: 10px;
+    
   }
   
-  button:hover {
-    cursor: pointer;
-    opacity: 90%;
+  form {
+    padding: 15px;
+    background-color: var(--color-bg-box);
+    border-radius: 15px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
     
   }
 
   #field {
     align-items: end;
     padding: 10px;
+    display: flex;
+    flex-direction: column;
   }
 
-  </style>
+  input {
+    margin: 2px;
+    border-radius: 10px;
+  }
+
+
+  h1{
+    font-size:xx-large;
+  }
+
+</style>
 
 
   

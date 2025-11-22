@@ -8,7 +8,7 @@
   
 </script>
 
-<div class='tableContainer'>  	
+<div id='table-container'>  	
   
     {#if creating}
         <form action="?/createTable" method="post"
@@ -28,17 +28,17 @@
         <fieldset>
           <legend>Sélectionnes un nombre de joueurs :</legend>
           
-          <div class="dr">
-            <input type="radio" name="nbPlayers" id="r1" value="4" checked>
-            <label for="r1">4</label>
-          </div>
-      
-          <!-- <div class="dr">
+          <label class="hit-area" for="r1">
+            <input type="radio" name="nbPlayers" id="r1" value="2" checked>
+            2 joueurs
+          </label>
+        
+          <label class="hit-area" for="r2">
             <input type="radio" name="nbPlayers" id="r2" value="5" >
-            <label for="r2">5</label>
-          </div> -->
-      
-          </fieldset>
+            5 joueurs
+          </label>
+
+        </fieldset>
         <button type="submit"> Créer la table </button>
         </form>
         
@@ -54,60 +54,57 @@
 
 
 <style>
-  .tableContainer {
+  #table-container {
     display: flex;
+    flex-direction: column;
     text-align: center;
-    border: 10px solid brown;
     border-radius: 25px;
     margin: 10px ;
     padding: 10px;
-    background-color:burlywood;
-    justify-content: center;
-    align-items: center;
+    background-color:var(--color-bg-box);
+    box-shadow: var(--box-shadow-1);
 
   }
-
-  button {
-      background-color:lawngreen;
-      padding: 7px;
-      border-radius: 15px;
-      border: 1px solid green ;
-      text-align: center;
-      margin: 15px;
-
-  }
-
-  button:hover{
-  opacity: 80%;
-  cursor: pointer;
-}
 
   button:disabled{
     cursor: not-allowed;
   }
 
   fieldset{
-    border : 2px solid brown;
-    margin: 5px;
+    border : var(--border-1);
     text-align: center;
-    padding: 5px;
-    border-radius: 10px; 
+    border-radius: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    margin: 10px;
+
+
   }
 
   legend{
-    color: brown;
-    font-size:small;
+    font-size:medium;
     margin: 5px;
+    padding: 5px;
+  }
+  
+  .hit-area{
+    border : var(--border-1);
+    padding: 10px;
+    margin: 5px;
+    border-radius: 15px;
+    background-color: beige;
+  
   }
 
-  .dr {
-    color : white;
-    background-color: orange;
-    border-radius: 15px;
-    margin: 5px;
-    margin-left: 20px;
-    margin-right: 20px;
-    border : 1px solid brown;
+  .hit-area:has(input:checked){
+      border: var(--border-3);
+      background-color:peru;
+      color:var(--color-text-2)
+    }
+
+  input:checked{
+    color:var(--color-text-2);
   }
 
 </style>

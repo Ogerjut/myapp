@@ -2,6 +2,7 @@
 import { auth } from "$lib/auth";
 import type { Actions, PageServerLoad } from "./$types.js";
 import { fail } from '@sveltejs/kit';
+import {isValid} from "$lib/server/auth-utils"
 
 export const load: PageServerLoad = async ({ locals }) => {
   resetPassword : async ({request}) => {
@@ -10,9 +11,11 @@ export const load: PageServerLoad = async ({ locals }) => {
     const newPassword2 = formData.get('newPassword2');
 
     try {
-      if(newPassword !== newPassword2){
-          throw new Error('Les mots de passe doivent être identiques !')
-      }
+
+        isValid(password)
+        if(newPassword !== newPassword2){
+            throw new Error('Les mots de passe doivent être identiques !')
+        }
   
     } catch (err) {
         return fail(400, { error : err.message });

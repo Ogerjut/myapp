@@ -1,5 +1,6 @@
 import { auth } from '$lib/auth'
 import { fail } from '@sveltejs/kit';
+import {isValid} from "$lib/server/auth-utils"
 
 export const actions = {
     signup : async({request}) => {
@@ -11,6 +12,8 @@ export const actions = {
         const name = username
 
         try {
+            
+            isValid(password)
             if(password !== password2){
                 throw new Error('Les mots de passe doivent être identiques !')
             }

@@ -57,7 +57,7 @@
 			signout = false	
 			};
 		}}>
-		<button type="submit" disabled={signout}> {signout ? "Déconnection..." : "Se déconnecter"} </button>
+		<button id="logout" type="submit" disabled={signout}> {signout ? "Déconnection..." : "Se déconnecter"} </button>
   	</form>
 	<a href="/">Menu</a>
 	<a href="/dashboard">Account</a>
@@ -77,13 +77,91 @@
 	{@render children?.()}
 
 	{#if showInvite}
-	<div class="invite-modal">
+	<div id="invite-modal">
 		<p>{inviter} t'invite à rejoindre une partie !</p>
+		<div id="button-modal">
 		<button onclick={acceptInvite}>Accepter</button>
 		<button onclick={declineInvite}>Refuser</button>
-	  </div>
+		</div>
+
+	</div>
 		
-	{/if}
-	
+{/if}
 </main>
+
+<footer>
+	<div>
+		footer
+	</div>
+</footer>
+
+
+
+
+<style>
+	
+	main {
+		background-color : var(--color-bg);
+		display : flex;
+		align-items: center;
+		flex-direction: column;
+		height: 600px;
+		margin: 5%;
+		margin-top: -5px;
+		border-radius: 10px;
+		/* border : var(--border-2); */
+		/* justify-content: center; */
+		/* align-items: flex-start; */
+	}
+
+	nav {
+		margin : 5px;
+		padding: 5px;
+		align-items: center;
+		justify-content: center;
+	}
+
+	a {
+		border : var(--border-1);
+		background-color: var(--color-text);
+		color : azure;
+		padding : 10px;
+		border-radius : 7px;
+		max-width : 15%;
+		min-width: 12%;
+		text-align: center;
+	}
+
+	#invite-modal {
+		display: flex;
+		position: absolute;
+		border : var(--border-1);
+		padding : 15px;
+		border-radius : 15px;
+		flex-direction: column;
+		justify-self: center;
+		background: var(--color-bg-box);
+		opacity : 90%; 
+	}
+
+	#button-modal{
+		display: flex;
+		justify-content: space-around;
+		padding: 3px;
+	}
+
+
+	a:hover{
+		color : var(--color-bg-box);
+		box-shadow: 0px 0px 5px var(--color-text-2);
+	}
+
+	#logout:hover {
+		color : red;
+	}
+	
+
+
+  
+</style>
 

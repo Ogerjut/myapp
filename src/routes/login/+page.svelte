@@ -7,7 +7,7 @@
   </script>
   
   
-  <div>
+  <div id='sign-in-container'>
     
     <form method="post" action="?/login" 
     use:enhance={(({formElement})=>{
@@ -43,7 +43,7 @@
     
     <button disabled={logingin}> Se connecter </button>
 
-    <a href="/login/forgotten-password">mot de passe oublié</a>
+    <a href="/login/forgotten-password">mot de passe oublié ?</a>
 
     {#if form?.error}
       <p style="color:red;">{form.error}</p>
@@ -57,46 +57,52 @@
   {/if}
   
   
-  <style>
-    div {
-      display: flex;
-      flex-direction: column;
-      align-items: center;      
-    }
+  
 
-    input {
-      margin: 2px;
-      border-radius: 5px;
-    }
-    
-    form {
-      display: flex;
-      flex-direction: column;
-      padding: 15px;
-      justify-content: center;
-      align-items: center;
-      border-radius: 15px;
-      
-    }
-  button {
-    background-color: burlywood ;
+
+<style>
+
+ 
+#sign-in-container {
+    box-shadow: var(--box-shadow-1);
     border-radius: 15px;
-    margin: 2px;
-    padding: 8px;
+    margin-top: 10px;
+    
   }
   
-  button:hover {
-    cursor: pointer;
-    opacity: 90%;
+  form {
+    padding: 15px;
+    background-color: var(--color-bg-box);
+    border-radius: 15px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
     
   }
 
   #field {
     align-items: end;
     padding: 10px;
+    display: flex;
+    flex-direction: column;
   }
 
+  input {
+    margin: 2px;
+    border-radius: 10px;
+  }
+
+
+  h1{
+    font-size:xx-large;
+  }
+
+  a{
+    font-size: medium;
+    margin-top : 10px;
+  }
+
+  a:hover{
+    text-decoration: underline;
+  }
   </style>
-
-
-  

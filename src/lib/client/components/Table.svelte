@@ -5,7 +5,6 @@
 
 <style>
     #table {
-            border: 1px solid black;
             grid-area: 2 / 2;
             height: 300px;
             width: 400px;

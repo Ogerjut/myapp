@@ -3,6 +3,7 @@
     import UserProfil from "./UserProfil.svelte";
 	import {useTarotContext} from '../game/context/tarotContext.svelte'
 
+    // rajouter barre pour scroller, barre de recherche de joueur (filtre)
     let tarotContext = useTarotContext()
  
     let activeUsers = $state()
@@ -33,12 +34,13 @@
 
 
 <div id="listplayers">
-    <h1> Joueurs actifs : </h1>
+    <h1><u> Joueurs actifs :</u> </h1>
+    <!-- barre de recherche -->
     <ul>
         {#each activeUsers as activeUser }
             <li> 
-                <button onclick={()=> fetchSelectedUser(activeUser._id)}> {activeUser.name} </button> 
-                <button onclick={()=> socket.emit("inviteToPlay", tableId, tarotContext.user.username, activeUser._id)}> Inviter </button>
+                <button id="pseudo-button" onclick={()=> fetchSelectedUser(activeUser._id)}> {activeUser.name} </button> 
+                <button id="invite-button" onclick={()=> socket.emit("inviteToPlay", tableId, tarotContext.user.username, activeUser._id)}> Inviter </button>
             </li>
         {/each}
     </ul>
@@ -51,11 +53,39 @@
 
 <style>
     #listplayers{
-        background : white;
-        opacity: 60%;
+        background : var(--color-bg-box);
         border-radius: 15px;
         margin: 10px;
         padding: 10px;
+        height: 252px;
+        width : 200px;
+        text-align:center
+    }
+
+    li{
+        border : var(--border-1);
+        display: flex;
+        justify-content: space-between;
+        padding: 3px;
+        border-radius: 15px;
+    }
+
+    button{
+        padding: 3px;
+        border-radius: 10px;
+    }
+
+    #pseudo-button{
+        width: 100px;
+        background-color: azure;
+        box-shadow: 0px 0px 0px ;
+    }
+
+    #invite-button{
+        width: auto;
+        padding: 3px;
+        background-color: var(--color-text-2);
+        color : white
     }
 
 </style>
