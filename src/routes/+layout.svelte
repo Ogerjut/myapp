@@ -140,7 +140,6 @@
 		color : azure;
 		padding : 10px;
 		border-radius : 10px;
-		min-width: 20px;
 		text-align: center;
 	}
 
