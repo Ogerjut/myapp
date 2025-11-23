@@ -77,9 +77,13 @@ export const actions: Actions = {
 
     try {
       await auth.api.changeEmail({
-        newEmail : newEmail,
-        callbackURL: "/dashboard"
+        body : {
+          newEmail : newEmail,
+          callbackURL: "/dashboard"
+        },
+        headers : request.headers
       })
+
       return {success : true, message : 'Ton  mail a été changé, vérifies ta boîte mail !'}
 
     } catch (err) {
@@ -96,10 +100,11 @@ export const actions: Actions = {
       await auth.api.deleteUser({
         body : {
           password: password,
-          callbackURL : "/"
+          callbackURL : "/signup"
         },
         headers : request.headers
       })
+      
       return {success : true, message : 'Compte supprimé, au revoir !'}
 
     } catch (err) {

@@ -5,8 +5,12 @@
 	import { onMount } from 'svelte';
 	import { socket } from '$lib/client/socket';
 	import { goto } from '$app/navigation';
+	import LogOut from '@lucide/svelte/icons/log-out';
+	import Menu from '@lucide/svelte/icons/menu';
 
 	let { children, data } = $props();
+
+	let showMenu = $state(false)
 	
 	let signout = $state(false)
 
@@ -48,6 +52,7 @@
 </svelte:head>
 
 <nav class="flex gap-2">
+
 	{#if data.user}
 	<form method="POST" action="/dashboard?/signout"
 		use:enhance ={() => {
@@ -57,12 +62,21 @@
 			signout = false	
 			};
 		}}>
-		<button id="logout" type="submit" disabled={signout}> {signout ? "Déconnection..." : "Se déconnecter"} </button>
+		<button id="logout" type="submit" disabled={signout}> <LogOut/> </button>
   	</form>
-	<a href="/">Menu</a>
-	<a href="/dashboard">Account</a>
-	<a href="/table">Tarot</a>
-	<!-- <a href="/yams">Yams</a> -->
+		<div id="menu">
+			<button onclick={()=> showMenu = !showMenu}> <Menu/> </button>
+		{#if showMenu}
+		<a href="/">Menu</a>
+		<a href="/dashboard">Account</a>
+		<a href="/table">Tarot</a>
+		<!-- <a href="/yams">Yams</a> -->
+		{/if}
+		</div>
+	  
+	
+			
+		
 	
 	
 	{:else}
@@ -117,6 +131,7 @@
 		padding: 5px;
 		align-items: center;
 		justify-content: center;
+		font-size: medium;
 	}
 
 	a {
@@ -124,9 +139,8 @@
 		background-color: var(--color-text);
 		color : azure;
 		padding : 10px;
-		border-radius : 7px;
-		max-width : 15%;
-		min-width: 12%;
+		border-radius : 10px;
+		min-width: 20px;
 		text-align: center;
 	}
 
@@ -154,10 +168,23 @@
 		box-shadow: 0px 0px 5px var(--color-text-2);
 	}
 
+	#logout{
+		background-color: crimson;
+		color : white;
+	}
+
 	#logout:hover {
-		color : red;
+		box-shadow: 0px 0px 3px red;
 	}
 	
+	#menu{
+		justify-content: center;
+		display : flex;
+		gap : 5px;
+		background-color: beige;
+		padding: 5px;
+		border-radius: 15px;
+	}
 
 
   

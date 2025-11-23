@@ -78,7 +78,8 @@
     padding-right: 15px;
     padding-bottom: 15px;
     margin: 10px;
-
+    display: flex;
+    flex-direction: column;
 
   }
 
