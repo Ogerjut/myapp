@@ -94,8 +94,11 @@ export const actions: Actions = {
 
     try {
       await auth.api.deleteUser({
-        password: password,
-        callbackURL : "/"
+        body : {
+          password: password,
+          callbackURL : "/"
+        },
+        headers : request.headers
       })
       return {success : true, message : 'Compte supprimé, au revoir !'}
 
