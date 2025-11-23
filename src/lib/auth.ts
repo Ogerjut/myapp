@@ -7,6 +7,8 @@ import { BETTER_AUTH_SECRET, BETTER_AUTH_URL } from "$env/static/private";
 import { db, usersCollection } from "./server/db/db.js";
 import { ObjectId } from "mongodb";
 import { sendEmail } from "./email/email.js";
+import { verificationEmail } from "./email/verification-email.js";
+import { resetPassword } from "./email/reset-password.js";
 
 export const auth = betterAuth({
   secret: BETTER_AUTH_SECRET,
@@ -20,23 +22,11 @@ export const auth = betterAuth({
     // requireEmailVerification: true,
 
     sendResetPassword: async ({user, url, token}, request) => {
-      // sendEmail à définir et à importer
       await sendEmail({
         to: user.email,
         subject: "Reset your password",
         text: `Click the link to reset your password: ${url}`,
-        html : `
-        <p>Bonjour 👋,</p>
-        <p>Cliquez sur le bouton ci-dessous pour réinitialiser votre mot de passe :</p>
-        <p><a href="${url}" style="
-          background:#4f46e5;
-          color:white;
-          padding:10px 15px;
-          border-radius:6px;
-          text-decoration:none;
-        ">Réinitialiser mon mot de passe</a></p>
-        <p>Si vous n'avez pas fait cette demande, ignorez cet email.</p>
-      `,
+        html : resetPassword(url)
       });
     },
   
@@ -51,7 +41,12 @@ export const auth = betterAuth({
 
   emailVerification: {
 		sendVerificationEmail: async ({ user, url, token }) => {
-			// Send verification email to user
+			await sendEmail({
+        to : user.email,
+        subject : "Verify your email adress",
+        text : `click the link to verify your email ${url}`,
+        html : verificationEmail(url)
+      })
 		},
 		sendOnSignUp: true,
 		autoSignInAfterVerification: true,
@@ -59,16 +54,14 @@ export const auth = betterAuth({
 	},
 
   user: {
-    // changeEmail : {
-    //   enabled : true,
-    //   sendChangeEmailVerification : async({user, newEmail, url, token}, request)=>{
-    //     await sendEmail({
-    //       to : user.email,
-    //       subject : 'Changement adresse email',
-    //       text : 'Cliques sur le lien pour confirmer le changement'
-    //     })
-    //   }
-    // },
+    changeEmail : {
+      enabled : true,
+    },
+
+    deleteUser: {
+      enabled : true,
+    },
+
     additionalFields: {
       role: {type: "string", defaultValue: "user", input: false},
       inGame: {type: "boolean", input: false},

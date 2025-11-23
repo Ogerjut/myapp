@@ -105,13 +105,11 @@
 		display : flex;
 		align-items: center;
 		flex-direction: column;
-		height: 600px;
+		min-height: 500px;
 		margin: 5%;
 		margin-top: -5px;
 		border-radius: 10px;
-		/* border : var(--border-2); */
-		/* justify-content: center; */
-		/* align-items: flex-start; */
+		
 	}
 
 	nav {

@@ -56,8 +56,8 @@ export const actions: Actions = {
     try {
       const data = await auth.api.changePassword({
         body: {
-            newPassword: newPassword, // required
-            currentPassword: password, // required
+            newPassword: newPassword,
+            currentPassword: password,
             revokeOtherSessions: true,
         },
         // This endpoint requires session cookies.
@@ -69,5 +69,39 @@ export const actions: Actions = {
         return fail(400, { error : err.message });
     }
     
+  },
+
+  changeEmail : async ({request})=>{
+    const formData = await request.formData();
+    const newEmail = formData.get('newEmail');
+
+    try {
+      await auth.api.changeEmail({
+        newEmail : newEmail,
+        callbackURL: "/dashboard"
+      })
+      return {success : true, message : 'Ton  mail a été changé, vérifies ta boîte mail !'}
+
+    } catch (err) {
+        return fail(400, { error : err.message });
+    }
+
+  },
+
+  deleteAccount : async ({request})=>{
+    const formData = await request.formData();
+    const password = formData.get('password');
+
+    try {
+      await auth.api.deleteUser({
+        password: password,
+        callbackURL : "/"
+      })
+      return {success : true, message : 'Compte supprimé, au revoir !'}
+
+    } catch (err) {
+        return fail(400, { error : err.message });
+    }
+
   }
 };

@@ -35,6 +35,13 @@ export const actions = {
 
             console.log("New user:", data);
 
+            if (data){
+                await auth.api.sendVerificationEmail({
+                    email : user.email,
+                    callbackURL : "/"
+                })
+            }
+
             return {
                 success: true,
                 message: 'Account created successfully'
