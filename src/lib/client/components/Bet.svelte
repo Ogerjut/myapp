@@ -24,7 +24,7 @@
       <Timer {duration} callback={() => sendBet(0)}/>
     {/if}
     
-    <p> {tarot.isSpeaker ? "Your turn to bet ! " : "Waiting to bet"} </p>
+    <p> {tarot.isSpeaker ? "Choisis ton annonce ! " : "Ce n'est pas ton tour !"} </p>
     
     <form action="?/bet" method="post" 
         use:enhance ={()=>{
@@ -38,7 +38,6 @@
         }}>
         
         <fieldset disabled = {!tarot.isSpeaker}>
-          <legend> <u>Choisis ton annonce :</u> </legend>
 
           <div class="dr">
             <input type="radio" name="bet" id="r0" value="0" checked >
@@ -76,12 +75,13 @@
 <style>
     #bet {
         display : flex; 
-        background: white;
+        background: var(--color-bg-box);
         padding: 10px;
-        border: 1px solid black;
-        border-radius: 15px;
+        border: var(--border-4);
+        border-radius: 10px;
         align-items: center;
         flex-direction: column;
+        color : var(--color-text-2)
 
     }
     

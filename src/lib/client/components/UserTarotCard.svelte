@@ -49,9 +49,10 @@
 
 <style>
 	#user-card {
-		border: var(--border-3);
+		border: var(--border-4);
 		border-radius: 10px;
-		width: 160px;
+		max-width: 150px;
+		width: 120px;
 		padding: 6px;
 		margin: 5px;
 		background: var(--color-bg-box);

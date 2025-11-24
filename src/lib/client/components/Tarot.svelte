@@ -110,26 +110,29 @@
 
 <style>
     #table-area{
-            display: grid;
-            grid-template-columns: 0.1fr 0.1fr 0.1fr;
-            grid-template-rows: 0.1fr 1fr 0.1fr 0.1fr;
-            align-items: center;
-            justify-items: center;
-            
+        display: grid;
+        grid-template-columns: 0.1fr 0.1fr 0.1fr;
+        grid-template-rows: 0.1fr 1fr 0.1fr 0.1fr;
+        align-items: center;
+        justify-items: center;
+        
     }
 
     #hand-area {
         display : flex;
         flex-direction:row;
+        padding: 3px;
+        border-radius: 5px;
+        justify-content: center;
         flex-wrap: wrap;
+        width: 100%;
         background: var(--color-bg-box);
         margin-top: -22px;
-        height: 126px;
-        border-radius: 15px;
-        border : var(--border-1)
+        border : var(--border-4)
         
         
     }
+
 
     #bet-container {
         display: flex;
@@ -140,7 +143,7 @@
     #chien-container{
         background: var(--color-bg-box);
         padding: 10px;
-        border:var(--border-1);
+        border:var(--border-4);
         border-radius: 15px;
         justify-items: center;
         justify-content: center;

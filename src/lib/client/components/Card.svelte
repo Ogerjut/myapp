@@ -4,6 +4,13 @@
 	import { CardController } from "../game/controllers/cardsController.svelte";
 
     let {value, suit} = $props()
+
+    let isExcuse = false
+
+    if (value === 0){
+        value = "Excuse"
+        isExcuse = true 
+    }
     
     let tarotContext = useTarotContext()
     const isPlayableCard = $derived(tarotContext.isPlayableCard)
@@ -23,7 +30,7 @@
         club : "&#9827"
     }
     
-    let color = $derived((suit === "heart" || suit === "diamond") ? "red" : suit === "atout" ? 'blue' : 'black')
+    let color = $derived((suit === "heart" || suit === "diamond") ? "#CC0000" : suit === "atout" ? '#0000CC' : 'black')
 
     $effect( ()=> {
         const isActiveCard = value === activeCard?.value && suit === activeCard?.suit
@@ -35,15 +42,17 @@
     
 </script>
 
-    <div class="card"
-        style="--color : {color}"
+    <div
+        class="card"
+        class:isExcuse = {isExcuse}
+        style="--color : {color};"
         onmousedown={() => controller.onCardClick({value, suit})}
         class:playable={isPlayableCard}
         class:invalid={isPlayableCard === false}
         transition:fly={{ y: -100, duration: 1000 }}
 
     >
-        <p>{suit != "atout" && mapValue[value] || value}</p>
+        <p id="value">{suit != "atout" && mapValue[value] || value}</p>
         <p id='suit'> {@html mapSuit[suit]}</p>
     </div>
 
@@ -56,15 +65,24 @@
         height: 100px;
         border: 2px solid var(--color);
         padding: 2px;
-        border-radius: 5px;
-        font-size: large;
+        border-radius: 6px;
+        font-size: x-large;
+        font-weight: bold;
         cursor: grab;
         align-self: center;
+        margin-top : 6px;
+        margin-bottom : 6px;
+        
+    }
+
+    .card:not(:first-child) {
+        margin-left: -21px; /* seulement pour les suivantes */
     }
 
     #suit{
         justify-self: center;
-        font-size: xx-large;
+        font-size:36px;
+        margin-top: -10px;
     }
 
     .card:active{
@@ -72,8 +90,14 @@
     }
 
     .card:hover{
-        zoom: 1.2;
+        margin-top : 0px;
+        margin-bottom : 0px;
+        zoom: 1.1;
         border: 3px solid var(--color);
+    }
+
+    .isExcuse{
+        writing-mode:vertical-lr;
     }
 
 
