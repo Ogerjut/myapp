@@ -30,7 +30,7 @@
           
           <label class="hit-area" for="r1">
             <input type="radio" name="nbPlayers" id="r1" value="2" checked>
-            2 joueurs
+            4 joueurs
           </label>
         
           <label class="hit-area" for="r2">
@@ -39,7 +39,11 @@
           </label>
 
         </fieldset>
-        <button type="submit"> Créer la table </button>
+        <div id="buttons">
+          <button type="submit"> Créer la table </button>
+          <button type="button" onclick={() => goto('/')}> Retour </button>
+        </div>
+        
         </form>
         
 
@@ -99,13 +103,19 @@
   }
 
   .hit-area:has(input:checked){
-      border: var(--border-3);
+      border: var(--border-4);
       background-color:peru;
-      color:var(--color-text-2)
+      color:var(--color-text-2);
+      font-weight: bold;
     }
 
   input:checked{
     color:var(--color-text-2);
+  }
+
+  #buttons{
+    display: flex;
+    justify-content: space-around;
   }
 
 </style>

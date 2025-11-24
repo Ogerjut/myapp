@@ -1,16 +1,20 @@
 <script lang="ts">
 	import '../app.css';
 	import favicon from '$lib/assets/favicon.svg';
+	import jouonsentrepotes from '$lib/assets/jouonsentrepotes-icon.png'
 	import { enhance } from "$app/forms";
 	import { onMount } from 'svelte';
 	import { socket } from '$lib/client/socket';
 	import { goto } from '$app/navigation';
 	import LogOut from '@lucide/svelte/icons/log-out';
 	import Menu from '@lucide/svelte/icons/menu';
+	import House from '@lucide/svelte/icons/house';
+	import UserCog from '@lucide/svelte/icons/user-cog';
+	import Footer from '$lib/client/components/Footer.svelte'
 
 	let { children, data } = $props();
 
-	let showMenu = $state(false)
+	let showMenu = $state(true)
 	
 	let signout = $state(false)
 
@@ -48,40 +52,36 @@
 
 
 <svelte:head>
-	<link rel="icon" href={favicon} />
+	<link rel="icon" href={jouonsentrepotes} />
 </svelte:head>
 
 <nav class="flex gap-2">
 
 	{#if data.user}
-	<form method="POST" action="/dashboard?/signout"
-		use:enhance ={() => {
-			signout = true
-		return async ({ update, result }) => {
-			await update()
-			signout = false	
-			};
-		}}>
-		<button id="logout" type="submit" disabled={signout}> <LogOut/> </button>
-  	</form>
+	
 		<div id="menu">
 			<button onclick={()=> showMenu = !showMenu}> <Menu/> </button>
-		{#if showMenu}
-		<a href="/">Menu</a>
-		<a href="/dashboard">Account</a>
-		<a href="/table">Tarot</a>
-		<!-- <a href="/yams">Yams</a> -->
-		{/if}
+			{#if showMenu}
+			<form method="POST" action="/dashboard?/signout"
+				use:enhance ={() => {
+					signout = true
+				return async ({ update, result }) => {
+					await update()
+					signout = false	
+					};
+			}}>
+			<button id="logout" type="submit" disabled={signout}> <LogOut/> </button>
+			</form>
+			<a href="/"> <House/> </a>
+			<a href="/dashboard"> <UserCog/> </a>
+			<!-- <a href="/table">Tarot</a> -->
+			<!-- <a href="/yams">Yams</a> -->
+			{/if}
 		</div>
 	  
-	
-			
-		
-	
-	
 	{:else}
-	<a href="/login">Se connecter</a>
-	<a href="/signup">S'inscrire</a>
+		<a href="/login">Se connecter</a>
+		<a href="/signup">S'inscrire</a>
 	{/if}
 
 	
@@ -104,9 +104,7 @@
 </main>
 
 <footer>
-	<div>
-		footer
-	</div>
+	<Footer/>
 </footer>
 
 
@@ -119,10 +117,12 @@
 		display : flex;
 		align-items: center;
 		flex-direction: column;
-		min-height: 500px;
+		min-height: 400px;
+		min-width: 400px;
 		margin: 5%;
 		margin-top: -5px;
 		border-radius: 10px;
+		justify-content: center;
 		
 	}
 
@@ -139,7 +139,7 @@
 		background-color: var(--color-text);
 		color : azure;
 		padding : 10px;
-		border-radius : 10px;
+		border-radius : 15px;
 		text-align: center;
 	}
 
@@ -177,14 +177,14 @@
 	}
 	
 	#menu{
-		justify-content: center;
 		display : flex;
 		gap : 5px;
-		background-color: beige;
+		background-color:lightgreen;
 		padding: 5px;
-		border-radius: 15px;
+		border-radius: 10px;
 	}
 
+	
 
   
 </style>

@@ -93,21 +93,6 @@
     border-radius: 10px; 
   }
 
-  legend{
-    color: brown;
-    font-size:small;
-    margin: 5px;
-  }
-
-  .dr {
-    color : white;
-    background-color: orange;
-    border-radius: 15px;
-    margin: 5px;
-    margin-left: 20px;
-    margin-right: 20px;
-    border : 1px solid brown;
-  }
 
 </style>
 

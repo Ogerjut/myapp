@@ -90,7 +90,7 @@ export class RoundManager{
                 cardsWon.push(card)
             } else {
                 const user = await usersCollection.findOne({_id : new ObjectId(id)})
-                let cardsWon = user?.tarot.updateCardsWon
+                let cardsWon = user?.tarot.cardsWon
                 cardsWon.push(card)
                 await usersCollection.updateOne(
                     {_id : new ObjectId(id)},

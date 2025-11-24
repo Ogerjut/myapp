@@ -117,7 +117,7 @@ async function areHandsEmpties(playersId){
     let handEmpty = true 
     for (const playerId of playersId){
         const player = await usersCollection.findOne({ _id: new ObjectId(playerId)});
-        if (player?.hand.length !== 0) {
+        if (player?.tarot.hand.length !== 0) {
             handEmpty = false 
         }
     }

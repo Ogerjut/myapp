@@ -69,7 +69,7 @@
 	hr {
 		border: none;
 		border-top: var(--border-1);
-		margin: 4px 0;
+		margin: 4px;
 	}
 
 	.user-bottom {

@@ -37,8 +37,11 @@ export const actions = {
 
             if (data){
                 await auth.api.sendVerificationEmail({
-                    email : data.user.email,
-                    callbackURL : "/login"
+                    body : {
+                        email : data.user.email,
+                        callbackURL : "/login"
+                    }
+                    
                 })
             }
 

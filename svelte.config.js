@@ -10,7 +10,7 @@ const config = {
 		adapter: adapter(),
 		csrf: {
 			// checkOrigin: process.env.NODE_ENV === 'production',
-			checkOrigin: false
+			trustedOrigins: ["https://jouonsentrepotes.fr"]
 		  }
 	},
 	

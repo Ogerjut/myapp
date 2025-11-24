@@ -37,7 +37,6 @@
 
     <div class="card"
         style="--color : {color}"
-        aria-roledescription="button-card"
         onmousedown={() => controller.onCardClick({value, suit})}
         class:playable={isPlayableCard}
         class:invalid={isPlayableCard === false}

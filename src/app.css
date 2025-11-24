@@ -8,28 +8,49 @@
     src: url('/fonts/Montserrat-Regular.ttf');
 }
 
+@font-face {
+    font-family: 'CaveatBrush';
+    src: url('/fonts/CaveatBrush-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Chicle';
+    src: url('/fonts/Chicle-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Kurale';
+    src: url('/fonts/Kurale-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'McLaren';
+    src: url('/fonts/McLaren-Regular.ttf');
+}
+
+
 :root{
-    --color-bg : rgb(176, 250, 176) ;
+    --color-bg : lightgreen ;
     --color-bg-button : rgb(250, 221, 183);
     --color-bg-box : azure ;
     --color-text : saddlebrown; 
     --color-text-2 : maroon;
   
     --border-1 : 1px var(--color-text) solid;
-    --border-2 : 4px var(--color-text) solid;
-    --border-3 : 2px var(--color-text-2) solid;
-
+    --border-2 : 2px var(--color-text) solid;
+    --border-3 : 4px var(--color-text) solid;
+    --border-4 : 2px var(--color-text-2) solid;
 
     --box-shadow-1 : 6px 6px 12px var(--color-text) ;
+    --box-shadow-2 : 0px 0px 15px var(--color-text-2) ;
 }
 
 
 html, body {
-    font-family: "Montserrat" ;
-    font-size:large;
+    font-family: "McLaren" ;
+    font-size:medium;
     color:var(--color-text);
     background-color: var(--color-bg-box);
-    font-size: medium;
     
 
 }
