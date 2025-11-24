@@ -96,14 +96,18 @@
         
         </div>
         
-    
     </div>
     
-    <div id="hand-area">
+    
+    {#if tarotContext.user.tarot?.hand}
+        <div id="hand-area">
         {#each tarotContext.user.tarot?.hand as card}
             <Card value={card.value} suit={card.suit}/> 
         {/each}
-    </div>
+        </div>
+    {/if}
+        
+   
 
 </div>
 

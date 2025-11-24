@@ -152,7 +152,6 @@
 		flex-direction: column;
 		justify-self: center;
 		background: var(--color-bg-box);
-		opacity : 90%; 
 	}
 
 	#button-modal{

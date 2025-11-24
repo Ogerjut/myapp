@@ -72,6 +72,7 @@
         align-self: center;
         margin-top : 6px;
         margin-bottom : 6px;
+        font-family: 'Kurale';
         
     }
 
@@ -80,8 +81,7 @@
     }
 
     #suit{
-        justify-self: center;
-        font-size:36px;
+        font-size:32px;
         margin-top: -10px;
     }
 

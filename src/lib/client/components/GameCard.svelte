@@ -5,6 +5,7 @@
 
 <div
   id="game-card"
+  class:notpublished={!published}
   style={`grid-row: ${row}; grid-column: ${col};`}
   onmousedown={() =>{published && goto(url)}}
 >
@@ -21,22 +22,23 @@
     padding : 3px;
     margin: 5px;
     background: var(--color-bg-box);
-	display: flex;
+	  display: flex;
     flex-direction: column;
     justify-content: space-between;
-	align-items: center;
+	  align-items: center;
 	
+  }
+
+  .notpublished >*{
+    cursor: not-allowed;
+    opacity: 50%;
+
   }
 
   #game-card:hover{
-	cursor : pointer;
-	box-shadow: var(--box-shadow-2);
-	color : var(--color-text-2);
-	
-  }
-
-  #game-card:disabled {
-    cursor: not-allowed;
+    cursor : pointer;
+    box-shadow: var(--box-shadow-2);
+    color : var(--color-text-2);
   }
 
   .thumbnail {
@@ -55,4 +57,8 @@
 	border-bottom-left-radius: 6px;
 	color: white
   }
+
+
+
+  
 </style>
