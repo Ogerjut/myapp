@@ -14,25 +14,24 @@
 
 <style>
   #game-card {
-    border: var(--border-2);
+    border: var(--border-4);
     border-radius: 10px;
     width: 160px;
     height: 160px;
-    padding : 1px;
+    padding : 3px;
     margin: 5px;
     background: var(--color-bg-box);
-	font-weight: bold;
 	display: flex;
     flex-direction: column;
     justify-content: space-between;
 	align-items: center;
+	
   }
 
   #game-card:hover{
 	cursor : pointer;
 	box-shadow: var(--box-shadow-2);
 	color : var(--color-text-2);
-	border: var(--border-4);
 	
   }
 
@@ -42,17 +41,18 @@
 
   .thumbnail {
 	width: 100%;
-	height : 130px;
+	height : 125px;
 	border-top-right-radius: 8px;
 	border-top-left-radius: 8px;
     object-fit: cover; /* 🔑 garde proportion sans coupe */
   }
 
   span {
-	background-color:bisque;
+	background-color:brown;
 	align-self: stretch;
 	text-align: center;
-	border-bottom-right-radius: 8px;
-	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 6px;
+	border-bottom-left-radius: 6px;
+	color: white
   }
 </style>
