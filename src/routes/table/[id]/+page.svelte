@@ -8,7 +8,7 @@
     let game = $state({
         user : data.user,
         table : data.table,
-        socket : socket
+        socket : socket,
     })
 
     setTarotContext(game)

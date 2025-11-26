@@ -31,11 +31,40 @@
 
 
 <div>
-    Fin de la partie 
+    <span>Fin de la partie </span> 
     <ScoreBoard/>
+    <button onclick={() => backToMenu()}>
+        Retour au menu
+    </button>
     
 </div>
 
-<button onclick={() => backToMenu()}>
-    Retour au menu
-</button>
+
+
+<style>
+    div{
+        background-color: var(--color-bg-box);
+        border-radius: 15px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        border: var(--border-2);
+        width : 245px
+        
+    }
+
+    span{
+        background-color: var(--color-text);
+        color : white;
+        width : 100%;
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
+        padding: 5px;
+    }
+
+    button{
+        border-radius : 0px;
+        border-bottom-right-radius: 13px;
+        border-bottom-left-radius: 13px;
+    }
+</style>

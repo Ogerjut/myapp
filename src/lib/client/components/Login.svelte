@@ -1,6 +1,10 @@
 <script>
     import { enhance } from "$app/forms";
       import { goto } from "$app/navigation";
+      import User from '@lucide/svelte/icons/user';
+      import Lock from '@lucide/svelte/icons/lock';
+
+
       let  {form} = $props()
       let logingin = $state(false)
   
@@ -30,13 +34,13 @@
 
     <div id="field">
       <label>
-        Pseudo :
-        <input type="text" name="username" required />
+        <User size={32} />
+        <input type="text" name="username" placeholder="pseudo" required />
       </label>
       
       <label>
-       Mot de passe :
-        <input type="password" name="password" required />
+       <Lock size={32} />
+        <input type="password" name="password" placeholder="mot de passe" required />
       </label>
 
     </div>
@@ -98,11 +102,17 @@
   }
 
   a{
-    font-size: medium;
+    font-size: 14px;
     margin-top : 10px;
   }
 
   a:hover{
     text-decoration: underline;
+  }
+
+  label{
+    display: flex;
+    align-items: center;
+    color : var(--color-text-2)
   }
   </style>

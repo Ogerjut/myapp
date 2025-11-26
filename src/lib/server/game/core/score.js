@@ -72,7 +72,7 @@ export class ScoreManager{
         const hasWin = this.hasWin(contrat)
         const coef = this.getCoef(this.player.tarot.bet)
         const marque = (25 + Math.abs(this.score - contrat))*coef
-        console.log("coef marque", coef, marque)
+        console.log("coef / contrat / marque", coef, contrat, marque)
         if (hasWin){
             return {contrat, hasWin, preneurScore : marque*3, defScore : marque*(-1)}
         } else {

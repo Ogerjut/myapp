@@ -9,7 +9,7 @@ import { fail } from '@sveltejs/kit';
 export const load: PageServerLoad = async ({ locals }) => {
   // Rediriger si pas de session
   if (!locals.session) {
-    throw redirect(302, "/signin");
+    throw redirect(302, "/");
   }
 };
 
@@ -100,7 +100,7 @@ export const actions: Actions = {
       await auth.api.deleteUser({
         body : {
           password: password,
-          callbackURL : "/signup"
+          callbackURL : "/"
         },
         headers : request.headers
       })

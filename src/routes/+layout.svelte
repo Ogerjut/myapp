@@ -10,6 +10,9 @@
 	import Menu from '@lucide/svelte/icons/menu';
 	import House from '@lucide/svelte/icons/house';
 	import UserCog from '@lucide/svelte/icons/user-cog';
+	import Admin from '@lucide/svelte/icons/shield-user';
+	import Msg from '@lucide/svelte/icons/message-circle';
+
 	import Footer from '$lib/client/components/Footer.svelte'
 
 	let { children, data } = $props();
@@ -55,13 +58,10 @@
 	<link rel="icon" href={jouonsentrepotes} />
 </svelte:head>
 
-<nav class="flex gap-2">
-
-	{#if data.user}
-	
-		<div id="menu">
-			<button onclick={()=> showMenu = !showMenu}> <Menu/> </button>
-			{#if showMenu}
+{#if data.user}
+	<nav>
+		<button style="background-color: green; color : white" onclick={()=> showMenu = !showMenu}> <Menu/>  </button>
+		{#if showMenu}
 			<form method="POST" action="/dashboard?/signout"
 				use:enhance ={() => {
 					signout = true
@@ -74,18 +74,25 @@
 			</form>
 			<a href="/"> <House/> </a>
 			<a href="/dashboard"> <UserCog/> </a>
+			<a href="/chat"> <Msg/> </a>
+			{#if data.user.role ==="admin"}
+				<a href="/admin"> <Admin/> </a>
+			{/if}
 			<!-- <a href="/table">Tarot</a> -->
 			<!-- <a href="/yams">Yams</a> -->
-			{/if}
-		</div>
-	  
-	{:else}
-		<a href="/login">Se connecter</a>
-		<a href="/signup">S'inscrire</a>
+		{/if}	
+	</nav>
+
+	{#if data.user?.role === "admin"}
+	<p>Connected in admin mode</p>
 	{/if}
 
-	
-</nav>
+	{#if data.user}
+	<p> Bonjour {data.user.name} ({data.user.email})</p>
+
+	{/if}
+{/if}
+
 
 <main>
 	{@render children?.()}
@@ -120,25 +127,24 @@
 		min-height: 400px;
 		min-width: 400px;
 		margin: 5%;
-		margin-top: -5px;
 		border-radius: 10px;
 		justify-content: center;
 		
 	}
 
 	nav {
-		margin : 5px;
-		padding: 5px;
 		align-items: center;
-		justify-content: center;
-		font-size: medium;
+		display : flex;
+		gap : 5px;
+		background-color:lightgreen;
+		padding: 10px;
 	}
 
 	a {
 		border : var(--border-1);
 		background-color: var(--color-text);
 		color : azure;
-		padding : 10px;
+		padding : 8px;
 		border-radius : 15px;
 		text-align: center;
 	}
@@ -175,16 +181,6 @@
 		box-shadow: 0px 0px 3px red;
 	}
 	
-	#menu{
-		display : flex;
-		gap : 5px;
-		background-color:lightgreen;
-		padding: 5px;
-		border-radius: 10px;
-	}
-
-	
-
   
 </style>
 

@@ -5,18 +5,11 @@
 
     let {value, suit} = $props()
 
-    let isExcuse = false
-
-    if (value === 0){
-        value = "Excuse"
-        isExcuse = true 
-    }
-    
     let tarotContext = useTarotContext()
     const isPlayableCard = $derived(tarotContext.isPlayableCard)
     const activeCard = $derived(tarotContext.activeCard)
     const controller = new CardController()
-    
+
     let mapValue = {
         14 : "R",
         13 : "D",
@@ -30,6 +23,19 @@
         club : "&#9827"
     }
     
+    let isExcuse = $derived(value === 0 && suit === "atout")
+    let displayValue = $derived.by(()=>{
+        if (isExcuse){
+        return "Excuse"
+    } else if (suit === "atout"){
+        return value
+    } else {
+        return mapValue[value] || value
+    }
+    })
+
+    let displaySuit = $derived(mapSuit[suit]) 
+
     let color = $derived((suit === "heart" || suit === "diamond") ? "#CC0000" : suit === "atout" ? '#0000CC' : 'black')
 
     $effect( ()=> {
@@ -43,6 +49,8 @@
 </script>
 
     <div
+        role="button"
+        tabindex="1"
         class="card"
         class:isExcuse = {isExcuse}
         style="--color : {color};"
@@ -52,8 +60,8 @@
         transition:fly={{ y: -100, duration: 1000 }}
 
     >
-        <p id="value">{suit != "atout" && mapValue[value] || value}</p>
-        <p id='suit'> {@html mapSuit[suit]}</p>
+        <p id="value">{displayValue}</p>
+        <p id='suit'> {@html displaySuit}</p>
     </div>
 
 <style>

@@ -17,7 +17,7 @@ export const auth = betterAuth({
   database: mongodbAdapter(db),
   emailAndPassword: {
     enabled: true,
-    minPasswordLength: 8,
+    // minPasswordLength: 8,
     maxPasswordLength: 64,
     // requireEmailVerification: true,
 
@@ -82,9 +82,9 @@ export const auth = betterAuth({
                     ...user,
                     isActive: true,
                     inGame: false,
-                    victories : 0, 
-                    games : 0,
-                    score : 0,
+                    victories : {tarot : 0, belote : 0, yams : 0, chess : 0}, 
+                    games : {tarot : 0, belote : 0, yams : 0, chess : 0},
+                    score : {tarot : 0, belote : 0, yams : 0},
                   }
             }
         },
@@ -93,7 +93,10 @@ export const auth = betterAuth({
           await usersCollection.updateOne(
             {_id: new ObjectId(user.id)},
             {$set : {
-              tarot : {}
+              tarot : {}, 
+              belote : {},
+              yams : {},
+              chess : {}
             }}
           );
         }

@@ -3,8 +3,6 @@ import { usersCollection, tarotCollection } from '../../db/db.js';
 import { Deck } from '../core/cards.js';
 
 export default async function handleChien(io, tableId, userId, card) {
-	console.log("handle chien")
-    
     const table = await tarotCollection.findOne({_id : new ObjectId(tableId)})
     const user = await usersCollection.findOne({ _id: new ObjectId(userId) });
     
@@ -12,7 +10,7 @@ export default async function handleChien(io, tableId, userId, card) {
     let newChien = user?.tarot.cardsWon
     let hand = user?.tarot.hand
 
-    const maxcard = table?.size === 2 ? 6 : 3
+    const maxcard = table?.size === 4 ? 6 : 3
 
     if (hand.some(c => isSameCard(c, card))) {
         if (newChien.length === maxcard || isForbidenCard(card) ) return

@@ -1,4 +1,5 @@
 <script lang='ts'>
+	import { browser } from "$app/environment";
     import {enhance} from "$app/forms"
     import {useTarotContext} from '../game/context/tarotContext.svelte'
 	  import Timer from "./Timer.svelte";
@@ -10,7 +11,7 @@
     let tarot = $derived(tarotContext.user.tarot)
     let actualBet = $derived(tarotContext.table.gameState.actualBet)
     
-    const duration = $state(3000)
+    const duration = $state(300) //s
 
     function sendBet(bet){
         // console.log("bet sent : ", bet)
@@ -19,8 +20,9 @@
 
 </script>
 
+
 <div id="bet">
-    {#if tarot.isSpeaker}
+    {#if tarot.isSpeaker && browser}
       <Timer {duration} callback={() => sendBet(0)}/>
     {/if}
     

@@ -13,5 +13,6 @@ try {
 
 export const db = client.db("tarot");
 export const usersCollection = db.collection("user")
+export const msgCollection = db.collection("messages")
 export const tarotCollection = db.collection("tarot-games")
 export const yamsCollection = db.collection("yams")

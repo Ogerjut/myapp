@@ -4,6 +4,7 @@ import { usersCollection, tarotCollection } from '../../db/db.js';
 export default async function leaveAllTable(io, socket, tableId) {
     console.log("leave all table")
     const table = await tarotCollection.findOne({ _id: new ObjectId(tableId) });
+    if (!table) return 
     const playersId = table?.playersId
 
     const ids = playersId.map(id => new ObjectId(id));

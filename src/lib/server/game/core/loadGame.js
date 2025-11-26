@@ -2,18 +2,18 @@ import { Deck } from "./cards.js"
 import { Player } from "./players.js"
 
 export class LoadGame {
-    constructor(table) {
+    constructor(table, round) {
         this.players = table.playersId.map(id => new Player(id))
-        this.players[0].isSpeaker = true
-        this.players[0].isPlayer = true 
+        this.round = round
         this.chien = this.dealCards()
+        this.setFirstPlayer()
         this.state = "bet"
     
     }
 
     dealCards() {
         const deck = new Deck().shuffle();
-        const nbCardsChien = this.players.length === 2 ? 6 : 3;
+        const nbCardsChien = this.players.length === 4 ? 6 : 3;
     
         while (deck.length > nbCardsChien) {
             this.players.forEach(player => {
@@ -25,5 +25,9 @@ export class LoadGame {
         return deck;
     }
     
+    setFirstPlayer(){
+        this.players[(this.round-1) % this.players.length].isSpeaker = true
+        this.players[(this.round-1) % this.players.length].isPlayer = true 
+    }
     
 }

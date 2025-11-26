@@ -2,7 +2,7 @@
     let {data, form} = $props()
     import { enhance } from "$app/forms";
 
-    let changePassword = $state(false)
+    let changingPassword = $state(false)
 </script>
 
 <form method="post" action="?/changePassword" 

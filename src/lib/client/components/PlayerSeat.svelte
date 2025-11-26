@@ -7,15 +7,15 @@
 
 </script>
 
-<div class="player" style="grid-area: 1 / 2;">
+<div class="player" style="grid-area: 2 / 3;">
     <UserTarotCard user = {opponents[0]} />
 </div>
 
-<div class="player" style="grid-area: 2 / 1;">
+<div class="player" style="grid-area: 1 / 2;">
     <UserTarotCard user = {opponents[1]} />
 </div>
 
-<div class="player" style="grid-area: 2 / 3;">
+<div class="player" style="grid-area: 2 / 1;">
     <UserTarotCard user = {opponents[2]} />
 </div>
 

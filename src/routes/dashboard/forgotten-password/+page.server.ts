@@ -10,7 +10,7 @@ export const actions: Actions = {
         const data = await auth.api.requestPasswordReset({
             body: {
                 email: email, // required
-                redirectTo: "/login/reset-password",
+                redirectTo: "/reset-password",
             },
         });
 

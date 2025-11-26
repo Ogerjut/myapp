@@ -12,9 +12,10 @@ export default async function checkStartBet(io, tableId) {
 	}
 
 	console.log("check start bet")
-	const tarot = new LoadGame(table);
+	const round = table?.gameState.round 
+	const tarot = new LoadGame(table, round);
 	const players = tarot.players;
-	const round = table?.gameState.round || 1 
+	
 
 	await tarotCollection.updateOne(
 		{ _id: new ObjectId(tableId) },

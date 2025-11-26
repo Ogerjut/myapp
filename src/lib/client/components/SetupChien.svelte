@@ -8,14 +8,14 @@
     const socket = $derived(tarotContext.socket)
 
 
-    const maxCards = $derived(table.size === 2 ? 6 : 3)
+    const maxCards = $derived(table.size === 4 ? 6 : 3)
     let disabledButton = $derived(tarotContext.user.tarot.cardsWon.length !== maxCards)
 
-    const duration = 60
+    const duration = 60 //s
 
     function randomCard(){
-        console.log("select random card")
-        socket.emit("registerRandomChien", table._id, tarotContext.user._id)
+        console.log("select random chien")
+        socket.emit("selectRandomChien", table._id, tarotContext.user._id)
     }
 
     function validateChien(){

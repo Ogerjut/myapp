@@ -1,6 +1,6 @@
 // src/routes/dashboard/+page.server.ts
 import { auth } from "$lib/auth";
-import type { Actions, PageServerLoad } from "./$types.js";
+import type { Actions, PageServerLoad } from "./$types.js.js";
 import { fail } from '@sveltejs/kit';
 import {isValid} from "$lib/server/auth-utils"
 

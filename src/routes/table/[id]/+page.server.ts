@@ -21,20 +21,6 @@ export const actions = {
   bet : async({params, locals, request}) => {
       const formData = await request.formData();
       const bet = Number(formData.get('bet'))
-      // const user = locals.user
-      // const table = await tarotCollection.findOne({_id : new ObjectId(params.id)})
-
-      // // console.log(user, bet, table)
-
-      // await tarotCollection.updateOne(
-      //   {_id : new ObjectId(params.id)},
-      //   {$set : {"gameState.bet" : bet}}
-      // )
-
-      // await usersCollection.updateOne(
-      //   {_id : new ObjectId(user.id)},
-      //   {$set : {"tarot.bet" : bet, "tarot.hasbet" : true, "tarot.isSpeaker" : false}}
-      // )
   
       try {
         return {
@@ -47,4 +33,5 @@ export const actions = {
           return fail(400, { error : err.message });
       }
   }
+
 }

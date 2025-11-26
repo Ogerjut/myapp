@@ -4,6 +4,7 @@
 </script>
 
 <div
+  role="button"
   id="game-card"
   class:notpublished={!published}
   style={`grid-row: ${row}; grid-column: ${col};`}

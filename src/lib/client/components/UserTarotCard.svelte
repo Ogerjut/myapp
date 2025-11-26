@@ -34,7 +34,7 @@
 			{/if}
 		</div>
 		<div class="score">
-			<p>{user.score || 0} pts</p>
+			<p>{user.score.tarot || 0} pts</p>
 		</div>
 	</div>
 	{/if}
@@ -52,7 +52,7 @@
 		border: var(--border-4);
 		border-radius: 10px;
 		max-width: 150px;
-		width: 120px;
+		width: 130px;
 		padding: 6px;
 		margin: 5px;
 		background: var(--color-bg-box);

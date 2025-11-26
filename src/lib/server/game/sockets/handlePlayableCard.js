@@ -6,8 +6,6 @@ import gameOver from './gameOver.js';
 import checkStartBet from './startBet.js';
 
 export default async function handlePlayableCard(io, tableId, userId, card) {
-	console.log("handle card : ", card)
-    
     const table = await tarotCollection.findOne({_id : new ObjectId(tableId)})
     const user = await usersCollection.findOne({ _id: new ObjectId(userId) });
     
@@ -66,18 +64,23 @@ export default async function handlePlayableCard(io, tableId, userId, card) {
         const preneur = await usersCollection.findOne({ _id: { $in: objectIds }, "tarot.hasTaken" : true })
         const scoreManager = new ScoreManager(preneur)
         scoreManager.compute()
+        console.log("point preneur", scoreManager.score)
         const {contrat, hasWin, preneurScore, defScore} = scoreManager.getMarque()
+        console.log("preneurScore / hasWin", preneurScore, hasWin)
         for (const playerId of playersId) {
             const player = await usersCollection.findOne({ _id: new ObjectId(playerId)});
+            let score = player?.score
             if (player?.tarot.hasTaken){
+                score += preneurScore
                 await usersCollection.updateOne(
                     {_id : new ObjectId(playerId)},
-                    {$set : {score : preneurScore, "tarot.cardsWon" : new Array(), "tarot.hasWin" : hasWin, "tarot.contrat" : contrat}}
+                    {$set : {score : score, "tarot.cardsWon" : new Array(), "tarot.hasWin" : hasWin, "tarot.contrat" : contrat}}
                 )
             } else {
+                score += defScore
                 await usersCollection.updateOne(
                     {_id : new ObjectId(playerId)},
-                    {$set : {score : defScore, "tarot.cardsWon" : new Array()}}
+                    {$set : {score : score, "tarot.cardsWon" : new Array()}}
                 )
             }
         

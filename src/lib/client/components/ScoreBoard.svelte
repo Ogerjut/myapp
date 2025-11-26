@@ -35,7 +35,6 @@
 <style>
     #score-board{
         background-color: white;
-        border : 1px solid black ;
         border-collapse: separate;
         border-radius:  15px;
     

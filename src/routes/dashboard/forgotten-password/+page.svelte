@@ -1,5 +1,5 @@
 <script>
-    let {data, form} = $props()
+    let../../login/forgotten-password/$types.js../../login/forgotten-password/$types.js {data, form} = $props()
     import { enhance } from "$app/forms";
 
     let resetingPassword = $state(false)

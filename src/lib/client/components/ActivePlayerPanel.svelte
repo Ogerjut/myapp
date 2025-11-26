@@ -1,21 +1,20 @@
 <script lang='ts'>
 	import { onMount } from "svelte";
     import UserProfil from "./UserProfil.svelte";
-	import {useTarotContext} from '../game/context/tarotContext.svelte'
 
-    // rajouter barre pour scroller, barre de recherche de joueur (filtre)
-    let tarotContext = useTarotContext()
+    let {context, game} = $props()
  
-    let activeUsers = $state()
+    let activeUsers = $state([])
     let selectedUser = $state()
-    const socket = $derived(tarotContext.socket)
-    const tableId = $derived(tarotContext.table._id)
+    let searchTerm = $state("")
 
-    async function fetchActiveUsers() {
-        const res = await fetch("/");
-        activeUsers = await res.json();
-        activeUsers = activeUsers.filter(user => user._id != tarotContext.user._id)
-    }
+    const socket = $derived(context.socket)
+    const tableId = $derived(context.table._id)
+    let filteredUsers = $derived(
+        activeUsers?.filter(user => 
+        user.name.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+    )
 
     onMount(()=> {
         fetchActiveUsers()
@@ -24,31 +23,40 @@
     })
 
     async function fetchSelectedUser(userId) {
-        console.log("userId :", userId)
         const res = await fetch(`/users/${userId}`);
         selectedUser = await res.json();
     }
-    
+
+    async function fetchActiveUsers() {
+        const res = await fetch("/");
+        activeUsers = await res.json();
+        activeUsers = activeUsers.filter(user => user._id != context.user._id)
+    }
     
 </script>
 
 
 <div id="listplayers">
     <h1><u> Joueurs actifs :</u> </h1>
-    <!-- barre de recherche -->
+    <input 
+    id="search-bar"
+    type="search"
+    placeholder="Rechercher un joueur"
+    bind:value={searchTerm}
+    />
+
     <ul>
-        {#each activeUsers as activeUser }
+        {#each filteredUsers as activeUser }
             <li> 
                 <button id="pseudo-button" onclick={()=> fetchSelectedUser(activeUser._id)}> {activeUser.name} </button> 
-                <button id="invite-button" onclick={()=> socket.emit("inviteToPlay", tableId, tarotContext.user.username, activeUser._id)}> Inviter </button>
+                <button id="invite-button" onclick={()=> socket.emit("inviteToPlay", tableId, context.user.username, activeUser._id)}> Inviter </button>
             </li>
         {/each}
     </ul>
 </div>
 
-<!-- faire un lien sur nom du joueur pour afficher le profil -->
 {#if selectedUser}
-    <UserProfil user={selectedUser} onclick = {()=> selectedUser = null}/>
+    <UserProfil user={selectedUser} onclick = {()=> selectedUser = null} games={selectedUser.games?.[game]} victories={selectedUser.victories?.[game]}/>
 {/if}
 
 <style>
@@ -57,28 +65,46 @@
         border-radius: 15px;
         margin: 10px;
         padding: 10px;
-        height: 252px;
+        height: 250px;
         width : 200px;
-        text-align:center
+        text-align:center;
+        
+    }
+
+    #search-bar{
+        margin: 2px;
+        padding: 1px;
+        font-size: small;
+        width : 100%;
+        border-radius: 5px;
     }
 
     li{
-        border : var(--border-1);
+        border-bottom : var(--border-1);
         display: flex;
         justify-content: space-between;
-        padding: 3px;
-        border-radius: 15px;
+        font-size: small;
+        
+    }
+
+    li:first-child{
+        border-top : var(--border-1);
     }
 
     button{
-        padding: 3px;
-        border-radius: 10px;
+        padding: 0px;
+        border-radius: 5px;
+        margin: 2px;
     }
 
     #pseudo-button{
         width: 100px;
         background-color: azure;
         box-shadow: 0px 0px 0px ;
+    }
+
+    #pseudo-button:hover{
+        font-weight: bold;
     }
 
     #invite-button{

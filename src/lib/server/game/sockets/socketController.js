@@ -8,6 +8,7 @@ import handleChien from './handleChien.js';
 import registerChien from './registerChien.js';
 import handlePlayableCard from './handlePlayableCard.js';
 import checkPlayableCard from './checkPlayableCard.js';
+import startTimer from './timer.js';
 
 
 export default function socketController(io) {
@@ -32,7 +33,9 @@ export default function socketController(io) {
 		socket.on('registerChien', (tableId)=> registerChien(io, tableId))
 		socket.on('checkPlayableCard', (tableId, userId, card)=> checkPlayableCard(io, tableId, userId, card))
 		socket.on('handlePlayableCard', (tableId, userId, card)=> handlePlayableCard(io, tableId, userId, card))
-
+		
+		// timer
+		socket.on('getEndTime', (duration, callback) => startTimer(duration, callback))
 
 	});
 

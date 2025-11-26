@@ -16,7 +16,7 @@ export const actions = {
           completed : false,
           playersId : [],
           state : "created",
-          roundMax : 3,
+          roundMax : Number(formData.get('nbRound')),
           gameState : {},
         })
         

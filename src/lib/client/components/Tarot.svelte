@@ -14,15 +14,17 @@
 	import Round from './Round.svelte';
 	import EndGame from './EndGame.svelte';
 	import ScoreBoard from './ScoreBoard.svelte';
+	import { browser } from '$app/environment';
 
     let tarotContext = useTarotContext()
     
+    let game = "tarot"
     let userId = $derived(tarotContext.user.id || tarotContext.user._id)
     let tableId = $derived(tarotContext.table._id)
     let socket = $derived(tarotContext.socket)
 
-    $inspect("tarot / user", tarotContext.user)
-    $inspect("tarot / table", tarotContext.table)
+    // $inspect("tarot / user", tarotContext.user)
+    // $inspect("tarot / table", tarotContext.table)
 
     let opponents = $derived(useOpponents())
 
@@ -61,7 +63,17 @@
             socket.emit("leaveTable", tableId, userId, nav.to?.url.pathname) 
         }
     })
-
+    
+    if (browser) {
+        window.addEventListener("beforeunload", () => {
+        if (tarotContext.table.state === "created") return 
+        if (tarotContext.table.state !== "created") {
+            console.log("before unload triggered")
+            socket.emit("leaveAllTable", tableId)
+        }
+    });
+    }
+    
 </script>
 
 <!-- faire un composant pour 4joueurs et 5joueurs (plus tard) -->
@@ -73,7 +85,7 @@
     
         <div style="grid-area: 2 / 2;">
             {#if !tarotContext.table.ready }
-                <ActivePlayerPanel/>
+                <ActivePlayerPanel context={tarotContext} {game}/>
             {/if}
             {#if tarotContext.table.ready && tarotContext.table.state === 'bet'}
                 <div id='bet-container'>
@@ -132,7 +144,8 @@
         width: 100%;
         background: var(--color-bg-box);
         margin-top: -22px;
-        border : var(--border-4)
+        border : var(--border-4);
+        height : 112px;
         
         
     }
