@@ -30,9 +30,13 @@
 
 
 :root{
-    --color-bg : lightgreen;
+    --color-bg : white;
+    --color-bg-2 :  peru ;
+    --color-bg-3 : forestgreen;
+
     --color-bg-button : rgb(250, 221, 183);
     --color-bg-box : azure ;
+
     --color-text : saddlebrown; 
     --color-text-2 : maroon;
   
@@ -40,9 +44,12 @@
     --border-2 : 2px var(--color-text) solid;
     --border-3 : 4px var(--color-text) solid;
     --border-4 : 2px var(--color-text-2) solid;
+    --border-5 : 4px var(--color-text-2) solid;
 
     --box-shadow-1 : 6px 6px 12px var(--color-text) ;
     --box-shadow-2 : 0px 0px 15px var(--color-text-2) ;
+
+    
 }
 
 
@@ -50,7 +57,10 @@ html, body {
     font-family: "McLaren" ;
     font-size:medium;
     color:var(--color-text);
-    background-color: var(--color-bg-box);
+    background-color: var(--color-bg);
+    user-select: none;
+    margin-left: 5%;
+	margin-right: 5%;
     
 
 }

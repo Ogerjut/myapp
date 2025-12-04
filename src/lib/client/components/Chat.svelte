@@ -1,49 +1,68 @@
 <script lang='ts'>
+    import Settings from '@lucide/svelte/icons/settings'
 	import { enhance } from "$app/forms";
+	import ChatFontColors from './ChatFontColors.svelte';
     let {data} = $props()
 
     let messages = $state(data.messages)
     let sending = $state(false)
+    let showChatSetting = $state(false)
+    let fontColor = $state("blue")
 
 </script>
 
-<div id="chat-container">
-    <h1>CHAT</h1>
-    <div id="msg-container">
-        {#each [...messages].reverse() as msg}
-            <div class="message">
-                <span class="author">{msg.author}</span>
-                <span class="time">({new Date(msg.date).toLocaleTimeString()})</span> :
-                <span class="content">{msg.content}</span>
-            </div>
-        {/each}
-    </div>    
+<div id="page-container">
+    <div id="chat-container">
+        <span id="title"><h1>CHAT</h1> <button id="button-setting" onclick={()=>showChatSetting = !showChatSetting}><Settings/></button>  </span> 
+        <div id="msg-container">
+            {#each [...messages].reverse() as msg}
+                <div class="message">
+                    <span class="author">{msg.author}</span>
+                    <span class="time">({new Date(msg.date).toLocaleTimeString()})</span> :
+                    <span class="content" style="--color:{msg.fontColor}">{msg.content}</span>
+                </div>
+            {/each}
+        </div>    
 
-    <form action="?/sendMessage" method="post"
-    use:enhance={(({formElement})=>{
-        sending = true
-      return async ({result, update}) => {
-          await update(); 
-          sending = false
-          console.log(result)
-          if (result?.data?.success) {
-            console.log(result.data)
-            formElement.reset()
-            messages = result.data.messages
+        <form action="?/sendMessage" method="post"
+        use:enhance={(({formElement})=>{
+            sending = true
+        return async ({result, update}) => {
+            await update(); 
+            sending = false
+            console.log(result)
+            if (result?.data?.success) {
+                console.log(result.data)
+                formElement.reset()
+                messages = result.data.messages
+                
             
+            }}})}
+        >
+            
+            <div style="display : flex; width : 100%">
+                <input id="input-msg" style="--color:{fontColor}" type="text" name="msg" placeholder="Ton message">
+                <input type="hidden" name="color" value={fontColor}>
+                <button disabled={sending} type="submit">Envoyer</button>
+            </div>
+        </form>
         
-          }}})}
-    >
-        
-        
-        <input type="text" name="msg" placeholder="Ton message">
-        <button disabled={sending} type="submit">Envoyer</button>
-    </form>
-    
 
+    </div>
+    {#if showChatSetting}
+        <div>
+            <ChatFontColors bind:fontColor={fontColor}/>
+        </div>
+    {/if}
 </div>
 
 <style>
+    #page-container{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
     #chat-container{
         border-radius: 15px;
         background-color: var(--color-bg-box);
@@ -55,6 +74,7 @@
         align-items: center;
         margin: 2px;
         box-shadow: var(--box-shadow-1);
+        flex-shrink: 0;
         
 
     }
@@ -69,14 +89,20 @@
         margin: 2px;
     }
 
-    h1{
+    #title, #button-setting{
         background-color: var(--color-text-2);
         align-self: stretch;
         color : white;
-        text-align: center;
         border-top-left-radius: 12px;
         border-top-right-radius: 12px;
-    
+        display: flex;
+        justify-content: space-between;
+        padding: 2px;
+    }
+
+    h1 {
+       margin-left: 45%;
+        
     }
 
     .message {
@@ -114,7 +140,10 @@
     .author{
         font-weight: bold;
     }
- 
+
+    .content, #input-msg{
+        color : var(--color)
+    }
 
 
 

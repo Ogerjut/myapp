@@ -1,4 +1,4 @@
-import { Deck } from "./cards.js"
+import { Deck, DECK_CHELEM, DECK_CHELEM_PETIT_AU_BOUT, DECK_PETIT_AU_BOUT } from "./cards.js"
 import { Player } from "./players.js"
 
 export class LoadGame {
@@ -7,27 +7,45 @@ export class LoadGame {
         this.round = round
         this.chien = this.dealCards()
         this.setFirstPlayer()
+        this.currentPlayer = this.getCurrentPlayer()
         this.state = "bet"
     
     }
 
     dealCards() {
-        const deck = new Deck().shuffle();
         const nbCardsChien = this.players.length === 4 ? 6 : 3;
     
-        while (deck.length > nbCardsChien) {
-            this.players.forEach(player => {
-                player.hand.push(...deck.splice(0, 3));
-                Deck.sort(player.hand);
-            });
-        }
+        while (true) {
+            // const deck = new Deck().shuffle();
+            const deck = [...DECK_PETIT_AU_BOUT]
+            while (deck.length > nbCardsChien) {
+                this.players.forEach(player => {
+                    player.hand.push(...deck.splice(0, 3));
+                    Deck.sort(player.hand);
+                });
+            }
+            if (!this.cancelDeal()) {
+                return deck;
+            }
     
-        return deck;
+           
+        }
     }
     
     setFirstPlayer(){
         this.players[(this.round-1) % this.players.length].isSpeaker = true
-        this.players[(this.round-1) % this.players.length].isPlayer = true 
+        
+    }
+
+    getCurrentPlayer(){
+        return this.players[(this.round-1) % this.players.length] 
     }
     
+    cancelDeal(){
+        this.players.some(player => {
+            const atouts = player.hand.filter(c => c.suit === "atout")
+            return atouts.length === 1 && atouts[0].value === 1
+        })
+    }
 }
+

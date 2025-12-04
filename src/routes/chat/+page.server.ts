@@ -8,8 +8,8 @@ export const load: PageServerLoad = async ({ locals }) => {
         throw redirect(302, "/");
     }
 
-    //  rajouter un filtre pour les dernières 24h/48h
-    const rawMessages = await msgCollection.find().toArray()
+    const cutoff = new Date(Date.now() - 48 * 60 * 60 * 1000);
+    const rawMessages = await msgCollection.find({date : {$gt: cutoff}}).toArray()
     const messages = rawMessages.map(msg => ({...msg, _id : msg._id.toString()}))
     return {messages}
   
@@ -19,6 +19,7 @@ export const actions = {
     sendMessage : async ({request, locals}) => {
         const formData = await request.formData();
         const msg = formData.get('msg')
+        const fontColor = formData.get('color')
         const user = locals.user
 
         try {
@@ -26,7 +27,8 @@ export const actions = {
                 _id : new ObjectId(),
                 date : new Date(),
                 author : user.username,
-                content : msg
+                content : msg,
+                fontColor : fontColor
 
             })
 

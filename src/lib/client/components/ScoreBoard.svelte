@@ -2,10 +2,13 @@
 	import { onMount } from "svelte";
 	import { useTarotContext } from "../game/context/tarotContext.svelte";
 
+    let {game} = $props()
+
     const tarotContext = useTarotContext()
     const tableId = $derived(tarotContext.table._id)
     
     let users = $state()
+    let max = $state()
 
     async function fetchActiveUsers() {
         const res = await fetch(`/table/${tableId}`);
@@ -16,6 +19,11 @@
         fetchActiveUsers()
     })
 
+    function getHigherScore(){
+        let scores = users.map(user => user.score[game] )
+        max = Math.max(scores, 0)
+    }
+
 
 </script>
 
@@ -24,8 +32,8 @@
     <!-- <caption> <u> Score : </u> </caption> -->
     <tbody>
         {#each users as user}
-            <tr>
-                <th>{user.username} : </th> <td>{user.score} pts </td> 
+            <tr class:winner={user.score[game]=== max}>
+                <th>{user.username} : </th> <td>{user.score[game]} pts </td> 
             </tr>
         {/each}
     </tbody>
@@ -42,6 +50,10 @@
 
     th, td {
         padding: 10px;
+    }
+
+    .winner{
+        background-color: lightgreen;
     }
 </style>
 

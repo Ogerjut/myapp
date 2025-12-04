@@ -1,12 +1,12 @@
 import { ObjectId } from 'mongodb';
 import { tarotCollection } from '../../db/db.js';
 
-export default async function registerChien(io, tableId) {
-	console.log("register chien")
+export default async function endPoigneeChelem(io, tableId) {
+	console.log("end poignée chelem")
 
     await tarotCollection.updateOne(
         {_id : new ObjectId(tableId)},
-        {$set : {state : "beforeGame"}}
+        {$set : {state : "game", "gameState.pli": new Map()}}
     )
     
     const updatedTable = await tarotCollection.findOne({_id : new ObjectId(tableId)})

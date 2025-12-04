@@ -22,7 +22,6 @@
     display: flex;
     flex-direction: row;
     padding: 10px;
-    border: 1px solid black;
     border-radius: 15px;
     justify-items: center;
     justify-content: center;

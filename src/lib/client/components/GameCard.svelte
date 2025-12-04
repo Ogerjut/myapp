@@ -32,7 +32,7 @@
 
   .notpublished >*{
     cursor: not-allowed;
-    opacity: 50%;
+    opacity: 60%;
 
   }
 
@@ -51,7 +51,7 @@
   }
 
   span {
-	background-color:brown;
+	background-color:maroon;
 	align-self: stretch;
 	text-align: center;
 	border-bottom-right-radius: 6px;

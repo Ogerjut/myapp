@@ -11,7 +11,7 @@
     let tarot = $derived(tarotContext.user.tarot)
     let actualBet = $derived(tarotContext.table.gameState.actualBet)
     
-    const duration = $state(300) //s
+    const duration = $state(15) //s
 
     function sendBet(bet){
         // console.log("bet sent : ", bet)
@@ -22,9 +22,9 @@
 
 
 <div id="bet">
-    {#if tarot.isSpeaker && browser}
+    <!-- {#if tarot.isSpeaker && browser}
       <Timer {duration} callback={() => sendBet(0)}/>
-    {/if}
+    {/if} -->
     
     <p> {tarot.isSpeaker ? "Choisis ton annonce ! " : "Ce n'est pas ton tour !"} </p>
     
@@ -65,7 +65,6 @@
             <input type="radio" name="bet" id="r4" value="4">
             <label for="r4">Garde contre</label>
           </div>
-
            
           </fieldset>
         <button disabled = {!tarot.isSpeaker} type="submit"> Annoncer </button>

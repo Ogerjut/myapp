@@ -15,6 +15,8 @@
 	import EndGame from './EndGame.svelte';
 	import ScoreBoard from './ScoreBoard.svelte';
 	import { browser } from '$app/environment';
+	import PoigneeChelem from './PoigneeChelem.svelte';
+	import ShowPoignee from './ShowPoignee.svelte';
 
     let tarotContext = useTarotContext()
     
@@ -23,8 +25,9 @@
     let tableId = $derived(tarotContext.table._id)
     let socket = $derived(tarotContext.socket)
 
-    // $inspect("tarot / user", tarotContext.user)
+    // $inspect("tarot / user", tarotContext.user.tarot)
     // $inspect("tarot / table", tarotContext.table)
+    $inspect("table state : ", tarotContext.table.state)
 
     let opponents = $derived(useOpponents())
 
@@ -38,18 +41,22 @@
         // peut etre faire un composant InstallingPlayer
         // Bet, startGame... en fonction du table.state 
         // pour alléger composant Tarot
-        
+        console.log('Tarot.svelte mounted')
         socket.emit("joinTable", userId, tableId)
-        listenerSocketTarot(socket, tableId, userId)
+        listenerSocketTarot(tarotContext)
 
         return ()=> {
-            socket.off("leaveAllTable")
-            socket.off("tableLeft")
-            socket.off("setUserTarot")
-            socket.off("updateTable")
-            socket.off("startBet")
-            socket.off("connect")
-            socket.off("newBetTurn")
+            socket.off("leaveAllTable")//
+            socket.off("tableLeft")//
+            socket.off("setUserTarot")//
+            socket.off("updateTable")//
+            socket.off("startBet")//
+            socket.off("connect")//
+            socket.off("isPlayableCard")//
+            socket.off("updateTarotContext")//
+            socket.off("showPoignee")//
+            socket.off("updateUser")//
+            socket.off("endPlayableCard")//
         }
     })
 
@@ -64,22 +71,22 @@
         }
     })
     
-    if (browser) {
-        window.addEventListener("beforeunload", () => {
-        if (tarotContext.table.state === "created") return 
-        if (tarotContext.table.state !== "created") {
-            console.log("before unload triggered")
-            socket.emit("leaveAllTable", tableId)
-        }
-    });
-    }
+    // if (browser) {
+    //     window.addEventListener("beforeunload", () => {
+    //     if (tarotContext.table.state === "created") return 
+    //     if (tarotContext.table.state !== "created") {
+    //         console.log("before unload triggered")
+    //         socket.emit("leaveAllTable", tableId)
+    //     }
+    // });
+    // }
     
 </script>
 
 <!-- faire un composant pour 4joueurs et 5joueurs (plus tard) -->
 <div id="game-container">
     <div id="table-area">
-        <!-- <i>{tarotContext.table.state} mode</i> -->
+        <i>{tarotContext.table.state} mode</i>
         <Table/>
         <PlayerSeat {opponents} />
     
@@ -99,11 +106,17 @@
                 </div>
                
             {/if}
+            {#if tarotContext.table.ready && tarotContext.table.state === 'beforeGame'}
+                    <PoigneeChelem />
+            {/if}
+            {#if tarotContext.table.ready && tarotContext.table.state === 'showPoignee'}
+                    <ShowPoignee />
+            {/if}
             {#if tarotContext.table.ready && tarotContext.table.state === 'game'}
                     <Round />
             {/if}
             {#if tarotContext.table.completed && tarotContext.table.state === 'endGame'}
-                    <EndGame />
+                    <EndGame {game} />
             {/if}
         
         </div>
@@ -145,7 +158,7 @@
         background: var(--color-bg-box);
         margin-top: -22px;
         border : var(--border-4);
-        height : 112px;
+        min-height : 112px;
         
         
     }

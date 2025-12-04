@@ -9,7 +9,6 @@ export function setTarotContext(game) {
     let table = $state(game.table)
     let user = $state(game.user)
     let betStarted = $state(false)
-    let isPlayableCard = $state(undefined)
     let activeCard = $state({})
     let url = $state("")
     
@@ -24,8 +23,8 @@ export function setTarotContext(game) {
         set betStarted(value) { betStarted = value },
         get url() {return url},
         set url(value) {url = value},
-        get isPlayableCard() { return isPlayableCard },
-        set isPlayableCard(value) { isPlayableCard = value },
+        // get isPlayableCard() { return isPlayableCard },
+        // set isPlayableCard(value) { isPlayableCard = value },
         get activeCard() { return activeCard },
         set activeCard(value) { activeCard = value },
         });

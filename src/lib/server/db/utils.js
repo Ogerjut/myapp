@@ -1,0 +1,32 @@
+import { ObjectId } from 'mongodb';
+import { usersCollection, tarotCollection } from './db.js';
+
+export function idsToObjectIds(ids){
+    return ids.map(id => new ObjectId(id));
+}
+
+export async function getUserById(userId){
+    return usersCollection.findOne({_id : new ObjectId(userId)})
+}
+
+export async function getUsers(usersId){
+    const ids = idsToObjectIds(usersId)
+    return usersCollection.find({ _id: { $in: ids } }).toArray()
+}
+
+// remplacer taraotCollection par tableCollection => indiquer sur la table quel est le type du jeu à la création
+export async function getTableById(tableId){
+    return tarotCollection.findOne({_id : new ObjectId(tableId)})
+}
+
+
+export async function getUsersByTableId(tableId){
+    const table = await getTableById(tableId)
+    return getUsers(table?.playersId)
+}
+
+export async function deleteCompletedTables(){
+    return tarotCollection.deleteMany({completed : true})
+}
+
+

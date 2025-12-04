@@ -10,16 +10,19 @@ export class RoundManager{
         this.playableCards = new Array()
     }
 
-    setPlayableCards(card, hand){
-        if (!this.colorPli) {
-            if (card.value !== 0){
-                this.colorPli = card.suit
-                this.playableCards = hand.slice();
-            }
+    setColorPli(card){
+        if (!this.colorPli){
+            this.colorPli = card.suit
+        }
+    }
+
+    setPlayableCards(hand){
+        if (!this.colorPli) { 
+            this.playableCards = hand.slice();
             return  
         } 
         
-        if (this.colorPli === "atout" && card.value !== 0) {
+        if (this.colorPli === "atout") {
             let maxAtout = Math.max(...this.playedAtouts, 0);
             this.playableCards = hand.filter(c => c.suit === this.colorPli && c.value > maxAtout);
             if (this.playableCards.length === 0) {
@@ -58,11 +61,26 @@ export class RoundManager{
         return false
     }
 
-    getRoundWinner(){
+    getRoundWinner(plis, preneur){
         let winner = null
         let max = 0
         let color = this.colorPli
         let hasAtout = false
+        
+        if (plis.length === 17 && preneur.tarot.chelem) {
+            console.log('check excuse jouée en dernier')
+            const atouts = [];
+            this.pli.forEach((card, id) => {
+                if (card.suit === "atout") {
+                    atouts.push({ id, card });
+                }
+            });
+
+            if (atouts.length === 1 && atouts[0].card.value === 0) {
+                console.log('excuse jouée en dernier gagne le pli')
+                return atouts[0].id;
+            }
+        }
         
         this.pli.forEach((card, id) => {
             if (card.suit === "atout" && card.value !==0){
@@ -84,18 +102,23 @@ export class RoundManager{
         return winner
     }
 
-    updateCardsWon(cardsWon){
+    updateCardsWon(cardsWon, preneurId){
         this.pli.forEach(async(card, id) => {
             if (card.value !== 0 ){
                 cardsWon.push(card)
-            } else {
-                const user = await usersCollection.findOne({_id : new ObjectId(id)})
-                let cardsWon = user?.tarot.cardsWon
-                cardsWon.push(card)
-                await usersCollection.updateOne(
-                    {_id : new ObjectId(id)},
-                    {$set : {"tarot.cardsWon" : cardsWon}}
-                )
+            } 
+            else {
+                if(id === preneurId){
+                    cardsWon.push(card)
+                    console.log("excuse ajoutée aux cartes du preneur")
+                } else {
+                    console.log(`excuse ajoutée aux cartes de ${id}`)
+                    await usersCollection.updateOne(
+                        {_id : new ObjectId(id)},
+                        {$push : {"tarot.cardsWon" : card}}
+                    )
+                }
+                
             }
         })
         return cardsWon

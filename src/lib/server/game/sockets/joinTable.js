@@ -1,6 +1,7 @@
 
 import { ObjectId } from 'mongodb';
 import { usersCollection, tarotCollection } from '../../db/db.js';
+import checkStartBet from './startBet.js';
 
 export default async function joinTable(io, socket, userId, tableId) {
 	console.log(`joueur connecté à la socket :${socket.id} rejoint la table : ${tableId}`);
@@ -25,6 +26,8 @@ export default async function joinTable(io, socket, userId, tableId) {
 	
 		const updatedTable = await tarotCollection.findOne({ _id: new ObjectId(tableId) });
 		io.to(tableId).emit('updateTable', updatedTable);
+
+		await checkStartBet(io, tableId)
 	} 
 	
 

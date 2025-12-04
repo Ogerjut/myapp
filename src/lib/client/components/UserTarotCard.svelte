@@ -1,23 +1,37 @@
 <script lang='ts'>
 	import { useTarotContext } from '../game/context/tarotContext.svelte'
 	import MiniCard from './MiniCard.svelte';
+	import Timer from './Timer.svelte';
 
 	let tarotContext = useTarotContext()
-	
 	let { user } = $props()
 
-    const betConvertion = {
+	const userId = $derived(user?.id || user?._id)
+    const tableId = $derived(tarotContext.table._id)
+    const socket = $derived(tarotContext.socket)
+	const currentPlayerId = $derived(tarotContext.table.gameState.currentPlayerId)
+	const userIsCurrentPlayer = $derived(userId === currentPlayerId)
+    
+	const betConvertion = {
+		0 : "a passé",
         1 : "prise",
         2 : "garde",
         3 : "garde sans",
         4 : "garde contre"
     }
-	
 
-
+	function playRandomCard(){
+		console.log('random card event')
+		socket.emit("playRandomCard", tableId, userId)
+	}
 </script>
 
 <div id="user-card">
+	<!-- {#if userIsCurrentPlayer && tarotContext.table.state === "game" && browser }
+		<div id="timer">
+			<Timer duration={5} callback={() => playRandomCard()}  key={`${currentPlayerId}`}/>
+		</div>
+	{/if} -->
 	<p class="username">{user?.username ?? "siège vide"}</p>
 	<hr />
 	{#if user}
@@ -26,9 +40,10 @@
 			{#if tarotContext.table.state === "bet" && user.tarot.isSpeaker}
 				<i>Parie...</i> 
 			{:else if tarotContext.table.state === "bet" && user.tarot.hasBet}
-				<p>Annonce : {user.tarot.bet}</p> 
-			{:else if tarotContext.table.state === "game" && user.tarot.isPlayer}
+				<p>{betConvertion[user.tarot.bet]}</p> 
+			{:else if tarotContext.table.state === "game" &&  userIsCurrentPlayer}
 				<i>Joue...</i>
+
 			{:else if tarotContext.table.state === "game" && user.tarot.hasPlayed && user.tarot.playedCard}
 				<MiniCard value={user.tarot.playedCard.value} suit={user.tarot.playedCard.suit} />
 			{/if}
@@ -38,14 +53,29 @@
 		</div>
 	</div>
 	{/if}
+	
+	
 </div>
 
-{#if user?.tarot.hasTaken}
-    <div>
-        <p id="badge-preneur">P</p>
-        <p> {betConvertion[user.tarot.bet]}</p>
-    </div>
-{/if}
+
+<div id="badge">
+
+	{#if user?.tarot.hasTaken}
+		<div>
+			<p id="badge-preneur">P</p>
+			<p class="text-badge"> {betConvertion[user.tarot.bet]}</p>
+		</div>
+	{/if}
+
+	{#if user?.tarot.chelem}
+		<div>
+			<p id="badge-chelem">C</p>
+			<p class="text-badge">Chelem</p>
+		</div>
+	{/if}
+
+</div>
+
 
 <style>
 	#user-card {
@@ -93,13 +123,42 @@
 	}
 
 	#badge-preneur {
-		background: green;
+		background: blueviolet;
 		color: white;
 		border-radius: 50%;
 		text-align: center;
 		font-size: 1.1rem;
 		font-weight: bold;
 		width: 30px;
+		font-family: "Kurale" ;
+		box-shadow: 1px 1px 2px grey;
 	
 	}
+
+	#badge-chelem {
+		background: orangered;;
+		color: white;
+		border-radius: 50%;
+		text-align: center;
+		font-size: 1.1rem;
+		font-weight: bold;
+		width: 30px;
+		font-family: "Kurale" ;
+		box-shadow: 1px 1px 2px grey;
+	
+	}
+
+	#badge{
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+		padding: 5px;
+	}
+
+	.text-badge{
+		font-size: small;
+		margin-top: -3px;
+		
+	}
+
 </style>

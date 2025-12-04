@@ -1,8 +1,8 @@
 import { ObjectId } from 'mongodb';
 import { tarotCollection } from '../../db/db.js';
 
-export default async function registerChien(io, tableId) {
-	console.log("register chien")
+export default async function endShowPoignee(io, tableId) {
+	console.log("end show poignée")
 
     await tarotCollection.updateOne(
         {_id : new ObjectId(tableId)},

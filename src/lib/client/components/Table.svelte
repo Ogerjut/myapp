@@ -23,7 +23,7 @@
         height: 300px;
         width: 400px;
         border: 10px solid maroon;
-        background-color: green;
+        background-color: darkgreen;
         border-radius: 50%;
     }
 
@@ -33,7 +33,7 @@
         grid-template-rows: repeat(3, auto);
         height: 100%;
         font-size: 64px;
-        color: rgb(6, 71, 6);
+        color: darkgoldenrod;
         
     }
 

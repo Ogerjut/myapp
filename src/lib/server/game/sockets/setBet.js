@@ -3,7 +3,7 @@ import { tarotCollection, usersCollection } from '../../db/db.js';
 import checkStartBet from './startBet.js';
 
 // a déplacer lors refactorisation
-async function emitUpdate(io, tableId, playersId){
+export async function emitUpdate(io, tableId, playersId){
     const updatedTable = await tarotCollection.findOne({ _id: new ObjectId(tableId) });
     for (const playerId of playersId) {
         const updatedUser = await usersCollection.findOne({ _id: new ObjectId(playerId)});
@@ -24,7 +24,7 @@ export default async function setBet(io, tableId, userId, bet) {
 
     await usersCollection.updateOne(
         {_id : new ObjectId(userId)},
-        {$set : {"tarot.bet" : bet, "tarot.hasbet" : true, "tarot.isSpeaker" : false}}
+        {$set : {"tarot.bet" : bet, "tarot.hasBet" : true, "tarot.isSpeaker" : false}}
     )
     
     if (bet > table?.gameState.actualBet){
@@ -37,7 +37,6 @@ export default async function setBet(io, tableId, userId, bet) {
     const isBetOver = betMap.size === table?.size || bet === 4
 
     if (isBetOver){
-        // event socket endenchère + maj player hasTaken... 
         console.log("end bet")
         let max = 0
         betMap.forEach((val, key)=> max = Math.max(max, val))
@@ -64,7 +63,7 @@ export default async function setBet(io, tableId, userId, bet) {
             } else {
                 await tarotCollection.updateOne(
                     {_id : new ObjectId(tableId)},
-                    {$set : {state : 'game'}}
+                    {$set : {state : 'beforeGame'}}
                 )
             }
             await emitUpdate(io, tableId, playersId)

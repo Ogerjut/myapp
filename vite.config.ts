@@ -9,7 +9,7 @@ export default defineConfig({
 		proxy: {
 			'/socket.io': {
 				target: 'http://localhost:3000', 
-				ws: true,                       // Active la redirection WebSocket
+				ws: true,                     
 				changeOrigin: true
 			}
 		}

@@ -11,7 +11,7 @@ export default async function leaveAllTable(io, socket, tableId) {
     
     await usersCollection.updateMany(
         {_id: { $in: ids }}, 
-        {$set : {inGame: false, tarot : {}, score : 0}
+        {$set : {inGame: false, tarot : {}, "score.tarot" : 0}
     })
 
 	await tarotCollection.deleteOne({ _id: new ObjectId(tableId) });

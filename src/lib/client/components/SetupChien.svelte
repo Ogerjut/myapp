@@ -7,14 +7,12 @@
     const table = $derived(tarotContext.table)
     const socket = $derived(tarotContext.socket)
 
-
     const maxCards = $derived(table.size === 4 ? 6 : 3)
     let disabledButton = $derived(tarotContext.user.tarot.cardsWon.length !== maxCards)
 
     const duration = 60 //s
 
     function randomCard(){
-        console.log("select random chien")
         socket.emit("selectRandomChien", table._id, tarotContext.user._id)
     }
 
@@ -22,6 +20,8 @@
         console.log("chien validé")
         socket.emit("registerChien", table._id, tarotContext.user._id)
     }
+
+    
 
 </script>
 
@@ -33,7 +33,7 @@
 </div>
 
 {#if tarotContext.user.tarot.hasTaken}
-    <Timer {duration} callback={randomCard()}/>
+    <!-- <Timer {duration} callback={() => randomCard()} key={`${table.gameState.currentPlayerId}`}/> -->
     <p>Nouveau chien : </p>
     <div class="chien">
         {#each tarotContext.user.tarot.cardsWon as card }
@@ -41,6 +41,8 @@
         {/each}
     </div>
     <button disabled={disabledButton} onclick={()=>validateChien()}> Valider </button>
+    
+
 {/if}
 
 
@@ -50,6 +52,7 @@
         gap: 3px;
         display: flex;
         flex-direction: row;
+        width : 100%
     }
 
     button:disabled{

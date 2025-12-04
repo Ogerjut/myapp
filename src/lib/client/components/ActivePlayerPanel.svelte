@@ -49,7 +49,7 @@
         {#each filteredUsers as activeUser }
             <li> 
                 <button id="pseudo-button" onclick={()=> fetchSelectedUser(activeUser._id)}> {activeUser.name} </button> 
-                <button id="invite-button" onclick={()=> socket.emit("inviteToPlay", tableId, context.user.username, activeUser._id)}> Inviter </button>
+                <button id="invite-button" onclick={()=> socket.emit("inviteToPlay", tableId, context.user.username, activeUser._id, game)}> Inviter </button>
             </li>
         {/each}
     </ul>

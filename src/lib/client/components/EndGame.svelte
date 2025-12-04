@@ -5,6 +5,8 @@
 	import { useOpponents } from "../game/updateOpponents.svelte";
 	import ScoreBoard from "./ScoreBoard.svelte";
 
+    let {game} = $props()
+
     const tarotContext = useTarotContext()
     const socket = $derived(tarotContext.socket)
     const table = $derived(tarotContext.table)
@@ -32,7 +34,7 @@
 
 <div>
     <span>Fin de la partie </span> 
-    <ScoreBoard/>
+    <ScoreBoard {game}/>
     <button onclick={() => backToMenu()}>
         Retour au menu
     </button>

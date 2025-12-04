@@ -9,7 +9,6 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		csrf: {
-			// checkOrigin: process.env.NODE_ENV === 'production',
 			trustedOrigins: ["https://jouonsentrepotes.fr"]
 		  }
 	},

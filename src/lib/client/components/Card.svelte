@@ -6,7 +6,6 @@
     let {value, suit} = $props()
 
     let tarotContext = useTarotContext()
-    const isPlayableCard = $derived(tarotContext.isPlayableCard)
     const activeCard = $derived(tarotContext.activeCard)
     const controller = new CardController()
 
@@ -40,7 +39,7 @@
 
     $effect( ()=> {
         const isActiveCard = value === activeCard?.value && suit === activeCard?.suit
-        if (isActiveCard && isPlayableCard ){
+        if (isActiveCard ){
             controller.onPlayableCard({value, suit})
         }
     })
@@ -55,8 +54,6 @@
         class:isExcuse = {isExcuse}
         style="--color : {color};"
         onmousedown={() => controller.onCardClick({value, suit})}
-        class:playable={isPlayableCard}
-        class:invalid={isPlayableCard === false}
         transition:fly={{ y: -100, duration: 1000 }}
 
     >
@@ -81,6 +78,7 @@
         margin-top : 6px;
         margin-bottom : 6px;
         font-family: 'Kurale';
+       
         
     }
 

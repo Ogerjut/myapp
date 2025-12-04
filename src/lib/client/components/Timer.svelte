@@ -2,32 +2,46 @@
 	import { onDestroy, onMount } from "svelte";
 	import { TimerController } from "../game/controllers/timerController.svelte";
     
-    let {duration, callback} = $props()
+    let {duration, callback, key} = $props()
     
     const DURATION : number = duration
 	let interval : number 
     let endTime : number
     let timerController
 
+    window.timerInstances ??= 0;
+
     onMount(async()=>{
+
+        cleanup()
+        window.timerInstances++;
+        console.log('Timer mounted', window.timerInstances);
         timerController = new TimerController(duration)
 
-        const storedEndTime = localStorage.getItem("endTimer")
+        const storedEndTime = localStorage.getItem(key)
         
         if (storedEndTime){
             endTime = parseInt(storedEndTime)
         } else {
             endTime = await timerController.getEndTime()
-			localStorage.setItem("endTimer", endTime.toString())
+			localStorage.setItem(key, endTime.toString())
         }
 
         startTimer()
     })
 
     onDestroy(()=>{
-        clearInterval(interval)
-        localStorage.removeItem("endTimer")
+        cleanup()
+        window.timerInstances--;
+        console.log('Timer destroyed', window.timerInstances)
     })
+
+    function cleanup() {
+        if (interval) {
+            clearInterval(interval)
+        }
+        localStorage.removeItem(key)
+    }
 
     function startTimer() {
 		updateTime();
@@ -42,9 +56,8 @@
 		duration = remaining;
 
 		if (duration <= 0) {
-			clearInterval(interval);
-			localStorage.removeItem("endTimer");
-			callback
+			cleanup()
+			callback()
 		}
 	}
 
@@ -52,8 +65,8 @@
 
 <div>
     <progress
-        class:end={duration < 6}
-        class:soonEnd={duration < 16 && duration >= 6}
+        class:end={duration < (duration / 4)}
+        class:soonEnd={duration < (duration / 2) && duration >= (duration / 4)}
         max={DURATION}
         value={duration}>
     </progress>
@@ -62,9 +75,10 @@
 
 <style>
     progress {
-        height: 20px;
         border-radius: 10px;
         appearance: none;
+        width : 100%;
+        height: 15px;
     }
 
     /* webkit */

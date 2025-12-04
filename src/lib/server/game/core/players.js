@@ -10,17 +10,19 @@ export class Player{
         hasTaken = false,
         cardsWon = [],
         isSpeaker = false,
-        isPlayer = false,
+        chelem = false,
+        poignee = 0, 
         ) {
         this.id = id
         this.hand = hand
         this.bet = bet
         this.hasPlayed = hasPlayed
-        this.isPlayer = isPlayer
         this.hasBet = hasBet
         this.hasTaken = hasTaken
         this.cardsWon = cardsWon
         this.isSpeaker = isSpeaker
+        this.chelem = chelem
+        this.poignee = poignee
 
     }
 }

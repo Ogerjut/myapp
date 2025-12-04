@@ -7,7 +7,7 @@ export default async function leaveTable(io, socket, tableId, userId, url) {
 		{$set: {
 			inGame: false,
 			tarot : {},
-			score : 0
+			"score.tarot" : 0
 		}}
 	);
 

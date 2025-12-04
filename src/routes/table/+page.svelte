@@ -7,6 +7,7 @@
     let creating = $state(true)
     let chooseNbRound = $state(false)
     let nbPlayers = $state(4)
+
   
 </script>
 
@@ -61,7 +62,7 @@
             </label>
           
             <label class="hit-area" for="r5">
-              <input type="radio" name="nbPlayers" id="r5" value="5" onchange={(e)=> nbPlayers = e.target.value} >
+              <input disabled={true} type="radio" name="nbPlayers" id="r5" value="5" onchange={(e)=> nbPlayers = e.target.value} >
               5 joueurs
             </label>
 
@@ -152,6 +153,10 @@
   #buttons{
     display: flex;
     justify-content: space-around;
+  }
+
+  .hit-area:has(input:disabled){
+    opacity: 60%;
   }
 
 </style>

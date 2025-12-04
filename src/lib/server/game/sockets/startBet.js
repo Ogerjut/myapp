@@ -11,8 +11,13 @@ export default async function checkStartBet(io, tableId) {
 		return 
 	}
 
+	if (table?.state === "ready"){
+		console.log("table déjà prête")
+		return
+	}  
+
 	console.log("check start bet")
-	const round = table?.gameState.round 
+	const round = table?.gameState.round || 1 
 	const tarot = new LoadGame(table, round);
 	const players = tarot.players;
 	
@@ -29,8 +34,10 @@ export default async function checkStartBet(io, tableId) {
 					actualBet : 0, 
 					betMap : new Map(),
 					pli : new Map(),
+					plis : new Array(),
 					colorPli : undefined,
-					playedAtouts : new Array()
+					playedAtouts : new Array(),
+					currentPlayerId : tarot.currentPlayer.id
 				}
 				
 			}

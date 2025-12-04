@@ -1,10 +1,12 @@
 
-
+<script>
+    import Copyright from '@lucide/svelte/icons/copyright'
+</script>
 
 
 
 <div id="footer">
-	copyright 2025
+	copyright <Copyright /> 2025
 
     règles des jeux, mentions légales 
 </div>

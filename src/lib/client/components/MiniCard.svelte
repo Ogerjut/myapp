@@ -40,7 +40,6 @@
     }
 
     #suit{
-        justify-self: center;
         font-size: large;
     }
     
