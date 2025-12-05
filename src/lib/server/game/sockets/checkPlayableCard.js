@@ -75,7 +75,7 @@ export async function playCard(io, tableId, userId, hand, roundManager, card, pl
     io.to(userId).emit("updateUser", updatedUser)
     
     console.log("selected card managed")
-    await new Promise((r) => setTimeout(r, 1000));
+    // await new Promise((r) => setTimeout(r, 1000));
     
 
     let pli = new Map(Object.entries(updatedTable?.gameState.pli)) 
