@@ -1,9 +1,9 @@
 import { ObjectId } from 'mongodb';
-import { usersCollection, tarotCollection } from '../../db/db.js';
+import { usersCollection, tablesCollection } from '../../db/db.js';
 
 export default async function leaveAllTable(io, socket, tableId) {
     console.log("leave all table")
-    const table = await tarotCollection.findOne({ _id: new ObjectId(tableId) });
+    const table = await tablesCollection.findOne({ _id: new ObjectId(tableId) });
     if (!table) return 
     const playersId = table?.playersId
 
@@ -14,7 +14,7 @@ export default async function leaveAllTable(io, socket, tableId) {
         {$set : {inGame: false, tarot : {}, "score.tarot" : 0}
     })
 
-	await tarotCollection.deleteOne({ _id: new ObjectId(tableId) });
+	await tablesCollection.deleteOne({ _id: new ObjectId(tableId) });
 		
 	console.log(`table ${tableId} deleted and players ${playersId} left`);
 	

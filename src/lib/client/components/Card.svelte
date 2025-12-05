@@ -5,8 +5,9 @@
 
     let {value, suit} = $props()
 
-    let tarotContext = useTarotContext()
-    const activeCard = $derived(tarotContext.activeCard)
+    // let tarotContext = useTarotContext()
+    // const isPlayableCard = $derived(tarotContext.isPlayableCard)
+    // const activeCard = $derived(tarotContext.activeCard)
     const controller = new CardController()
 
     let mapValue = {
@@ -37,12 +38,12 @@
 
     let color = $derived((suit === "heart" || suit === "diamond") ? "#CC0000" : suit === "atout" ? '#0000CC' : 'black')
 
-    $effect( ()=> {
-        const isActiveCard = value === activeCard?.value && suit === activeCard?.suit
-        if (isActiveCard ){
-            controller.onPlayableCard({value, suit})
-        }
-    })
+    // $effect( ()=> {
+    //     const isActiveCard = value === activeCard?.value && suit === activeCard?.suit
+    //     if (isActiveCard && isPlayableCard ){
+    //         controller.onPlayableCard()
+    //     }
+    // })
     
     
 </script>

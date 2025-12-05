@@ -1,8 +1,8 @@
 <script lang='ts'>
 	import { browser } from "$app/environment";
     import {enhance} from "$app/forms"
-    import {useTarotContext} from '../game/context/tarotContext.svelte'
-	  import Timer from "./Timer.svelte";
+    import {useTarotContext} from '../../game/context/tarotContext.svelte'
+	  import Timer from "../Timer.svelte";
 
     let tarotContext = useTarotContext()
     const socket = $derived(tarotContext.socket)

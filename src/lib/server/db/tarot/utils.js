@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb';
-import { usersCollection, tarotCollection } from '../db.js';
+import { usersCollection, tablesCollection } from '../db.js';
 import { getTableById, idsToObjectIds } from '../utils.js';
 
 export async function getUserHasTaken(tableId ){

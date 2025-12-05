@@ -36,7 +36,7 @@ export function listenerSocketTarot(tarotContext){
         alert("Un adversaire a quitté la partie.");
         resetOpponent()
         socket.emit("quitTable", tableId);
-        goto(tarotContext.url === "" ? "/table" : tarotContext.url)
+        goto(tarotContext.url === "" ? "/" : tarotContext.url)
     })
     
     socket.on("updateTarotContext", async (updatedUser, updatedTable) => {
@@ -48,12 +48,21 @@ export function listenerSocketTarot(tarotContext){
 
     })
 
-    socket.on("isPlayableCard", (card)  =>{
-        Object.assign(tarotContext.activeCard, card)
-    })
+    // socket.on("isPlayableCard", (isPlayableCard, card)  =>{
+    //     tarotContext.isPlayableCard = isPlayableCard
+    //     Object.assign(tarotContext.activeCard, card)
+    //     if (isPlayableCard){
+    //         console.log("playable card to handle")
+    //         socket.emit("handlePlayableCard", tableId, userId, card);
+    //         // à changer en playSelectedCard
+    //     } else {
+    //         console.log("card is not playable")
+    //     }
+    // })
 
     socket.on("endPlayableCard", ()  =>{
-        Object.assign(tarotContext.activeCard, {})
+        tarotContext.activeCard = null
+        tarotContext.isPlayableCard = undefined
     })
 
     

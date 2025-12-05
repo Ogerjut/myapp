@@ -1,5 +1,5 @@
 
-import {yamsCollection, usersCollection} from '$lib/server/db/db.js'
+import {tablesCollection, usersCollection} from '$lib/server/db/db.js'
 import {ObjectId} from 'mongodb'
 import { fail } from '@sveltejs/kit';
 
@@ -10,7 +10,7 @@ export const actions = {
   
       try {
 
-        const table = await yamsCollection.insertOne({
+        const table = await tablesCollection.insertOne({
           created : Date.now(),
           size : Number(formData.get('nbPlayers')),
           ready : false,
@@ -20,7 +20,7 @@ export const actions = {
           gameState : {},
         })
         
-        const createdTable = await yamsCollection.findOne({_id : table.insertedId})
+        const createdTable = await tablesCollection.findOne({_id : table.insertedId})
 
         return {
             success: true,

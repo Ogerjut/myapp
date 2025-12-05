@@ -10,13 +10,12 @@
         color : maroon;
         font-size: xx-large;
         text-align: center;
-        width: 300px;
-        min-width: 300px;
+        width: 250px;
         border : 2px solid maroon;
         font-family: "Chicle";
-        box-shadow: 0px 2px 3px maroon;
-        border-radius: 30px;
-        padding: 20px;
+        box-shadow: 0px 3px 4px maroon;
+        border-radius: 33px;
+        padding: 10px;
         background-color: var(--color-bg-2);
     }
 

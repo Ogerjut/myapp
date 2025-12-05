@@ -18,15 +18,27 @@
 
 	async function acceptInvite(){
 		showInvite = false
-		goto(`/table/${tableID}`)
+		goto(`/${gameType}/${tableID}`)
 	}
 
 	function declineInvite(){
 		showInvite = false
 	}
 
+	function registerUser(){
+		if (data?.user?.id){
+			socket.emit("registerUserSocket", data?.user?.id);
+		}
+	}
+
 	onMount(() => {
-    	socket.emit("registerUserSocket", data?.user?.id);
+    	registerUser()
+
+		socket.on("connect", () => {
+            console.log("Socket connected/reconnected");
+            registerUser();
+        });
+
 		socket.on("invitationToPlay", (tableId, from, game)=>{
 			console.log("invitation to play from", from)
 			showInvite = true
@@ -85,8 +97,9 @@
 		flex-direction: column;
 		min-height: 400px;
 		min-width: 400px;
-		border-radius: 10px;
+		border-radius: 15px;
 		justify-content: center;
+		margin-top: 5px;
 		
 	}
 

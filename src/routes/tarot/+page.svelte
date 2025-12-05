@@ -22,7 +22,7 @@
               console.log(result.data.message)
               creating = false 
               const table = result.data.table
-              goto(`/table/${table?._id}`)
+              goto(`/tarot/${table?._id}`)
                   
             }
           }

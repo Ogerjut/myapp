@@ -2,21 +2,22 @@
 <script lang='ts'>
     import ActivePlayerPanel from '$lib/client/components/ActivePlayerPanel.svelte';
 	import { onMount } from 'svelte';
-    import { beforeNavigate} from '$app/navigation'
+    import { beforeNavigate, goto} from '$app/navigation'
     import { useOpponents } from '$lib/client/game/updateOpponents.svelte.js'
-	import {useTarotContext} from '../game/context/tarotContext.svelte'
-    import PlayerSeat from '$lib/client/components/PlayerSeat.svelte';
+	import {useTarotContext} from '../../game/context/tarotContext.svelte'
+    import PlayerSeat from '$lib/client/components/tarot/PlayerSeat.svelte';
 	import Table from '$lib/client/components/Table.svelte';
     import Card from '$lib/client/components/Card.svelte'
-	import { listenerSocketTarot } from '../game/listenerSocketTarot.svelte';
+	import { listenerSocketTarot } from '../../game/listenerSocketTarot.svelte';
 	import Bet from './Bet.svelte';
 	import SetupChien from './SetupChien.svelte';
 	import Round from './Round.svelte';
-	import EndGame from './EndGame.svelte';
-	import ScoreBoard from './ScoreBoard.svelte';
+	import EndGame from '../EndGame.svelte';
+	import ScoreBoard from '../ScoreBoard.svelte';
 	import { browser } from '$app/environment';
 	import PoigneeChelem from './PoigneeChelem.svelte';
 	import ShowPoignee from './ShowPoignee.svelte';
+	import Modale from '../Modale.svelte';
 
     let tarotContext = useTarotContext()
     
@@ -30,6 +31,8 @@
     $inspect("table state : ", tarotContext.table.state)
 
     let opponents = $derived(useOpponents())
+
+    let dialog
 
     // faire un useTarot pour tout le jeu de tarot 
     // dans lib, fichiers .svelte.js 
@@ -63,10 +66,13 @@
     beforeNavigate((nav)=>{
         if (nav.type === "leave" || nav.type === "goto") return
         if (tarotContext.table.state !== "created"){
-            Object.assign(tarotContext.url, nav.to?.url.pathname) 
+            Object.assign(tarotContext.url, nav.to?.url.pathname)
+            // console.log(dialog)
+            // dialog.showModal()
             socket.emit("leaveAllTable", tableId)
+           
         }
-        if (tarotContext.table.state === "created" && !nav.to?.url.pathname.startsWith("/table/")){
+        if (tarotContext.table.state === "created" && !nav.to?.url.pathname.startsWith("/tarot/")){
             socket.emit("leaveTable", tableId, userId, nav.to?.url.pathname) 
         }
     })
@@ -80,6 +86,11 @@
     //     }
     // });
     // }
+
+    function quitTable(){
+        console.log("leave table from dialog")
+        socket.emit("leaveAllTable", tableId)
+    }
     
 </script>
 
@@ -135,6 +146,13 @@
    
 
 </div>
+
+<Modale
+    bind:dialog
+    text={"Veux-tu vraiment quitter la table en cours ?"}
+    action={"Quitter la table"}
+    onaction={()=>quitTable()}
+    />
 
 
 <style>

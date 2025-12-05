@@ -1,11 +1,11 @@
-import { tarotCollection, usersCollection } from '$lib/server/db/db.js'
+import { tablesCollection, usersCollection } from '$lib/server/db/db.js'
 import { redirect } from '@sveltejs/kit';
 import {ObjectId} from 'mongodb'
 
 
 export async function load({params, locals}){
     // console.log("params id", params.id)
-    const table = await tarotCollection.findOne({_id : new ObjectId(params.id)})
+    const table = await tablesCollection.findOne({_id : new ObjectId(params.id)})
     const user = await usersCollection.findOne({_id : new ObjectId(locals.user.id)})
     
     if (!table) {

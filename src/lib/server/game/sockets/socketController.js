@@ -6,7 +6,7 @@ import leaveAllTable from './leaveAllTable.js';
 import setBet from './setBet.js';
 import handleChien from './handleChien.js';
 import registerChien from './registerChien.js';
-import handlePlayableCard from './handlePlayableCard.js';
+// import handlePlayableCard from './handlePlayableCard.js';
 import checkPlayableCard from './checkPlayableCard.js';
 import startTimer from './timer.js';
 import selectRandomChien from './selectRandomChien.js';
@@ -39,7 +39,7 @@ export default function socketController(io) {
 		socket.on('handleChien', (tableId, userId, card)=> handleChien(io, tableId, userId, card))
 		socket.on('registerChien', (tableId)=> registerChien(io, tableId))
 		socket.on('checkPlayableCard', (tableId, userId, card)=> checkPlayableCard(io, tableId, userId, card))
-		socket.on('handlePlayableCard', (tableId, userId, card)=> handlePlayableCard(io, tableId, userId, card))
+		// socket.on('handlePlayableCard', (tableId, userId, card)=> handlePlayableCard(io, tableId, userId, card))
 		socket.on('selectRandomChien', (tableId, userId)=> selectRandomChien(io, tableId, userId))
 		socket.on('checkPoignee', (userId, callback)=> checkPoignee(userId, callback))
 		socket.on('registerPoignee', (tableId, userId, poigneeSize)=> registerPoignee(io, tableId, userId, poigneeSize))

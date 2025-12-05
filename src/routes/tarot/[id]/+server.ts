@@ -1,5 +1,5 @@
 import { json } from "@sveltejs/kit";
-import { tarotCollection, usersCollection } from "$lib/server/db/db.js";
+import { tablesCollection, usersCollection } from "$lib/server/db/db.js";
 import { ObjectId } from "mongodb";
 import { error } from '@sveltejs/kit';
 
@@ -30,7 +30,7 @@ export async function GET({ params }) {
   }
   
   try {
-    const table = await tarotCollection.findOne({ _id: new ObjectId(params.id) });
+    const table = await tablesCollection.findOne({ _id: new ObjectId(params.id) });
 
     if (!table) {
       throw error(404, 'Table non trouvée');

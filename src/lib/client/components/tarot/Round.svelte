@@ -1,7 +1,7 @@
 <script lang='ts'>
 	
-	import { useTarotContext } from "../game/context/tarotContext.svelte";
-	import Card from "./Card.svelte";
+	import { useTarotContext } from "../../game/context/tarotContext.svelte";
+	import Card from "../Card.svelte";
 
     const tarotContext = useTarotContext()
     const table = $derived(tarotContext.table)

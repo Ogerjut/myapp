@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb';
-import { usersCollection, tarotCollection } from '../../db/db.js';
+import { usersCollection, tablesCollection } from '../../db/db.js';
 
 export default async function registerPoignee(io, tableId, userId, poigneeSize) {
 	console.log("register poignee")
@@ -18,14 +18,14 @@ export default async function registerPoignee(io, tableId, userId, poigneeSize) 
     const poignees = new Map()
     poignees.set(updatedUser?.username, poignee)
     
-    await tarotCollection.updateOne(
+    await tablesCollection.updateOne(
         {_id : new ObjectId(tableId)},
         {$set : {state : "showPoignee", "gameState.poignees" : poignees}}
     )
     
-    const updatedTable = await tarotCollection.findOne({_id : new ObjectId(tableId)})
+    const updatedTable = await tablesCollection.findOne({_id : new ObjectId(tableId)})
 
-    await io.to(userId).emit("updateUser", updatedUser)
+    io.to(userId).emit("updateUser", updatedUser)
     io.to(tableId).emit("updateTable", updatedTable)
 
 }

@@ -1,9 +1,9 @@
 import { ObjectId } from 'mongodb';
-import { usersCollection, tarotCollection} from '../../db/db.js';
+import { usersCollection, tablesCollection} from '../../db/db.js';
 
 export default async function registerChelem(io, tableId, userId) {
 	console.log("register chelem")
-    const table = await tarotCollection.findOne({ _id: new ObjectId(tableId) });
+    const table = await tablesCollection.findOne({ _id: new ObjectId(tableId) });
     const firstPlayerId = table?.gameState.currentPlayerId
 
     await usersCollection.updateOne(
@@ -12,11 +12,11 @@ export default async function registerChelem(io, tableId, userId) {
     )
 
     if (userId !== firstPlayerId){
-        await tarotCollection.updateOne(
+        await tablesCollection.updateOne(
             {_id : new ObjectId( firstPlayerId)},
             {$set : {"gameState.currentPlayerId" : userId }}
         )
-        const updatedTable = await tarotCollection.findOne({ _id: new ObjectId(tableId) });
+        const updatedTable = await tablesCollection.findOne({ _id: new ObjectId(tableId) });
         io.to(tableId).emit("updateTable", updatedTable)
     }
     

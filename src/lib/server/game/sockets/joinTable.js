@@ -1,11 +1,11 @@
 
 import { ObjectId } from 'mongodb';
-import { usersCollection, tarotCollection } from '../../db/db.js';
+import { usersCollection, tablesCollection } from '../../db/db.js';
 import checkStartBet from './startBet.js';
 
 export default async function joinTable(io, socket, userId, tableId) {
 	console.log(`joueur connecté à la socket :${socket.id} rejoint la table : ${tableId}`);
-	const table = await tarotCollection.findOne({ _id: new ObjectId(tableId) });
+	const table = await tablesCollection.findOne({ _id: new ObjectId(tableId) });
 	
 	if (table){
 		socket.join(tableId);
@@ -14,7 +14,7 @@ export default async function joinTable(io, socket, userId, tableId) {
 	if (table && !table.ready && !table.playersId.includes(userId)){
 		table?.playersId.push(userId);
 
-		await tarotCollection.updateOne(
+		await tablesCollection.updateOne(
 				{ _id: new ObjectId(tableId) },
 				{ $set: { playersId: table?.playersId } }
 			);
@@ -24,7 +24,7 @@ export default async function joinTable(io, socket, userId, tableId) {
 			{$set: {inGame: true} }
 		);
 	
-		const updatedTable = await tarotCollection.findOne({ _id: new ObjectId(tableId) });
+		const updatedTable = await tablesCollection.findOne({ _id: new ObjectId(tableId) });
 		io.to(tableId).emit('updateTable', updatedTable);
 
 		await checkStartBet(io, tableId)

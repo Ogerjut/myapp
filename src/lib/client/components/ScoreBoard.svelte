@@ -11,7 +11,7 @@
     let max = $state()
 
     async function fetchActiveUsers() {
-        const res = await fetch(`/table/${tableId}`);
+        const res = await fetch(`/${game}/${tableId}`);
         users = await res.json();
     }
 

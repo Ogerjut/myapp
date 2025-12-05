@@ -16,8 +16,8 @@ export class LoadGame {
         const nbCardsChien = this.players.length === 4 ? 6 : 3;
     
         while (true) {
-            // const deck = new Deck().shuffle();
-            const deck = [...DECK_PETIT_AU_BOUT]
+            const deck = new Deck().shuffle();
+            // const deck = [...DECK_PETIT_AU_BOUT]
             while (deck.length > nbCardsChien) {
                 this.players.forEach(player => {
                     player.hand.push(...deck.splice(0, 3));

@@ -1,9 +1,9 @@
 import { ObjectId } from 'mongodb';
-import { usersCollection, tarotCollection } from '../../db/db.js';
+import { usersCollection, tablesCollection } from '../../db/db.js';
 import { Deck } from '../core/cards.js';
 
 export default async function handleChien(io, tableId, userId, card) {
-    const table = await tarotCollection.findOne({_id : new ObjectId(tableId)})
+    const table = await tablesCollection.findOne({_id : new ObjectId(tableId)})
     const user = await usersCollection.findOne({ _id: new ObjectId(userId) });
     
     let chien = table?.gameState.chien
@@ -33,12 +33,12 @@ export default async function handleChien(io, tableId, userId, card) {
         {$set : {"tarot.hand" : hand, "tarot.cardsWon" : newChien}}
     )
 
-    await tarotCollection.updateOne(
+    await tablesCollection.updateOne(
         {_id : new ObjectId(tableId)},
         {$set : {"gameState.chien" : chien}}
     )
     
-    const updatedTable = await tarotCollection.findOne({_id : new ObjectId(tableId)})
+    const updatedTable = await tablesCollection.findOne({_id : new ObjectId(tableId)})
     const updtatedUser = await usersCollection.findOne({ _id: new ObjectId(userId) });
 
     io.to(userId).emit("updateTarotContext", updtatedUser, updatedTable)

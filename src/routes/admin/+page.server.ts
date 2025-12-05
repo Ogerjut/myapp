@@ -1,7 +1,7 @@
 import { redirect, fail, error } from "@sveltejs/kit";
 import { auth } from "$lib/auth";
 import type { Actions, PageServerLoad } from "./$types.js";
-import { usersCollection, tarotCollection } from "$lib/server/db/db.js"
+import { usersCollection, tablesCollection } from "$lib/server/db/db.js"
 import {ObjectId} from 'mongodb'
 import { deleteCompletedTables } from "$lib/server/db/utils";
 
@@ -16,7 +16,7 @@ export const load: PageServerLoad = async ({ locals }) => {
   }
 
   const users = await usersCollection.find().toArray();
-  const tables = await tarotCollection.find().toArray();
+  const tables = await tablesCollection.find().toArray();
   
   return  {
       users : users.map(u => ({ ...u, _id: u._id.toString() })),
@@ -37,7 +37,7 @@ export const actions = {
       const formData = await request.formData();
       const tableId = formData.get('tableId');
       
-      const result = await tarotCollection.deleteOne({ 
+      const result = await tablesCollection.deleteOne({ 
           _id: new ObjectId(tableId) 
       });
       

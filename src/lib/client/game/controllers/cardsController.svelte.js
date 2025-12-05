@@ -1,13 +1,12 @@
-import { socket } from "$lib/client/socket";
 import { useTarotContext } from "../context/tarotContext.svelte";
 
 export class CardController {
   constructor() {
-    this.socket = socket;
     this.tarotContext = useTarotContext();
+    this.socket = this.tarotContext.socket;
   }
 
-  onCardClick(card) {
+  async onCardClick(card) {
     // peut destructurer le context car pas dans composant .svelte (balek réactivité ici)
     const { table, user } = this.tarotContext;
     const { state } = table;
@@ -24,13 +23,18 @@ export class CardController {
     }
   }
 
-  async onPlayableCard(card) {
-    const { table, user } = this.tarotContext;
-    const {currentPlayerId} = table.gameState
-
-    if (currentPlayerId === user._id && table.state === "game") {
-        await new Promise((r) => setTimeout(r, 1000));
-        this.socket?.emit("handlePlayableCard", table._id, user._id, card);
-    }
-  }
+  // async onPlayableCard() {
+  //   console.log("on playable card")
+  //   const { table, user, isPlayableCard } = this.tarotContext;
+  //   const {currentPlayerId} = table.gameState
+  //   const userIsCurrentPlayer = currentPlayerId === user._id
+  //   const isCurrentPlayer = user.tarot.isCurrentPlayer
+  //   console.log("is current player :", isCurrentPlayer, '\nisPlayableCard :', isPlayableCard, '\nuser is current player:', userIsCurrentPlayer)
+  //   console.log(isPlayableCard && userIsCurrentPlayer && table.state === "game")
+  //   if (isPlayableCard && userIsCurrentPlayer && table.state === "game") {
+  //       await new Promise((r) => setTimeout(r, 1000));
+  //       console.log('handleplayablecard event sent')
+  //       this.socket?.emit("handlePlayableCard", table._id, user._id);
+  //   }
+  // }
 }

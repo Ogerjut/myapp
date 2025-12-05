@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { useTarotContext } from '../game/context/tarotContext.svelte';
+	import { useTarotContext } from '../../game/context/tarotContext.svelte';
 	import UserTarotCard from "./UserTarotCard.svelte";
 
     let tarotContext = useTarotContext()

@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
-    import {useTarotContext} from '../game/context/tarotContext.svelte'
-	import Timer from './Timer.svelte';
+    import {useTarotContext} from '../../game/context/tarotContext.svelte'
+	import Timer from '../Timer.svelte';
 
     let tarotContext = useTarotContext()
     const table = $derived(tarotContext.table)

@@ -1,9 +1,9 @@
 import { ObjectId } from 'mongodb';
-import { tarotCollection, usersCollection } from '../../db/db.js';
+import { tablesCollection, usersCollection } from '../../db/db.js';
 import { LoadGame } from '../core/loadGame.js';
 
 export default async function checkStartBet(io, tableId) {
-	const table = await tarotCollection.findOne({ _id: new ObjectId(tableId) });
+	const table = await tablesCollection.findOne({ _id: new ObjectId(tableId) });
 	const room = io.sockets.adapter.rooms.get(tableId);
 
 	if (room?.size !== table?.size && !table?.ready ) {
@@ -22,7 +22,7 @@ export default async function checkStartBet(io, tableId) {
 	const players = tarot.players;
 	
 
-	await tarotCollection.updateOne(
+	await tablesCollection.updateOne(
 		{ _id: new ObjectId(tableId) },
 		{
 			$set: {
@@ -53,7 +53,7 @@ export default async function checkStartBet(io, tableId) {
 		io.to(player.id).emit("setUserTarot", updatedUser )
 	};
 
-	const updatedTable = await tarotCollection.findOne({ _id: new ObjectId(tableId) });
+	const updatedTable = await tablesCollection.findOne({ _id: new ObjectId(tableId) });
 	io.to(tableId).emit('startBet', updatedTable);
 	
 }

@@ -15,7 +15,7 @@
     {
       row : 1, col : 1,
       name : "tarot",
-      url : "/table",
+      url : "/tarot",
       image : tarotImage,
       published : true 
     },
@@ -51,7 +51,17 @@
   </div>
 
   {:else}
-  <p>Connectes toi ou inscris toi pour jouer une partie de tarot</p>
+  <p>Connectes toi ou inscris toi pour accéder aux jeux. </p>
+  <ul class="info"><u> Jeux disponibles : </u>
+    <li>Tarot 4 joueurs</li>
+  </ul>
+  <hr>
+  <ul class="info"><u>Jeux à venir : </u> 
+    <li>Tarot 5 joueurs</li>
+    <li>Belote</li>
+    <li>Yam's</li>
+    <li>Echec</li>
+  </ul>
   
   {#if loginBox}
     <Login {form}/>
@@ -84,19 +94,28 @@
     grid-template-rows: repeat(2, auto);   
     gap: 5px;
     margin-top: 10px;
+    
   }
 
   a:hover{
     cursor: pointer;
-    color : var(--color-text-2)
   }
 
   p{
     margin: 5px;
+    color : var(--color-text-2)
   }
 
   u{
     font-weight: bold;
+  }
+
+  .info{
+    background-color: var(--color-bg-box);
+    text-align: center;
+    padding: 5px;
+    border-radius: 10px;
+    width: 200px;
   }
 
 </style>

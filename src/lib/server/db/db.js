@@ -11,8 +11,7 @@ try {
     console.error("❌ Erreur de connexion à MongoDB :", error);
 }
 
-export const db = client.db("tarot");
+export const db = client.db("games");
 export const usersCollection = db.collection("user")
 export const msgCollection = db.collection("messages")
-export const tarotCollection = db.collection("tarot-games")
-export const yamsCollection = db.collection("yams")
+export const tablesCollection = db.collection("tables")

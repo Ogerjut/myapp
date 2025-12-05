@@ -30,14 +30,11 @@
 	header{
 		display: flex;
 		align-content: center;
-		/* justify-content: space-between; */
 		background-color:var(--color-bg);
 		align-items: center;
         gap: 10px;
         margin-top: 5px;
-        /* margin-right: -10%;
-        margin-left: -10% */
-
+       
 	}
 
     #user-info{

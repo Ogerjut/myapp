@@ -1,7 +1,7 @@
 <script lang='ts'>
-	import { useTarotContext } from '../game/context/tarotContext.svelte'
-	import MiniCard from './MiniCard.svelte';
-	import Timer from './Timer.svelte';
+	import { useTarotContext } from '../../game/context/tarotContext.svelte'
+	import MiniCard from '../MiniCard.svelte';
+	import Timer from '../Timer.svelte';
 
 	let tarotContext = useTarotContext()
 	let { user } = $props()

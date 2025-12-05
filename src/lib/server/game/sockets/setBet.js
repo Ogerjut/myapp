@@ -1,10 +1,11 @@
 import { ObjectId } from 'mongodb';
-import { tarotCollection, usersCollection } from '../../db/db.js';
+import { tablesCollection, usersCollection } from '../../db/db.js';
 import checkStartBet from './startBet.js';
 
 // a déplacer lors refactorisation
 export async function emitUpdate(io, tableId, playersId){
-    const updatedTable = await tarotCollection.findOne({ _id: new ObjectId(tableId) });
+    console.log("emit tarot context update")
+    const updatedTable = await tablesCollection.findOne({ _id: new ObjectId(tableId) });
     for (const playerId of playersId) {
         const updatedUser = await usersCollection.findOne({ _id: new ObjectId(playerId)});
         io.to(playerId).emit("updateTarotContext", updatedUser, updatedTable)
@@ -12,12 +13,12 @@ export async function emitUpdate(io, tableId, playersId){
 }
 
 export default async function setBet(io, tableId, userId, bet) {
-    const table = await tarotCollection.findOne({ _id: new ObjectId(tableId) });
+    const table = await tablesCollection.findOne({ _id: new ObjectId(tableId) });
     const betMap = new Map(Object.entries(table?.gameState.betMap))
     betMap.set(userId, bet)
     const playersId = table?.playersId
     
-    await tarotCollection.updateOne(
+    await tablesCollection.updateOne(
         {_id : new ObjectId(tableId)},
         {$set : {"gameState.betMap" : betMap}}
     )
@@ -28,7 +29,7 @@ export default async function setBet(io, tableId, userId, bet) {
     )
     
     if (bet > table?.gameState.actualBet){
-        await tarotCollection.updateOne(
+        await tablesCollection.updateOne(
             {_id : new ObjectId(tableId)},
             {$set : {"gameState.actualBet" : bet}}
         )
@@ -56,12 +57,12 @@ export default async function setBet(io, tableId, userId, bet) {
             })
 
             if (max < 3){
-                await tarotCollection.updateOne(
+                await tablesCollection.updateOne(
                     {_id : new ObjectId(tableId)},
                     {$set : {state : 'setupChien'}}
                 )
             } else {
-                await tarotCollection.updateOne(
+                await tablesCollection.updateOne(
                     {_id : new ObjectId(tableId)},
                     {$set : {state : 'beforeGame'}}
                 )

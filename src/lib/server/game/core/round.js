@@ -125,9 +125,16 @@ export class RoundManager{
     }
 
     restartRound(){
-        console.log('restart round')
         this.pli.clear()
         this.playedAtouts = new Array()
         this.colorPli = undefined
+    }
+
+    checkEndTurn(){
+
+    }
+
+    checkEndRound(){
+        
     }
 }

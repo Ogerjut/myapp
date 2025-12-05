@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb';
-import { usersCollection, tarotCollection } from '../../db/db.js';
+import { usersCollection, tablesCollection } from '../../db/db.js';
 import handleChien from './handleChien.js';
 import registerChien from './registerChien.js';
 
@@ -7,7 +7,7 @@ import registerChien from './registerChien.js';
 export default async function selectRandomChien(io, tableId, userId) {
     console.log("select random chien")
     const user = await usersCollection.findOne({_id : new ObjectId(userId)})
-    const table = await tarotCollection.findOne({ _id: new ObjectId(tableId)});
+    const table = await tablesCollection.findOne({ _id: new ObjectId(tableId)});
 
     let actualChien = table?.gameState.chien
     let sizeChien = table?.size === 4 ? 6 : 3

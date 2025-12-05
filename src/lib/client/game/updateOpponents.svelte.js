@@ -13,7 +13,7 @@ export async function fetchOpponents(ids, tableId) {
         return;
         }
 
-        const res = await fetch(`/table/${tableId}`, {
+        const res = await fetch(`/tarot/${tableId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ids })

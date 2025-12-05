@@ -26,7 +26,7 @@
 
     async function backToMenu(){
         socket.emit("endGame", table._id, user._id)
-        await goto('/table')
+        await goto('/tarot')
     }
 </script>
 
