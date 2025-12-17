@@ -14,7 +14,6 @@ export async function getUsers(usersId){
     return usersCollection.find({ _id: { $in: ids } }).toArray()
 }
 
-// remplacer taraotCollection par tableCollection => indiquer sur la table quel est le type du jeu à la création
 export async function getTableById(tableId){
     return tablesCollection.findOne({_id : new ObjectId(tableId)})
 }

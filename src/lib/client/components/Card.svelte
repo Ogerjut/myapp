@@ -1,7 +1,7 @@
 <script lang='ts'>
 	import { fade, fly } from "svelte/transition";
 	import { useTarotContext } from "../game/context/tarotContext.svelte";
-	import { CardController } from "../game/controllers/cardsController.svelte";
+	import { CardController } from "../game/tarot/controllers/cardsController.svelte";
 
     let {value, suit} = $props()
 

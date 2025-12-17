@@ -1,45 +1,85 @@
 <script lang="ts">
+    import Lock from '@lucide/svelte/icons/lock';
+    import D1 from '@lucide/svelte/icons/dice-1';
+    import D2 from '@lucide/svelte/icons/dice-2';
+    import D3 from '@lucide/svelte/icons/dice-3';
+    import D4 from '@lucide/svelte/icons/dice-4';
+    import D5 from '@lucide/svelte/icons/dice-5';
+    import D6 from '@lucide/svelte/icons/dice-6';
 
-    let {value} = $props()
-    let isSelected = $state(false)
+    let {id, selected = $bindable(),  value, launches} = $props()
+    
+    const diceComponents = {
+        1: D1,
+        2: D2,
+        3: D3,
+        4: D4,
+        5: D5,
+        6: D6
+    };
 
-    // rajouter une icone cadenas sous le dé séléctionné
-
-    const diceMap = {
-        1 : "&#9856", 
-        2 : "&#9857",
-        3 : "&#9858", 
-        4 : "&#9859",
-        5 : "&#9860", 
-        6 : "&#9861",
-
-    }
-
-    $inspect(isSelected)
+    const DiceIcon = $derived(diceComponents[value] || D1);
 
     function toggleisSelected(){
-        isSelected = !isSelected
+        if (launches >= 3) return
+        selected = !selected
     }
 
 </script>
 
-  
-<button id="dice" onclick={() => toggleisSelected()} onmouseenter={() => toggleisSelected()}  class:selected={isSelected}>
-    {@html diceMap[value] || "?" }
-</button>
+<div id="dice-container">
+    <button 
+    class="dice-button" 
+    class:selected={selected}
+    onclick={() => toggleisSelected()}
+    onmouseenter={() => toggleisSelected()}
+    >
+   
+    <svelte:component
+        class="dice-icon"
+        this={DiceIcon}
+        size={47}
+        fill="#fff"
+        strokeWidth={4}
+        absoluteStrokeWidth={true}
+    />
+    
+    </button>
+    {#if selected}
+        <Lock color="maroon" strokeWidth={2.5} /> 
+    {/if}
+</div>
+
     
 
 
 <style>
-
-    #dice {
-        font-size:xx-large;
-        zoom: 2;
+    #dice-container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 50px;
+        height: 80px;
+        margin-top: 30px;
     }
 
-    #dice.selected{
-        opacity: 80%;
-        color : grey;
+    .dice-button {
+        /* width: 40px;
+        height: 40px; */
+        padding: 0px;
+        margin: 0px;
+        border-radius: 0px;
+        background: green;
+        box-shadow:  0px 0px 0px;
+        /* border: 1px solid black; */
+        color : black;
+    }
+    #dice-container:first-child{
+        margin-left: 25px;
+    }
+    
+    .selected{
+        color : maroon
     }
 
 </style>

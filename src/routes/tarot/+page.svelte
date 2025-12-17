@@ -11,7 +11,7 @@
   
 </script>
 
-<div id='table-container'>  	
+<div id='setting-container'>  	
   
     {#if creating}
         <form action="?/createTable" method="post"
@@ -58,7 +58,7 @@
             
             <label class="hit-area" for="r4">
               <input checked type="radio" name="nbPlayers" id="r4" value="4" onchange={(e)=> nbPlayers = e.target.value}>
-              4 joueurs
+             4 joueurs
             </label>
           
             <label class="hit-area" for="r5">
@@ -95,7 +95,7 @@
 
 
 <style>
-  #table-container {
+  #setting-container {
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -158,5 +158,7 @@
   .hit-area:has(input:disabled){
     opacity: 60%;
   }
+
+
 
 </style>

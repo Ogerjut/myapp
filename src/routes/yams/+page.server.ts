@@ -6,7 +6,6 @@ import { fail } from '@sveltejs/kit';
 export const actions = {
   createTable : async({request}) => {
       const formData = await request.formData();
-      console.log(formData)
   
       try {
 

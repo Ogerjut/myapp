@@ -4,7 +4,7 @@ import express from 'express';
 import { handler } from './build/handler.js';
 import { Server } from 'socket.io';
 import http from 'http';
-import socketController from './src/lib/server/game/sockets/socketController.js';
+import socketController from './src/lib/server/game/socketController.js';
 
 console.log("NODE_ENV =", process.env.NODE_ENV);
 console.log('🌍 ORIGIN utilisée :', process.env.ORIGIN);

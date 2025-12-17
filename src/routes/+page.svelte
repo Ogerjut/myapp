@@ -24,7 +24,7 @@
       name : "yam's",
       url : "/yams",
       image : yamsImage,
-      published : false 
+      published : true 
     },
     {
       row : 2, col : 1,

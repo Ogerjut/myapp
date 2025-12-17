@@ -68,7 +68,7 @@
         height: 250px;
         width : 200px;
         text-align:center;
-        
+       
     }
 
     #search-bar{

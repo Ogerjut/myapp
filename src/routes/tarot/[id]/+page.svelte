@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Tarot from '$lib/client/components/tarot/Tarot.svelte'
+	import Tarot from '$lib/client/components/tarot/Tarot.svelte';
     import { setTarotContext } from '$lib/client/game/context/tarotContext.svelte.js'
 	import { socket } from '$lib/client/socket.js';
     

@@ -4,19 +4,18 @@
 	import { onMount } from 'svelte';
     import { beforeNavigate, goto} from '$app/navigation'
     import { useOpponents } from '$lib/client/game/updateOpponents.svelte.js'
-	import {useTarotContext} from '../../game/context/tarotContext.svelte'
     import PlayerSeat from '$lib/client/components/tarot/PlayerSeat.svelte';
 	import Table from '$lib/client/components/Table.svelte';
     import Card from '$lib/client/components/Card.svelte'
-	import { listenerSocketTarot } from '../../game/listenerSocketTarot.svelte';
+	import { listenerSocket } from '$lib/client/game/core/listenerSocket.svelte';
+	import { useTarotContext } from '$lib/client/game/context/tarotContext.svelte';
+	import { listenerSocketTarot } from '$lib/client/game/tarot/listenerSocketTarot.svelte';
 	import Bet from './Bet.svelte';
 	import SetupChien from './SetupChien.svelte';
-	import Round from './Round.svelte';
-	import EndGame from '../EndGame.svelte';
-	import ScoreBoard from '../ScoreBoard.svelte';
-	import { browser } from '$app/environment';
 	import PoigneeChelem from './PoigneeChelem.svelte';
 	import ShowPoignee from './ShowPoignee.svelte';
+	import Round from './Round.svelte';
+	import EndGame from '../EndGame.svelte';
 	import Modale from '../Modale.svelte';
 
     let tarotContext = useTarotContext()
@@ -28,38 +27,22 @@
 
     // $inspect("tarot / user", tarotContext.user.tarot)
     // $inspect("tarot / table", tarotContext.table)
-    $inspect("table state : ", tarotContext.table.state)
+    // $inspect("table state : ", tarotContext.table.state)
 
     let opponents = $derived(useOpponents())
 
     let dialog
 
-    // faire un useTarot pour tout le jeu de tarot 
-    // dans lib, fichiers .svelte.js 
-    //  passer la logique métier coté lib/server 
-    // useBet aussi dans client/game .svelte.js 
-
     onMount(() => {
-        // listeners pour loading game / bet / start game...
-        // peut etre faire un composant InstallingPlayer
-        // Bet, startGame... en fonction du table.state 
-        // pour alléger composant Tarot
         console.log('Tarot.svelte mounted')
-        socket.emit("joinTable", userId, tableId)
-        listenerSocketTarot(tarotContext)
+        socket.emit("joinTable", userId, tableId, game)
+        
+        const cleanupCore = listenerSocket (tarotContext, game)
+        const cleanupTarot = listenerSocketTarot(tarotContext)
 
-        return ()=> {
-            socket.off("leaveAllTable")//
-            socket.off("tableLeft")//
-            socket.off("setUserTarot")//
-            socket.off("updateTable")//
-            socket.off("startBet")//
-            socket.off("connect")//
-            socket.off("isPlayableCard")//
-            socket.off("updateTarotContext")//
-            socket.off("showPoignee")//
-            socket.off("updateUser")//
-            socket.off("endPlayableCard")//
+        return () => {
+            cleanupCore()
+            cleanupTarot()
         }
     })
 
@@ -69,11 +52,11 @@
             Object.assign(tarotContext.url, nav.to?.url.pathname)
             // console.log(dialog)
             // dialog.showModal()
-            socket.emit("leaveAllTable", tableId)
+            socket.emit("leaveAllTable", tableId, game)
            
         }
         if (tarotContext.table.state === "created" && !nav.to?.url.pathname.startsWith("/tarot/")){
-            socket.emit("leaveTable", tableId, userId, nav.to?.url.pathname) 
+            socket.emit("leaveTable", tableId, userId, nav.to?.url.pathname, game) 
         }
     })
     
@@ -127,7 +110,7 @@
                     <Round />
             {/if}
             {#if tarotContext.table.completed && tarotContext.table.state === 'endGame'}
-                    <EndGame {game} />
+                    <EndGame {game} context={tarotContext} />
             {/if}
         
         </div>

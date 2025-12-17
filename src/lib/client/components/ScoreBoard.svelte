@@ -1,11 +1,11 @@
 <script lang='ts'>
 	import { onMount } from "svelte";
-	import { useTarotContext } from "../game/context/tarotContext.svelte";
+	// import { useTarotContext } from "../game/context/tarotContext.svelte";
 
-    let {game} = $props()
+    let {game, context} = $props()
 
-    const tarotContext = useTarotContext()
-    const tableId = $derived(tarotContext.table._id)
+    // const tarotContext = useTarotContext()
+    const tableId = $derived(context.table._id)
     
     let users = $state()
     let max = $state()

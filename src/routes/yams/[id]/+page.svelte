@@ -5,6 +5,8 @@
 	
 	let {data} = $props()
 
+	$inspect(data.users)
+
 	let game = $state({
 		user : data.user,
 		table : data.table,
@@ -14,4 +16,4 @@
 
 </script>
 
-<Yams/>
+<Yams />

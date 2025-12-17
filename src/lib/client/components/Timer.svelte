@@ -1,6 +1,6 @@
 <script lang='ts'>
 	import { onDestroy, onMount } from "svelte";
-	import { TimerController } from "../game/controllers/timerController.svelte";
+	import { TimerController } from "../game/timerController.svelte";
     
     let {duration, callback, key} = $props()
     
