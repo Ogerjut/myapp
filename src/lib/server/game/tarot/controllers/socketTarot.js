@@ -9,11 +9,11 @@ import registerChien from "./registerChien.js";
 import registerPoignee from "./registerPoignee.js";
 import selectRandomChien from "./selectRandomChien.js";
 import setBet from "./setBet.js";
-import checkStartBet from "./startBet.js";
+// import checkStartBet from "./startBet.js";
 
 
 export default function socketTarot(io, socket){
-    socket.on('checkStartBet', (tableId) => {checkStartBet(io, tableId)});			
+    // socket.on('checkStartBet', (tableId) => {checkStartBet(io, tableId)});			
     socket.on('playerHasBet', (tableId, userId, bet)=> setBet (io, tableId, userId, bet))
     socket.on('handleChien', (tableId, userId, card)=> handleChien(io, tableId, userId, card))
     socket.on('registerChien', (tableId)=> registerChien(io, tableId))

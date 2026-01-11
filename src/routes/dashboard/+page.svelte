@@ -3,10 +3,15 @@
 
   let { data } = $props();
 
+  const user = $derived(data.user)
+
+  const mapGames = {"tarot" : "Tarot", "yams" : "Yam's", "belote" : "Belote", "chess" : "Échec"}
+
   // Affichage des sections
   let showChangePassword = $state(false);
   let showChangeEmail = $state(false);
   let showDelete = $state(false);
+  let showStats = $state(true)
 
   // Etats de chargement
   let changingPassword = $state(false);
@@ -20,6 +25,42 @@
 </script>
 
 <div id="dashboard-container">
+
+<!-- Montrer les stats -->
+  <div class="modifier">
+    <button class="modify-button" onclick={() => showStats = !showStats}>
+      Montrer les statistiques
+    </button>
+  
+    {#if showStats}
+    <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Parties jouées</th>
+            <th>Victoires</th>
+            <th>Ratio</th>
+            <th>Plus grand score</th>
+          </tr>  
+        </thead>
+
+        <tbody>
+          {#each Object.entries(mapGames) as [key, val] }
+            <tr>
+              <th>{val}</th>
+              <td>{user.games[key]}</td>
+              <td>{user.victories[key]}</td>
+              <td>{Math.floor((user.victories[key] / user.games[key] )*100) || 0}%</td>
+              <td>{user?.highestScores?.[key] || "-" }</td>
+            </tr>
+          {/each}
+        </tbody>
+    </table>
+      
+    {/if}
+  </div>
+
+
 <!-- Changer le mot de passe -->
 <div class="modifier">
   <button class="modify-button" onclick={() => showChangePassword = !showChangePassword}>
@@ -151,7 +192,7 @@ display: flex;
 flex-direction: column;
 padding: 5px;
 gap: 10px;
-max-width: 50%;
+max-width: 60%;
 }
 
 .modifier {
@@ -181,8 +222,9 @@ border-radius: 10px;
 }
 
 .modify-button {
-background-color: var(--color-text);
+background-color: var(--color-text-2);
 color: white;
+box-shadow: 0px 1px;
 }
 
 .modify-button:focus-visible {
@@ -199,5 +241,20 @@ span {
 background-color: var(--color-bg);
 padding: 5px;
 border-radius: 10px;
+}
+
+table{
+  background-color: var(--color-bg-box);
+  
+  border-collapse: collapse;
+  
+}
+
+td, th{
+  text-align: center;
+  padding: 2px;
+  border: 1px solid #ddd;
+  
+
 }
 </style>

@@ -4,66 +4,64 @@
 	import { onMount } from 'svelte';
     import { beforeNavigate, goto} from '$app/navigation'
     import { useOpponents } from '$lib/client/game/updateOpponents.svelte.js'
-    import PlayerSeat from '$lib/client/components/tarot/PlayerSeat.svelte';
+    import PlayerSeat from '$lib/client/components/belote/PlayersSeats.svelte';
 	import Table from '$lib/client/components/Table.svelte';
-    import Card from '$lib/client/components/tarot/Card.svelte'
 	import { listenerSocket } from '$lib/client/game/core/listenerSocket.svelte';
-	import { useTarotContext } from '$lib/client/game/context/tarotContext.svelte';
-	import { listenerSocketTarot } from '$lib/client/game/tarot/listenerSocketTarot.svelte';
+	import { useBeloteContext } from '$lib/client/game/context/beloteContext.svelte';
+
 	import Bet from './Bet.svelte';
-	import SetupChien from './SetupChien.svelte';
-	import PoigneeChelem from './PoigneeChelem.svelte';
-	import ShowPoignee from './ShowPoignee.svelte';
 	import Round from '../Round.svelte';
 	import EndGame from '../EndGame.svelte';
 	import Modale from '../Modale.svelte';
+	import { listenerSocketBelote } from '$lib/client/game/belote/listenerSocketBelote.svelte';
+	import Card from './Card.svelte';
 
-    let tarotContext = useTarotContext()
+    let beloteContext = useBeloteContext()
     
-    let game = "tarot"
-    let userId = $derived(tarotContext.user.id || tarotContext.user._id)
-    let tableId = $derived(tarotContext.table._id)
-    let socket = $derived(tarotContext.socket)
+    let game = "belote"
+    let userId = $derived(beloteContext.user.id || beloteContext.user._id)
+    let tableId = $derived(beloteContext.table._id)
+    let socket = $derived(beloteContext.socket)
 
-    // $inspect("tarot / user", tarotContext.user.tarot)
-    // $inspect("tarot / table", tarotContext.table)
-    // $inspect("table state : ", tarotContext.table.state)
+    $inspect("user.belote", beloteContext.user.belote)
+    $inspect("belote / table", beloteContext.table)
+    // $inspect("table state : ", beloteContext.table.state)
 
     let opponents = $derived(useOpponents())
 
     let dialog
 
     onMount(() => {
-        console.log('Tarot.svelte mounted')
+        console.log('Belote.svelte mounted')
         socket.emit("joinTable", userId, tableId, game)
         
-        const cleanupCore = listenerSocket (tarotContext, game)
-        const cleanupTarot = listenerSocketTarot(tarotContext)
+        const cleanupCore = listenerSocket(beloteContext, game)
+        const cleanupBelote = listenerSocketBelote(beloteContext)
 
         return () => {
             cleanupCore()
-            cleanupTarot()
+            cleanupBelote()
         }
     })
 
     beforeNavigate((nav)=>{
         if (nav.type === "leave" || nav.type === "goto") return
-        if (tarotContext.table.state !== "created"){
-            Object.assign(tarotContext.url, nav.to?.url.pathname)
+        if (beloteContext.table.state !== "created"){
+            Object.assign(beloteContext.url, nav.to?.url.pathname)
             // console.log(dialog)
             // dialog.showModal()
             socket.emit("leaveAllTable", tableId, game)
            
         }
-        if (tarotContext.table.state === "created" && !nav.to?.url.pathname.startsWith("/tarot/")){
+        if (beloteContext.table.state === "created" && !nav.to?.url.pathname.startsWith("/belote/")){
             socket.emit("leaveTable", tableId, userId, nav.to?.url.pathname, game) 
         }
     })
     
     // if (browser) {
     //     window.addEventListener("beforeunload", () => {
-    //     if (tarotContext.table.state === "created") return 
-    //     if (tarotContext.table.state !== "created") {
+    //     if (beloteContext.table.state === "created") return 
+    //     if (beloteContext.table.state !== "created") {
     //         console.log("before unload triggered")
     //         socket.emit("leaveAllTable", tableId)
     //     }
@@ -80,37 +78,25 @@
 <!-- faire un composant pour 4joueurs et 5joueurs (plus tard) -->
 <div id="game-container">
     <div id="table-area">
-        <i>{tarotContext.table.state} mode</i>
+        <i>{beloteContext.table.state} mode</i>
         <Table/>
         <PlayerSeat {opponents} />
     
         <div style="grid-area: 2 / 2;">
-            {#if !tarotContext.table.ready }
-                <ActivePlayerPanel context={tarotContext} {game}/>
+            {#if !beloteContext.table.ready }
+                <ActivePlayerPanel context={beloteContext} {game}/>
             {/if}
-            {#if tarotContext.table.ready && tarotContext.table.state === 'bet'}
+            {#if beloteContext.table.ready && beloteContext.table.state === 'bet'}               
                 <div id='bet-container'>
                     <Bet />
                 </div>
                
             {/if}
-            {#if tarotContext.table.ready && tarotContext.table.state === 'setupChien' && tarotContext.table.gameState.actualBet < 3}
-                <div id='chien-container'>
-                    <SetupChien/>
-                </div>
-               
+            {#if beloteContext.table.ready && beloteContext.table.state === 'game'}
+                    <Round context={beloteContext} />
             {/if}
-            {#if tarotContext.table.ready && tarotContext.table.state === 'beforeGame'}
-                    <PoigneeChelem />
-            {/if}
-            {#if tarotContext.table.ready && tarotContext.table.state === 'showPoignee'}
-                    <ShowPoignee />
-            {/if}
-            {#if tarotContext.table.ready && tarotContext.table.state === 'game'}
-                    <Round context={tarotContext} />
-            {/if}
-            {#if tarotContext.table.completed && tarotContext.table.state === 'endGame'}
-                    <EndGame {game} context={tarotContext} />
+            {#if beloteContext.table.completed && beloteContext.table.state === 'endGame'}
+                    <EndGame {game} context={beloteContext} />
             {/if}
         
         </div>
@@ -118,9 +104,9 @@
     </div>
     
     
-    {#if tarotContext.user.tarot?.hand}
+    {#if beloteContext.user.belote?.hand}
         <div id="hand-area">
-        {#each tarotContext.user.tarot?.hand as card}
+        {#each beloteContext.user.belote?.hand as card}
             <Card value={card.value} suit={card.suit}/> 
         {/each}
         </div>
@@ -171,15 +157,6 @@
         gap : 3px;
     }
 
-    #chien-container{
-        background: var(--color-bg-box);
-        padding: 10px;
-        border:var(--border-4);
-        border-radius: 15px;
-        justify-items: center;
-        justify-content: center;
-        
-        
-    }
+
     
 </style>

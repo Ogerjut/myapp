@@ -1,3 +1,4 @@
+import socketBelote from './belote/controllers/socketBelote.js';
 import { socketCore } from './core/socketCore.js';
 import socketTarot from './tarot/controllers/socketTarot.js';
 import socketYams from './yams/controllers/socketsYams.js';
@@ -14,7 +15,7 @@ export default function socketController(io) {
 		socketCore(io, socket); // events globaux
 		socketTarot(io, socket); // events du tarot
 		socketYams(io, socket); // events du yam's
-		// socketBelote(io, socket); // events de la belote
+		socketBelote(io, socket); // events de la belote
 		// socketChess(io, socket); // events des échecs
 	});
 

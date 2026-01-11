@@ -1,10 +1,10 @@
 <script lang='ts'>
 	
-	import { useTarotContext } from "../../game/context/tarotContext.svelte";
-	import Card from "../Card.svelte";
+	import Card from "./tarot/Card.svelte";
 
-    const tarotContext = useTarotContext()
-    const table = $derived(tarotContext.table)
+    let {context} = $props()
+
+    const table = $derived(context.table)
 
 
 </script>
@@ -26,6 +26,6 @@
     justify-items: center;
     justify-content: center;
     width: 300px;
-    height:150px
+    height:150px;
 }
 </style>

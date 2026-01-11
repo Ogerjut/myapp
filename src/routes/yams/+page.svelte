@@ -56,7 +56,7 @@
 
         <div id="buttons">
           <button type="submit"> Créer la table </button>
-          <button type="button"> Menu </button>
+          <button type="button" onclick={()=>goto('/')}> Menu </button>
   
         </div>
 

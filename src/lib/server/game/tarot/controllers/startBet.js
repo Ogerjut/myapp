@@ -2,7 +2,7 @@ import { ObjectId } from 'mongodb';
 import { tablesCollection, usersCollection } from '../../../db/db.js';
 import { LoadGame } from '../core/loadGame.js';
 
-export default async function checkStartBet(io, tableId) {
+export default async function checkStartBetTarot(io, tableId) {
 	const table = await tablesCollection.findOne({ _id: new ObjectId(tableId) });
 	
 	// const room = io.sockets.adapter.rooms.get(tableId);

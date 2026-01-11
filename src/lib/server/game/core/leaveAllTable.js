@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb';
 import { usersCollection, tablesCollection } from '../../db/db.js';
 
-export default async function leaveAllTable(io, socket, tableId, game) {
+export default async function leaveAllTable(io, tableId, game) {
     console.log("leave all table")
     const table = await tablesCollection.findOne({ _id: new ObjectId(tableId) });
     if (!table) return 
@@ -9,10 +9,7 @@ export default async function leaveAllTable(io, socket, tableId, game) {
 
     const ids = playersId.map(id => new ObjectId(id));
     
-    await usersCollection.updateMany(
-        {_id: { $in: ids }}, 
-        {$set : {inGame: false, tarot : {}, "score.tarot" : 0}
-    })
+    await updatePlayers(ids, game)
 
 	await tablesCollection.deleteOne({ _id: new ObjectId(tableId) });
 		
@@ -22,14 +19,23 @@ export default async function leaveAllTable(io, socket, tableId, game) {
 
 }
 
-
-async function leaveGameTable(ids, game){
-    switch(game){
-        case "tarot" : 
-            await leaveTarotTable(ids)
+async function updatePlayers(ids, game){
+    switch (game) {
+        case "tarot":
+            await usersCollection.updateMany(
+                {_id: { $in: ids }}, 
+                {$set : {inGame: false, tarot : {}, "score.tarot" : 0}
+            })        
+            break;
+            
+        case "belote":
+            await usersCollection.updateMany(
+                {_id: { $in: ids }}, 
+                {$set : {inGame: false, belote : {}, "score.belote" : 0}
+            })
             break
-        case "yams" : 
-            await leaveYamsTable(ids)
-            break
+        
+        default:
+            break;
     }
 }

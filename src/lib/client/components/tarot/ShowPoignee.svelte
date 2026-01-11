@@ -1,7 +1,7 @@
 <script lang='ts'>
 	
 	import { useTarotContext } from "../../game/context/tarotContext.svelte";
-	import Card from "../Card.svelte";
+	import Card from "./Card.svelte";
 	import Timer from "../Timer.svelte";
 
     const tarotContext = useTarotContext()

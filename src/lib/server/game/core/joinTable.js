@@ -1,7 +1,8 @@
 
 import { ObjectId } from 'mongodb';
 import { usersCollection, tablesCollection } from '../../db/db.js';
-import checkStartBet from '../tarot/controllers/startBet.js';
+import checkStartBetBelote from '../belote/controllers/checkStartBet.js';
+import checkStartBetTarot from '../tarot/controllers/startBet.js';
 import startGame from '../yams/controllers/startGame.js';
 import checkTableIsReady from './checkTableIsReady.js';
 
@@ -33,10 +34,13 @@ export default async function joinTable(io, socket, userId, tableId, game) {
 		if (tableReady){
 			switch(game){
 				case "tarot" : 
-					await checkStartBet(io, tableId)
+					await checkStartBetTarot(io, tableId)
 					break
 				case "yams" :
 					await startGame(io, tableId)
+					break
+				case "belote" : 
+					await checkStartBetBelote(io, tableId)
 					break
 				default : return 
 			}

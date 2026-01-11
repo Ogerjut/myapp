@@ -7,9 +7,9 @@
     const MENU = [
         {name : "menu", url : "/"},
         {name : "tarot", url : "/tarot"},
-		{name : "belote", url : "/belote"},
+		// {name : "belote", url : "/belote"},
 		{name : "yam's", url : "/yams"},
-		{name : "échec", url : "/chess"},
+		// {name : "échec", url : "/chess"},
 		{name : "chat", url : "/chat"},
 		{name : "compte", url : "/dashboard"},
     ]

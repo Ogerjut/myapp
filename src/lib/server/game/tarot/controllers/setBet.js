@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 import { tablesCollection, usersCollection } from '../../../db/db.js';
-import checkStartBet from './startBet.js';
+import checkStartBetTarot from './startBet.js';
 
 // a déplacer lors refactorisation
 export async function emitUpdate(io, tableId, playersId){
@@ -42,7 +42,7 @@ export default async function setBet(io, tableId, userId, bet) {
         betMap.forEach((val, key)=> max = Math.max(max, val))
         if (max === 0){
             console.log("restart bet")
-            checkStartBet(io, tableId)
+            checkStartBetTarot(io, tableId)
 
         } else {
 

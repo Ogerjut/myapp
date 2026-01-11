@@ -11,7 +11,7 @@ export function socketCore(io, socket){
     socket.on("quitTable", (tableId) => {socket.leave(tableId)})
     socket.on('inviteToPlay', (tableId, from, userId, game) => io.to(userId).emit('invitationToPlay', tableId, from, game));
     socket.on('leaveTable', (tableId, userId, url, game) => {leaveTable(io, socket, tableId, userId, url, game)});
-    socket.on('leaveAllTable', (tableId, game) => {leaveAllTable(io, socket, tableId, game)});
+    socket.on('leaveAllTable', (tableId, game) => leaveAllTable(io, tableId, game));
     socket.on('getEndTime', (duration, callback) => getEndTime(duration, callback))
 
 

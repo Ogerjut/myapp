@@ -1,5 +1,6 @@
 import { ObjectId } from 'mongodb';
 import { usersCollection, tablesCollection } from '../../db/db.js';
+import leaveBeloteTable from '../belote/controllers/leaveBeloteTable.js';
 import leaveTarotTable from '../tarot/controllers/leaveTarotTable.js';
 import leaveYamsTable from '../yams/controllers/leaveYamsTable.js';
 
@@ -11,6 +12,9 @@ export default async function leaveTable(io, socket, tableId, userId, url, game)
 			break;
 		case "yams" :
 			await leaveYamsTable(io, userId)
+			break
+		case "belote" :
+			await leaveBeloteTable(io, userId)
 			break
 		default:
 			break;

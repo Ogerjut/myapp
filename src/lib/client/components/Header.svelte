@@ -8,18 +8,19 @@
 </script>
 
 <header>
-    <img src={logo} alt="logo">
-
-    <Title />
-	
-    <!-- {#if data.user}
+    <div style="display:flex; align-items : center">
+        <img src={logo} alt="logo">
+        <Title />
+    </div>
+   
+    {#if data.user}
         <div id="user-info">
-            <p > Bonjour {data.user.name} ({data.user.email})</p>
+            <p > {data.user.name} ({data.user.email})</p>
             {#if data.user?.role === "admin"}
             <p>Admin mode</p>
             {/if}
         </div>
-    {/if} -->
+    {/if}
 
 
 </header>
@@ -31,7 +32,8 @@
 		display: flex;
 		align-content: center;
 		background-color:var(--color-bg);
-		align-items: center;
+		align-items:center;
+        justify-content: space-around;
         gap: 10px;
         margin-top: 5px;
        

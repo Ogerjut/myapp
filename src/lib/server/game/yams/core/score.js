@@ -26,7 +26,7 @@ export class ScoreManager{
             case "carré" : 
                 return this.getSquare()
             case "full" : 
-                return this.getFull()
+                return this.getFull(rule)
             case "petite suite" : 
                 return this.getPS()
             case "grande suite" : 
@@ -48,15 +48,19 @@ export class ScoreManager{
         return this.dices.reduce((sum, dice)=> sum + dice.value, 0)
     }
 
-    areEqualDicesOfLength(nb){
+    areEqualDicesOfLength(nb, rule = undefined){
         for (let i = 1; i < 7; i++){
             const dices = this.dices.filter(dice => dice.value === i)
-            if (dices.length >= nb){
+            if (!rule && dices.length >= nb){
+                return true 
+            } else if (rule === "full" && dices.length === nb){
                 return true 
             }
         }
         return false 
     }
+
+
 
     getBrelan(){
         if (this.areEqualDicesOfLength(3)){
@@ -70,8 +74,8 @@ export class ScoreManager{
         } else return 0
     }
     
-    getFull(){
-        if (this.areEqualDicesOfLength(3) && this.areEqualDicesOfLength(2)){
+    getFull(rule){
+        if (this.areEqualDicesOfLength(3, rule) && this.areEqualDicesOfLength(2, rule)){
             return 25
         } else return 0
     }

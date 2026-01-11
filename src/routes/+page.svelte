@@ -54,12 +54,12 @@
   <p>Connectes toi ou inscris toi pour accéder aux jeux. </p>
   <ul class="info"><u> Jeux disponibles : </u>
     <li>Tarot 4 joueurs</li>
+    <li>Yam's</li>
   </ul>
   <hr>
   <ul class="info"><u>Jeux à venir : </u> 
     <li>Tarot 5 joueurs</li>
     <li>Belote</li>
-    <li>Yam's</li>
     <li>Echec</li>
   </ul>
   
@@ -86,10 +86,6 @@
 <style>
   #games-container{
     display: grid;
-    /* border: var(--border-2);
-    border-radius: 25px;
-    background-color: var(--color-bg-box);
-    padding: 25px; */
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     grid-template-rows: repeat(2, auto);   
     gap: 5px;

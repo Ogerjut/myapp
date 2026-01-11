@@ -53,10 +53,6 @@
 	
 	})
 
-	// $effect(()=>{
-		
-	// })
-
 </script>
 
 <svelte:head>

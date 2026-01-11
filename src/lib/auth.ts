@@ -69,6 +69,8 @@ export const auth = betterAuth({
       victories :  {type: "number", input: false},
       games :  {type: "number", input: false},
       score :  {type: "number", input: false},
+      highestScore :  {type: "number", input: false},
+
 
     }
   },
@@ -85,6 +87,7 @@ export const auth = betterAuth({
                     victories : {tarot : 0, belote : 0, yams : 0, chess : 0}, 
                     games : {tarot : 0, belote : 0, yams : 0, chess : 0},
                     score : {tarot : 0, belote : 0, yams : 0},
+                    highestScore : {tarot : 0, belote : 0, yams : 0},
                   }
             }
         },

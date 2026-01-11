@@ -14,7 +14,6 @@
         <div id="E" style="grid-area: 2 / 3;"> {@html mapSuit["club"]}</div>
         <div id="S" style="grid-area: 3 / 2;"> {@html mapSuit["heart"]}</div>
     </div>
-    
 </div>
 
 <style>
@@ -25,6 +24,7 @@
         border: 10px solid maroon;
         background-color: darkgreen;
         border-radius: 50%;
+        box-shadow: 0px 0px 30px black;
     }
 
     #deco {

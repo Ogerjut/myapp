@@ -1,20 +1,19 @@
 <script lang='ts'>
 	import { fade, fly } from "svelte/transition";
-	import { useTarotContext } from "../game/context/tarotContext.svelte";
-	import { CardController } from "../game/tarot/controllers/cardsController.svelte";
 
     let {value, suit} = $props()
 
     // let tarotContext = useTarotContext()
     // const isPlayableCard = $derived(tarotContext.isPlayableCard)
     // const activeCard = $derived(tarotContext.activeCard)
-    const controller = new CardController()
+    const controller = null
 
     let mapValue = {
-        14 : "R",
-        13 : "D",
-        12 : "C",
-        11 : "V",
+        14 : "A",
+        13 : "10",
+        12 : "R",
+        11 : "D",
+        10 : "V"
     }
     let mapSuit = {
         spade : "&#9824", 
@@ -23,17 +22,7 @@
         club : "&#9827"
     }
     
-    let isExcuse = $derived(value === 0 && suit === "atout")
-    let displayValue = $derived.by(()=>{
-        if (isExcuse){
-        return "Excuse"
-    } else if (suit === "atout"){
-        return value
-    } else {
-        return mapValue[value] || value
-    }
-    })
-
+    let displayValue =  mapValue[value] || value
     let displaySuit = $derived(mapSuit[suit]) 
 
     let color = $derived((suit === "heart" || suit === "diamond") ? "#CC0000" : suit === "atout" ? '#0000CC' : 'black')
@@ -52,9 +41,8 @@
         role="button"
         tabindex="1"
         class="card"
-        class:isExcuse = {isExcuse}
         style="--color : {color};"
-        onmousedown={() => controller.onCardClick({value, suit})}
+        onmousedown={() => controller?.onCardClick({value, suit})}
         transition:fly={{ y: -100, duration: 1000 }}
 
     >
