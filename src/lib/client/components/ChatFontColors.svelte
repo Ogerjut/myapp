@@ -8,6 +8,7 @@
 <div id="colors">
     {#each colors as color}
         <button 
+            aria-label="color selection"
             class="btn-color" 
             style="--color-btn:{color}"
             onclick={()=>fontColor = color}

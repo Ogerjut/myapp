@@ -5,6 +5,7 @@
 
 <div
   role="button"
+  tabindex=0
   id="game-card"
   class:notpublished={!published}
   style={`grid-row: ${row}; grid-column: ${col};`}

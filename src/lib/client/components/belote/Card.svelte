@@ -39,7 +39,7 @@
 
     <div
         role="button"
-        tabindex="1"
+        tabindex=0
         class="card"
         style="--color : {color};"
         onmousedown={() => controller?.onCardClick({value, suit})}
@@ -91,9 +91,7 @@
         border: 3px solid var(--color);
     }
 
-    .isExcuse{
-        writing-mode:vertical-lr;
-    }
+  
 
 
 </style>

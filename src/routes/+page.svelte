@@ -52,7 +52,7 @@
 
   {:else}
   <p>Connectes toi ou inscris toi pour accéder aux jeux. </p>
-  <ul class="info"><u> Jeux disponibles : </u>
+  <!-- <ul class="info"><u> Jeux disponibles : </u>
     <li>Tarot 4 joueurs</li>
     <li>Yam's</li>
   </ul>
@@ -61,22 +61,22 @@
     <li>Tarot 5 joueurs</li>
     <li>Belote</li>
     <li>Echec</li>
-  </ul>
+  </ul> -->
   
   {#if loginBox}
     <Login {form}/>
     <p> Pas encore inscrit ?
-      <a onclick={()=> loginBox = !loginBox }>
+      <button class="btn-log" onclick={()=> loginBox = !loginBox }>
         <u>Cliques ici</u>
-      </a>
+      </button>
     </p> 
 
     {:else}
     <SignUp {form} />
-    <p>  Connectes toi 
-      <a onclick={()=> loginBox = !loginBox }>
-        <u>ici</u>
-      </a>
+    <p>  
+      <button class="btn-log" onclick={()=> loginBox = !loginBox }>
+        <u> Connectes toi </u>
+      </button>
     </p> 
   {/if}
 
@@ -112,6 +112,11 @@
     padding: 5px;
     border-radius: 10px;
     width: 200px;
+  }
+
+  .btn-log {
+    background: transparent;
+    box-shadow: 0 0
   }
 
 </style>

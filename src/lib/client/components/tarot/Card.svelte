@@ -49,7 +49,7 @@
 
     <div
         role="button"
-        tabindex="1"
+        tabindex=0
         class="card"
         class:isExcuse = {isExcuse}
         style="--color : {color};"

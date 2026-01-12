@@ -35,14 +35,14 @@
     onmouseenter={() => toggleisSelected()}
     >
    
-    <svelte:component
-        class="dice-icon"
-        this={DiceIcon}
-        size={47}
-        fill="#fff"
-        strokeWidth={4}
-        absoluteStrokeWidth={true}
+    <DiceIcon
+    class="dice-icon"
+    size={47}
+    fill="#fff"
+    strokeWidth={4}
+    absoluteStrokeWidth
     />
+
     
     </button>
     {#if selected}

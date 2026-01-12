@@ -31,7 +31,7 @@
 
     let opponents = $derived(useOpponents())
 
-    let dialog
+    let dialog = $state()
 
     onMount(() => {
         console.log('Tarot.svelte mounted')

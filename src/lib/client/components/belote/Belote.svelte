@@ -29,7 +29,7 @@
 
     let opponents = $derived(useOpponents())
 
-    let dialog
+    let dialog = $state()
 
     onMount(() => {
         console.log('Belote.svelte mounted')
