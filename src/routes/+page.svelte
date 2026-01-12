@@ -38,7 +38,7 @@
       name : "belote",
       url : "/belote",
       image : beloteImage,
-      published : true 
+      published : false 
     },
   ]
 </script>

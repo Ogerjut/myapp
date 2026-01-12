@@ -1,6 +1,8 @@
 <script>
     let {data, form} = $props()
     import { enhance } from "$app/forms";
+    import { goto } from "$app/navigation";
+
 
     let changingPassword = $state(false)
 </script>
@@ -30,5 +32,7 @@
       </label>
     </div>
     
-    <button disabled={changingPassword}> Changer de mot de passe </button>
+    <button type="submit" disabled={changingPassword}> Changer de mot de passe </button>
+    <button type="button" onclick={()=>goto("/")}>Annuler </button>
   </form> 
+  
