@@ -47,7 +47,7 @@
     
     <button disabled={logingin}> Se connecter </button>
 
-    <a href="/login/forgotten-password">mot de passe oublié ?</a>
+    <a href="/dashboard/forgotten-password">mot de passe oublié ?</a>
 
     {#if form?.error}
       <p style="color:red;">{form.error}</p>

@@ -17,9 +17,9 @@ export const auth = betterAuth({
   database: mongodbAdapter(db),
   emailAndPassword: {
     enabled: true,
-    // minPasswordLength: 8,
+    minPasswordLength: 8,
     maxPasswordLength: 64,
-    // requireEmailVerification: true,
+    requireEmailVerification: true,
 
     sendResetPassword: async ({user, url, token}, request) => {
       await sendEmail({

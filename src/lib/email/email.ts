@@ -1,4 +1,3 @@
-// src/lib/email.ts
 import { Resend } from "resend";
 import {RESEND_API_KEY} from '$env/static/private'
 

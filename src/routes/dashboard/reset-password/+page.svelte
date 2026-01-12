@@ -5,7 +5,7 @@
     let changingPassword = $state(false)
 </script>
 
-<form method="post" action="?/changePassword" 
+<form method="post" action="?/resetPassword" 
     use:enhance ={(({formElement})=>{
       changingPassword = true
     return async ({result, update}) => {
