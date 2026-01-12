@@ -93,10 +93,6 @@
     
   }
 
-  a:hover{
-    cursor: pointer;
-  }
-
   p{
     margin: 5px;
     color : var(--color-text-2)
@@ -106,13 +102,13 @@
     font-weight: bold;
   }
 
-  .info{
+  /* .info{
     background-color: var(--color-bg-box);
     text-align: center;
     padding: 5px;
     border-radius: 10px;
     width: 200px;
-  }
+  } */
 
   .btn-log {
     background: transparent;
