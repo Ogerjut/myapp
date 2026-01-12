@@ -1,8 +1,11 @@
 <script>
     let {data, form} = $props()
     import { enhance } from "$app/forms";
+	  import { goto } from "$app/navigation";
 
     let resetingPassword = $state(false)
+
+    
 </script>
 
 <form method="post" action="?/sendLinkByEmail" 
@@ -28,6 +31,8 @@
 
 <button disabled={resetingPassword}> Envoyer le mail de récupération </button>
 </form> 
+
+<button onclick={()=>goto("/")}>Menu</button>
 
 
 {#if form?.error}

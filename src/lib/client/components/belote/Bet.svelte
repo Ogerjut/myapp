@@ -23,7 +23,6 @@
     const duration = $state(15) //s
 
     function sendBet(bet, card, suit = ""){
-        // console.log("bet sent : ", bet)
         socket.emit("playerHasBet", table._id, user._id, bet, card, suit)
     }
 

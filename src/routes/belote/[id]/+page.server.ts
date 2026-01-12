@@ -16,22 +16,3 @@ export async function load({params, locals}){
         user :  {...user, _id : user._id.toString()},
     }
 }
-
-// export const actions = {
-//   bet : async({params, locals, request}) => {
-//       const formData = await request.formData();
-//       const bet = Number(formData.get('bet'))
-  
-//       try {
-//         return {
-//             success: true,
-//             bet : bet,
-//           };
-
-//       } catch (err) {
-//         console.log(err)
-//           return fail(400, { error : err.message });
-//       }
-//   }
-
-// }
