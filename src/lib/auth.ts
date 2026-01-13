@@ -34,7 +34,7 @@ export const auth = betterAuth({
 
   plugins: [
     username({
-      minUsernameLength: 1
+      minUsernameLength: 2
     }),
     sveltekitCookies(getRequestEvent)
   ],

@@ -1,4 +1,3 @@
-// server.js
 import 'dotenv/config'; 
 import express from 'express';
 import { handler } from './build/handler.js';
@@ -23,11 +22,9 @@ const io = new Server(server, {
 
 socketController(io);
 
-// app.use('/socket.io', (req, res, next) => next());
 app.use(handler);
 
 const port = 3000;
 server.listen(port, () => {
-    console.log(`✅ Serveur HTTP en écoute sur http://localhost:${port}`);
-    console.log(`🔌 Socket.io prêt sur ws://localhost:${port}`);
+    console.log(`✅ Serveur HTTP / WS en écoute sur http://localhost:${port}`); 
 });

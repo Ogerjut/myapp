@@ -10,22 +10,24 @@ export const actions = {
         const formData = await request.formData();
         const username = formData.get('username');
         const password = formData.get('password');
+
+        const normalizedUsername = username.toLowerCase().trim()
         
         try {
             const response = await auth.api.signInUsername({
                 body: {
-                    username,
-                    password
+                    username : normalizedUsername,
+                    password, 
                 },
             });
             
-            await usersCollection.updateOne(
-                {_id : new ObjectId(response.user.id) },
-                {$set : {isActive : true}}
-            )
+            // await usersCollection.updateOne(
+            //     {_id : new ObjectId(response.user.id) },
+            //     {$set : {isActive : true}}
+            // )
             
-            const user = await usersCollection.findOne({_id : new ObjectId(response.user.id) })
-            console.log("signin user : ", user)
+            // const user = await usersCollection.findOne({_id : new ObjectId(response.user.id) })
+            // console.log("signin user : ", user)
 
 
             return {
@@ -71,7 +73,7 @@ export const actions = {
                 }
             });
 
-            console.log("New user:", data);
+            // console.log("New user:", data);
 
             if (data){
                 await auth.api.sendVerificationEmail({

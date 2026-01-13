@@ -15,13 +15,15 @@ export const load: PageServerLoad = async ({ locals }) => {
 
 export const actions: Actions = {
   signout: async ({ request, locals }) => {
-    console.log("locals :", locals)
+    // console.log("locals :", locals)
+    // console.log("locals :", locals.user.id)
+    
     await usersCollection.updateOne(
         {_id : new ObjectId(locals.user.id) },
         {$set : {isActive : false}}
     )
     const user = await usersCollection.findOne({_id : new ObjectId(locals.user.id) })
-    console.log("signout user : ", user)
+    // console.log("signout user : ", user)
 
 
     try {

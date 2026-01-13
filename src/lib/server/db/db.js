@@ -15,3 +15,4 @@ export const db = client.db("games");
 export const usersCollection = db.collection("user")
 export const msgCollection = db.collection("messages")
 export const tablesCollection = db.collection("tables")
+export const sessionsCollection = db.collection("session")
