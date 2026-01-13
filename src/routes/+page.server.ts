@@ -21,10 +21,10 @@ export const actions = {
                 },
             });
             
-            // await usersCollection.updateOne(
-            //     {_id : new ObjectId(response.user.id) },
-            //     {$set : {isActive : true}}
-            // )
+            await usersCollection.updateOne(
+                {_id : new ObjectId(response.user.id) },
+                {$set : {isActive : true}}
+            )
             
             // const user = await usersCollection.findOne({_id : new ObjectId(response.user.id) })
             // console.log("signin user : ", user)

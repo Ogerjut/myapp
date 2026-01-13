@@ -32,7 +32,6 @@
       </label>
     </div>
     
-    <button type="submit" disabled={changingPassword}> Changer de mot de passe </button>
-    <button type="button" onclick={()=>goto("/")}>Annuler </button>
+    <button disabled={changingPassword}> Changer de mot de passe </button>
   </form> 
   
