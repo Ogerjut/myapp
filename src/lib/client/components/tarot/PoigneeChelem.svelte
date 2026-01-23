@@ -47,7 +47,7 @@
 </script>
 
 <div>
-    <Timer duration={15} callback={() => skip()} key={`${table.gameState.currentPlayerId}`}/>
+    <Timer duration={7} callback={() => skip()} key={`${table.gameState.currentPlayerId}`}/>
     <h1><u>Poignées & Chelem ? </u></h1>
     {#if hasPoignee}
         <button id="poignee" onclick={()=>poignee(poigneeSize)}> Poignée ({poigneeSize} atouts) </button>
@@ -57,9 +57,9 @@
     {#if user.tarot.hasTaken && !user.tarot.chelem}
         <button id="chelem" onclick={()=>chelem()}> Chelem </button>
     {/if}
-    {#if user.tarot.hasTaken || hasPoignee }
+    <!-- {#if user.tarot.hasTaken || hasPoignee }
         <button onclick={()=>skip()}> Passer </button>
-    {/if}
+    {/if} -->
 
 </div>
 

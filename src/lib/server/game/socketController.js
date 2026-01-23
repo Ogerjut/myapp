@@ -1,6 +1,6 @@
 // import { ObjectId } from 'mongodb';
 // import { usersCollection } from '../db/db.js';
-import socketBelote from './belote/controllers/socketBelote.js';
+// import socketBelote from './belote/controllers/socketBelote.js';
 import { socketCore } from './core/socketCore.js';
 // import { userConnected, userConnections, userDisconnected } from './presenceManager.js';
 import socketTarot from './tarot/controllers/socketTarot.js';
@@ -57,7 +57,7 @@ export default function socketController(io) {
 		socketCore(io, socket); // events globaux
 		socketTarot(io, socket); // events du tarot
 		socketYams(io, socket); // events du yam's
-		socketBelote(io, socket); // events de la belote
+		// socketBelote(io, socket); // events de la belote
 		// socketChess(io, socket); // events des échecs
 	});
 

@@ -76,10 +76,11 @@ export async function playCard(io, tableId, userId, hand, roundManager, card, pl
 
 	switch (turnState) {
 		case 'endRound':
-            await new Promise((r) => setTimeout(r, 1000));
+			await new Promise((r) => setTimeout(r, 1000));
 			await handleEndRound(io, tableId);
 			break;
 		case 'endPli':
+			await new Promise((r) => setTimeout(r, 2000));
 			await handleEndPli(tableId, roundManager);
 			break;
 		case 'nextPlayer':

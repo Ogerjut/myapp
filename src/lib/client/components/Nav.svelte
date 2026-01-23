@@ -1,7 +1,8 @@
 <script>
     import LogOut from '@lucide/svelte/icons/log-out';
     import { enhance } from "$app/forms";
-
+	
+	
     let {data} = $props()
     
     const MENU = [

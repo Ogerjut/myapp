@@ -11,7 +11,7 @@ export default async function checkStartBetBelote(io, tableId){
 		console.log("table déjà prête")
 		return
 	}  
-	console.log("check start bet belote")
+	console.log("check start bet / belote")
 
     const belote = new Belote(table);
     belote.loadGame()

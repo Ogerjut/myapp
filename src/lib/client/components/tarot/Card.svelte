@@ -52,6 +52,7 @@
         tabindex=0
         class="card"
         class:isExcuse = {isExcuse}
+        class:isAtout = {suit === "atout"}
         style="--color : {color};"
         onmousedown={() => controller.onCardClick({value, suit})}
         transition:fly={{ y: -100, duration: 1000 }}
@@ -104,6 +105,10 @@
 
     .isExcuse{
         writing-mode:vertical-lr;
+    }
+
+    .isAtout {
+        background-color:lemonchiffon
     }
 
 

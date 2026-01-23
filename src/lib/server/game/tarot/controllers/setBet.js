@@ -37,7 +37,7 @@ export default async function setBet(io, tableId, userId, bet) {
     const isBetOver = betMap.size === table?.size || bet === 4
 
     if (isBetOver){
-        console.log("end bet")
+        console.log("end bet tarot")
         let max = 0
         betMap.forEach((val, key)=> max = Math.max(max, val))
         if (max === 0){
@@ -72,7 +72,7 @@ export default async function setBet(io, tableId, userId, bet) {
     }
 
 
-    console.log("next player to bet")
+    console.log("next player to bet tarot")
     const ind = playersId.indexOf(userId)
     const newSpeakerId = playersId[ind+1]
     await usersCollection.updateOne(

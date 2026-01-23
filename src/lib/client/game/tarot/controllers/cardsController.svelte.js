@@ -20,6 +20,7 @@ export class CardController {
 
     if (state === "game" && currentPlayerId === user._id) {
       this.socket?.emit("checkPlayableCard", table._id, user._id, card);
+      await new Promise((r) => setTimeout(r, 3000));
     }
   }
 

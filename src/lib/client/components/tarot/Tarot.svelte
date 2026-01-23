@@ -81,6 +81,7 @@
 <div id="game-container">
     <div id="table-area">
         <i>{tarotContext.table.state} mode</i>
+        <p>Round : {tarotContext.table.gameState.round} / {tarotContext.table.roundMax} </p>
         <Table/>
         <PlayerSeat {opponents} />
     

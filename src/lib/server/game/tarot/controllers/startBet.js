@@ -16,7 +16,7 @@ export default async function checkStartBetTarot(io, tableId) {
 		return
 	}  
 
-	console.log("check start bet")
+	console.log("check start bet tarot")
 	const round = table?.gameState.round || 1 
 	const tarot = new LoadGame(table, round);
 	const players = tarot.players;

@@ -17,13 +17,13 @@ export default async function handlePlayerBet(io, tableId, userId, bet, suit){
 
     await usersCollection.updateOne(
         {_id : new ObjectId(userId)},
-        {$set : {"tarot.bet" : bet, "tarot.hasBet" : true, "tarot.isSpeaker" : false}}
+        {$set : {"belote.bet" : bet, "belote.hasBet" : true, "belote.isSpeaker" : false}}
     )
     
     const isBetOver = betMap.size === table?.size || bet === 1
 
     if (isBetOver){
-        console.log("end bet")
+        console.log("end bet belote")
        const bets = betMap.values()
        const betsEqualZero = bets.every(b => b === 0)
         if (betsEqualZero && table?.gameState.betRound === 2){
@@ -46,7 +46,7 @@ export default async function handlePlayerBet(io, tableId, userId, bet, suit){
             if (val === 1){
                 await usersCollection.updateOne(
                     {_id : new ObjectId(id)},
-                    {$set : {"tarot.hasTaken" : true}}
+                    {$set : {"belote.hasTaken" : true}}
                 )
             }
         })
@@ -71,7 +71,7 @@ export default async function handlePlayerBet(io, tableId, userId, bet, suit){
     const newSpeakerId = playersId[ind+1]
     await usersCollection.updateOne(
         {_id : new ObjectId(newSpeakerId)},
-        {$set : {"tarot.isSpeaker" : true}}
+        {$set : {"belote.isSpeaker" : true}}
     ) 
     await emitUpdate(io, tableId, playersId)
       

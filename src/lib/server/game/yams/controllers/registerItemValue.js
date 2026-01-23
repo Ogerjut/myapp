@@ -46,7 +46,7 @@ async function checkEndGame(playersId){
     for (const playerId of playersId){
         const player = await getUserById(playerId)
         const items = player?.yams.items
-        if (items.filter(item => item.done != true).length != 10){
+        if (items.filter(item => item.done != true).length  != 0){
             endgame = false 
         }
     }

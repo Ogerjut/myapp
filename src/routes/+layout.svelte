@@ -80,10 +80,6 @@
 
 <Footer/>
 
-
-
-
-
 <style>
 	
 	main {
